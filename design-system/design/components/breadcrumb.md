@@ -42,7 +42,7 @@
 | --- | --- |
 | List | 가로, `flex-wrap: wrap`, `align-items: center`, gap 4px `x1` |
 | Item | `inline-flex; align-items: center`, gap 4px |
-| Link | t4 14/19 regular, `fg-neutral-subtle`, 밑줄 없음. hover `fg-neutral` + 밑줄(`text-underline-offset: 2px`) |
+| Link | t4 14/19 regular, `fg-neutral-subtle`, 밑줄 없음. hover `fg-neutral` + 밑줄(`text-underline-offset` 4px(`spacing-x1`, design.md 3.5)) |
 | Current | t4 14/19 **medium**, `fg-neutral`, 한 줄 말줄임(최대 240px) |
 | Separator | 12px `chevron-right`, `fg-placeholder` |
 | Ellipsis | 24×24px 버튼, radius 4px `r1`, 아이콘 16px `fg-neutral-subtle`, hover bg `bg-transparent-pressed`. 누르면 접힌 단계를 [Dropdown Menu](dropdown-menu.md)로 |
