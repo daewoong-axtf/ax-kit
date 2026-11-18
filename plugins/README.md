@@ -40,7 +40,7 @@ Notion 연결은 내 계정 권한으로 동작한다. 위 표의 페이지 · D
 
 ## 쓰는 법
 
-설치하면 대화에서 하고 싶은 일을 말하면 된다. Claude가 맞는 스킬을 골라 쓴다. Claude Code에서는 `/write-prd`처럼 이름으로 바로 부를 수도 있다.
+설치하면 대화에서 하고 싶은 일을 말하면 된다. Claude가 맞는 스킬을 골라 쓴다. Claude Code에서는 `/write-prd:write-prd`, `/ax-mail-inquiry-log:ax-mail-inquiry-log`처럼 `플러그인:스킬` 이름으로 바로 부를 수도 있다.
 
 **write-prd**
 
