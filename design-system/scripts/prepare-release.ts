@@ -8,7 +8,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
-const REPOSITORY = 'https://github.com/daewoong-axtf/daewoong-ax-standards'
+const REPOSITORY = 'https://github.com/daewoong-axtf/ax-kit'
 const HISTORY = /(<h2 id="page-history-title">업데이트 기록<\/h2>\s*<ol>\n)/
 
 export function bumpPackage(source: string, version: string): string {

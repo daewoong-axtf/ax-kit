@@ -19,7 +19,7 @@ test('원문 위치는 태그 형식을 따른다', () => {
 test('설정 프롬프트에 저장소와 ref를 채운다', () => {
   assert.equal(
     fillPrompt('저장소: {{REPOSITORY}} / {{REF}}', 'v1.2.0'),
-    '저장소: https://github.com/daewoong-axtf/daewoong-ax-standards / v1.2.0',
+    '저장소: https://github.com/daewoong-axtf/ax-kit / v1.2.0',
   )
   assert.throws(() => fillPrompt('{{REPO}}', 'v1.2.0'), /v1\.2\.0.*자리표시자/)
 })

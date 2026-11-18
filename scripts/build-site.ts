@@ -9,7 +9,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url))
-const REPOSITORY = 'https://github.com/daewoong-axtf/daewoong-ax-standards'
+const REPOSITORY = 'https://github.com/daewoong-axtf/ax-kit'
 
 export type Slug = 'design-system' | 'safety-rules'
 
