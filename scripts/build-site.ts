@@ -65,6 +65,14 @@ export function buildIndex(entries: { slug: Slug; version: string; updatedAt: st
 }
 
 /** 태그 날짜를 한국 시간 YYYY-MM-DD로 */
+/** 가이드마다 최신 판을 latest.md로 한 벌 더 — 버전이 올라도 바뀌지 않는 링크 */
+export function latestCopies(index: GuideIndex): { from: string; to: string }[] {
+  return Object.entries(index.guides).map(([slug, guide]) => ({
+    from: guide.versions.find((v) => v.version === guide.latest)!.path,
+    to: `guides/${slug}/latest.md`,
+  }))
+}
+
 export function kstDate(iso: string): string {
   return new Date(Date.parse(iso) + 9 * 3600_000).toISOString().slice(0, 10)
 }
@@ -100,6 +108,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     writeFileSync(join(out, 'guides', parsed.slug, `${parsed.version}.md`), text)
     entries.push({ ...parsed, updatedAt: kstDate(date) })
   }
-  writeFileSync(join(out, 'guides/index.json'), `${JSON.stringify(buildIndex(entries), null, 2)}\n`)
+  const index = buildIndex(entries)
+  writeFileSync(join(out, 'guides/index.json'), `${JSON.stringify(index, null, 2)}\n`)
+  for (const { from, to } of latestCopies(index)) cpSync(join(out, from), join(out, to))
   console.log(`${out}: ${entries.map((e) => `${e.slug}@${e.version}`).join(', ')}`)
 }
