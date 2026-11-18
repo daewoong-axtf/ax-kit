@@ -3,7 +3,7 @@
   "version": "1.3.0",
   "private": true,
   "designSystem": {
-    "repository": "https://github.com/daewoong-axtf/daewoong-ax-standards",
+    "repository": "https://github.com/daewoong-axtf/ax-kit",
     "ref": "design-system-v1.3.0"
   },
   "type": "module",

@@ -1,5 +1,5 @@
 {
-  "name": "daewoong-ax-standards",
+  "name": "ax-kit",
   "private": true,
   "description": "대웅 AX 공용 기준 — 디자인 시스템 · 규칙 · Claude 스킬. 폴더마다 따로 버전을 매긴다",
   "license": "UNLICENSED",

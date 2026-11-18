@@ -1,4 +1,4 @@
-# daewoong-ax-standards
+# ax-kit
 
 대웅 AX 서비스가 함께 쓰는 기준을 한 저장소에서 관리한다. 폴더마다 따로 버전을 매긴다. 한 폴더를 고쳐도 다른 폴더의 버전은 오르지 않는다.
 
@@ -7,7 +7,7 @@
 | `design-system/` | Daewoong Design System — 토큰 · 컴포넌트 명세 · 카탈로그 · Storybook | `design-system-vX.Y.Z` | [design-system/README.md](design-system/README.md) |
 | `rules/safety-rules/` | AI로 만든 웹앱 최소 안전 규칙 | `safety-rules-vX.Y.Z` | [rules/README.md](rules/README.md) |
 
-[카탈로그](https://daewoong-axtf.github.io/daewoong-ax-standards/design/catalog.html) · [가이드 게시물 목록](https://daewoong-axtf.github.io/daewoong-ax-standards/guides/index.json) · [릴리즈](https://github.com/daewoong-axtf/daewoong-ax-standards/releases)
+[카탈로그](https://daewoong-axtf.github.io/ax-kit/design/catalog.html) · [가이드 게시물 목록](https://daewoong-axtf.github.io/ax-kit/guides/index.json) · [릴리즈](https://github.com/daewoong-axtf/ax-kit/releases)
 
 ## 버전과 릴리즈
 
@@ -47,4 +47,4 @@ pnpm -C design-system build
 
 ## 저장소 이름
 
-예전 이름은 `daewoong-design-system`이다. GitHub가 예전 주소의 clone · API 요청을 이 저장소로 넘겨 준다. **예전 이름으로 저장소를 새로 만들지 않는다.** 만들면 넘겨 주기가 끊긴다. Pages 주소는 넘겨 주지 않으므로 예전 Pages 링크는 새 주소로 바꾼다.
+예전 이름은 `daewoong-design-system`, `daewoong-ax-standards`다. GitHub가 예전 주소의 clone · API 요청을 이 저장소로 넘겨 준다. **예전 이름들로 저장소를 새로 만들지 않는다.** 만들면 넘겨 주기가 끊긴다. Pages 주소는 넘겨 주지 않으므로 예전 Pages 링크는 새 주소로 바꾼다.

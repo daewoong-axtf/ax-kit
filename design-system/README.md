@@ -5,11 +5,11 @@
 대웅 서비스들이 공통으로 쓰는 디자인 시스템이다. 패키지로 배포하지 않는다 — 각 서비스는 아래 전달물을 보고
 **자기 언어·프레임워크로 구현**하거나, React라면 Storybook의 소스를 복사해 쓴다.
 
-[카탈로그](https://daewoong-axtf.github.io/daewoong-ax-standards/design/catalog.html) · [AI로 설치하기](#ai로-설치하기) · [직접 설치하기](#직접-설치하기) · [AI용 문서](design/llms.txt)
+[카탈로그](https://daewoong-axtf.github.io/ax-kit/design/catalog.html) · [AI로 설치하기](#ai로-설치하기) · [직접 설치하기](#직접-설치하기) · [AI용 문서](design/llms.txt)
 
 ## 카탈로그
 
-토큰과 컴포넌트를 한 페이지에서 보는 [온라인 카탈로그](https://daewoong-axtf.github.io/daewoong-ax-standards/design/catalog.html)다. 원본은 [`design/catalog.html`](design/catalog.html)이다.
+토큰과 컴포넌트를 한 페이지에서 보는 [온라인 카탈로그](https://daewoong-axtf.github.io/ax-kit/design/catalog.html)다. 원본은 [`design/catalog.html`](design/catalog.html)이다.
 
 ## AI로 설치하기
 
@@ -37,13 +37,13 @@ AI 도구에는 프로젝트 파일을 고칠 권한과 저장소를 받을 수 
 ```text
 이 프로젝트의 기본 디자인 시스템으로 Daewoong Design System을 설정해줘. 파일 가져오기, 프로젝트 연결, AI 프로젝트 규칙 등록까지 끝내서 이후에는 "디자인 시스템 써"라고만 요청해도 쓸 수 있게 해줘.
 
-저장소: https://github.com/daewoong-axtf/daewoong-ax-standards
+저장소: https://github.com/daewoong-axtf/ax-kit
 가져올 위치(ref): design-system-v1.3.0
 
 1. 먼저 프로젝트의 언어, 프레임워크, 스타일 방식, 패키지 관리자, 기존 AI 지침 파일, 수정 중인 파일을 확인해줘. 프로젝트 안에 `docs/design-system.md`가 이미 있으면 다시 가져오지 말고 거기 적힌 버전을 재사용해줘.
 
 2. 저장소를 임시 폴더로 받아줘.
-   git clone --depth 1 --branch design-system-v1.3.0 https://github.com/daewoong-axtf/daewoong-ax-standards.git <임시 폴더>
+   git clone --depth 1 --branch design-system-v1.3.0 https://github.com/daewoong-axtf/ax-kit.git <임시 폴더>
    받은 뒤 `git rev-parse HEAD`로 커밋 값을 적어 둬. 저장소를 받지 못하면 내용을 추측하거나 설치했다고 말하지 말고, 받지 못한 이유를 사용자에게 알려줘.
 
 3. 받은 저장소의 `design-system/design/`을 이하 `design/`이라 부른다. 폴더를 나누기 전 태그(v1.2.0까지)는 저장소 맨 위에 `design/`이 있으니 그것을 쓴다. `design/README.md`, `design/llms.txt`, `design/design.md` 14장을 읽어줘. `design/` 전체는 참고 문서로 `docs/design-reference/`에 복사해줘. 이 폴더는 사용자에게 공개되는 경로에 두지 않는다. 그다음 아래에서 프로젝트에 맞는 경로 하나를 골라줘. 화면 실행에 쓰는 파일은 `fonts/`, `tokens.css`, `components.css`, `js/components.js`, `icons/`다.
@@ -99,7 +99,7 @@ AI 도구에는 프로젝트 파일을 고칠 권한과 저장소를 받을 수 
 
 ### 버전
 
-설치한 저장소·ref·커밋은 프로젝트의 `docs/design-system.md`에 남는다. 이미 설치한 프로젝트는 자동으로 바뀌지 않는다. [자동 반영](#릴리즈와-자동-반영)에 등록한 저장소만 새 릴리즈가 PR로 온다. 올릴 때는 [업데이트 기록](https://daewoong-axtf.github.io/daewoong-ax-standards/design/catalog.html#page-history-title)을 확인하고, 프로젝트에서 고친 파일을 덮어쓰지 않는지 비교한다.
+설치한 저장소·ref·커밋은 프로젝트의 `docs/design-system.md`에 남는다. 이미 설치한 프로젝트는 자동으로 바뀌지 않는다. [자동 반영](#릴리즈와-자동-반영)에 등록한 저장소만 새 릴리즈가 PR로 온다. 올릴 때는 [업데이트 기록](https://daewoong-axtf.github.io/ax-kit/design/catalog.html#page-history-title)을 확인하고, 프로젝트에서 고친 파일을 덮어쓰지 않는지 비교한다.
 
 ## 직접 설치하기
 
@@ -107,12 +107,12 @@ AI 없이 파일을 복사해 연결한다. 패키지 설치는 필요 없다.
 
 ### 1. 받기
 
-[릴리즈 목록](https://github.com/daewoong-axtf/daewoong-ax-standards/releases)에서 `design-system-v`로 시작하는 가장 새 릴리즈의 `design.zip`을 받아 압축을 푼다. 이 저장소는 규칙 등 다른 폴더도 따로 릴리즈하므로 "Latest" 표시만 보고 받지 않는다. 받은 버전을 프로젝트에 적어 두면 나중에 비교하기 쉽다.
+[릴리즈 목록](https://github.com/daewoong-axtf/ax-kit/releases)에서 `design-system-v`로 시작하는 가장 새 릴리즈의 `design.zip`을 받아 압축을 푼다. 이 저장소는 규칙 등 다른 폴더도 따로 릴리즈하므로 "Latest" 표시만 보고 받지 않는다. 받은 버전을 프로젝트에 적어 두면 나중에 비교하기 쉽다.
 
 특정 버전을 저장소째 받으려면 태그를 지정한다. 받은 저장소의 `design-system/design/`이 `design.zip`의 `design/`과 같다. `v1.2.0`까지의 태그는 저장소 맨 위에 `design/`이 있다.
 
 ```bash
-git clone --depth 1 --branch design-system-v<버전> https://github.com/daewoong-axtf/daewoong-ax-standards.git
+git clone --depth 1 --branch design-system-v<버전> https://github.com/daewoong-axtf/ax-kit.git
 ```
 
 ### 2. 복사하기
@@ -174,7 +174,7 @@ body {
 | 전달물 | 대상 | 내용 |
 | --- | --- | --- |
 | Figma 링크 | 디자이너·기획자 | 컴포넌트·토큰 라이브러리 _(준비 중)_ |
-| [카탈로그](https://daewoong-axtf.github.io/daewoong-ax-standards/design/catalog.html) | 모두 | 토큰과 컴포넌트를 한 페이지에서 보는 HTML. 언어와 무관하게 마크업을 복사해 쓴다 |
+| [카탈로그](https://daewoong-axtf.github.io/ax-kit/design/catalog.html) | 모두 | 토큰과 컴포넌트를 한 페이지에서 보는 HTML. 언어와 무관하게 마크업을 복사해 쓴다 |
 | Storybook 링크 | React 개발자 | 동작하는 React 컴포넌트 모음 _(준비 중)_ |
 | [`design/`](design/) | 개발자·AI 에이전트 | 언어 무관 정본 — 토큰, 컴포넌트 명세, 순수 HTML/CSS 레퍼런스, 가이드 |
 | [`design/ai/setup-prompt.md`](design/ai/setup-prompt.md) · [`design/llms.txt`](design/llms.txt) | 현업·AI 에이전트 | 복사해서 쓰는 설정 프롬프트와 AI용 문서 |
@@ -198,7 +198,7 @@ pnpm test               # 토큰·가드 테스트
 
 ## 릴리즈와 자동 반영
 
-이 폴더는 `daewoong-ax-standards` 저장소 안에서 따로 버전을 매긴다. 태그는 `design-system-vX.Y.Z`다. 폴더를 나누기 전의 릴리즈는 `v1.0.0`~`v1.2.0`이다.
+이 폴더는 `ax-kit` 저장소 안에서 따로 버전을 매긴다. 태그는 `design-system-vX.Y.Z`다. 폴더를 나누기 전의 릴리즈는 `v1.0.0`~`v1.2.0`이다.
 
 ```
 main 머지 → release-please가 릴리즈 PR을 만들거나 갱신 (버전 · CHANGELOG · 업데이트 기록 · 설치 ref)

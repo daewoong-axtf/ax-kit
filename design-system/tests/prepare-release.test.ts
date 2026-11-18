@@ -7,7 +7,7 @@ test('버전과 설치 프롬프트가 받는 ref를 함께 올린다', () => {
   const out = JSON.parse(bumpPackage('{"version":"1.2.0","designSystem":{"repository":"x","ref":"v1.2.0"}}', '1.3.0'))
   assert.equal(out.version, '1.3.0')
   assert.equal(out.designSystem.ref, 'design-system-v1.3.0')
-  assert.equal(out.designSystem.repository, 'https://github.com/daewoong-axtf/daewoong-ax-standards')
+  assert.equal(out.designSystem.repository, 'https://github.com/daewoong-axtf/ax-kit')
 })
 
 test('업데이트 기록에는 사용자가 볼 변경만 남긴다', () => {
