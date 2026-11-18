@@ -1,5 +1,13 @@
 # 변경 기록
 
+## [1.3.0](https://github.com/daewoong-axtf/daewoong-ax-standards/compare/design-system-v1.2.0...design-system-v1.3.0) (2026-11-18)
+
+
+### 새로 추가된 기능
+
+* 링크 밑줄 간격 기본값 4px, 상황별 사용 예시 ([da1b6af](https://github.com/daewoong-axtf/daewoong-ax-standards/commit/da1b6af8256292fc4c623e5c8539735953d34911))
+* 링크 밑줄 간격 기본값 4px(spacing-x1) 추가 ([ebda77b](https://github.com/daewoong-axtf/daewoong-ax-standards/commit/ebda77bd9f72b6a5e10501e03409365c45194bf7))
+
 ## [1.2.0](https://github.com/daewoong-axtf/daewoong-design-system/compare/v1.1.0...v1.2.0) (2026-11-12)
 
 ### 새로 추가된 기능
