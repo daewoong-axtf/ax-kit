@@ -4,9 +4,10 @@ import { test } from 'node:test'
 import { addHistory, bumpPackage, summarize } from '../scripts/prepare-release.ts'
 
 test('버전과 설치 프롬프트가 받는 ref를 함께 올린다', () => {
-  const out = JSON.parse(bumpPackage('{"version":"1.0.0","designSystem":{"ref":"v1.0.0"}}', '1.1.0'))
-  assert.equal(out.version, '1.1.0')
-  assert.equal(out.designSystem.ref, 'v1.1.0')
+  const out = JSON.parse(bumpPackage('{"version":"1.2.0","designSystem":{"repository":"x","ref":"v1.2.0"}}', '1.3.0'))
+  assert.equal(out.version, '1.3.0')
+  assert.equal(out.designSystem.ref, 'design-system-v1.3.0')
+  assert.equal(out.designSystem.repository, 'https://github.com/daewoong-axtf/daewoong-ax-standards')
 })
 
 test('업데이트 기록에는 사용자가 볼 변경만 남긴다', () => {
@@ -16,7 +17,13 @@ test('업데이트 기록에는 사용자가 볼 변경만 남긴다', () => {
 
 test('새 기록을 업데이트 기록 맨 위에 넣는다', () => {
   const html = readFileSync(new URL('../design/catalog.html', import.meta.url), 'utf8')
-  const out = addHistory(html, '1.1.0', '2026-12-01', '<Chip> 추가.')
-  assert.ok(out.indexOf('v1.1.0') < out.indexOf('<strong>v1.0.0</strong>'))
+  const out = addHistory(html, '9.9.0', '2026-12-01', '<Chip> 추가.')
+  assert.ok(out.indexOf('v9.9.0') < out.indexOf('<strong>v1.0.0</strong>'))
   assert.ok(out.includes('&lt;Chip&gt; 추가.'))
+})
+
+test('같은 버전 기록을 두 번 넣지 않는다', () => {
+  const html = readFileSync(new URL('../design/catalog.html', import.meta.url), 'utf8')
+  const once = addHistory(html, '1.3.0', '2026-12-01', '칩 추가.')
+  assert.equal(addHistory(once, '1.3.0', '2026-12-01', '칩 추가.'), once)
 })

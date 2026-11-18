@@ -1,52 +1,120 @@
 name: Release
 
+# 폴더마다 따로 릴리즈한다 (release-please-config.json).
+#   main에 머지 → release-please가 바뀐 폴더의 릴리즈 PR을 만들거나 갱신한다
+#   릴리즈 PR 머지 → design-system-vX.Y.Z · safety-rules-vX.Y.Z 태그와 GitHub Release
+# 디자인 시스템 릴리즈면 design.zip을 올리고 받는 저장소(ax-desk-fe)에 알린다. 어느 릴리즈든 Pages를 다시 올린다.
 on:
   push:
     branches: [main]
 
 permissions:
   contents: write
+  pull-requests: write
+  actions: write
 
 jobs:
-  release:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      prs_created: ${{ steps.rp.outputs.prs_created }}
+      pr_branch: ${{ steps.rp.outputs.prs_created == 'true' && fromJSON(steps.rp.outputs.pr).headBranchName || '' }}
+      releases_created: ${{ steps.rp.outputs.releases_created }}
+      ds_release: ${{ steps.rp.outputs['design-system--release_created'] }}
+      ds_tag: ${{ steps.rp.outputs['design-system--tag_name'] }}
+    steps:
+      - id: rp
+        uses: googleapis/release-please-action@v4
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  # 릴리즈 PR에 디자인 시스템 버전이 오르면 업데이트 기록 · 설치 ref · 생성 파일을 같은 PR에 넣는다
+  prepare-pr:
+    needs: release-please
+    if: needs.release-please.outputs.prs_created == 'true'
     runs-on: ubuntu-latest
     env:
       HUSKY: 0
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ needs.release-please.outputs.pr_branch }}
           fetch-depth: 0
+      - id: version
+        run: |
+          next=$(node -p "require('./design-system/package.json').version")
+          current=$(git show origin/main:design-system/package.json | node -p "JSON.parse(require('fs').readFileSync(0)).version")
+          if [ "$next" = "$current" ]; then echo "디자인 시스템 버전 그대로 ($current) — 건너뛴다"; exit 0; fi
+          echo "next=$next" >> "$GITHUB_OUTPUT"
       - uses: pnpm/action-setup@v4
+        if: steps.version.outputs.next != ''
       - uses: actions/setup-node@v4
+        if: steps.version.outputs.next != ''
         with:
           node-version: 24
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm test
-      - run: pnpm exec semantic-release
+      - if: steps.version.outputs.next != ''
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NEXT: ${{ steps.version.outputs.next }}
+        run: |
+          pnpm install --frozen-lockfile
+          node design-system/scripts/prepare-release.ts "$NEXT"
+          pnpm -C design-system build
+          if git diff --quiet; then echo "바뀐 것 없음"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: 디자인 시스템 $NEXT 릴리즈 준비 (업데이트 기록 · 설치 ref)"
+          git push
 
-      # 새 릴리즈를 받아 쓰는 저장소에 알린다. 받는 쪽은 design-system-released 이벤트로 반영한다
+  after-release:
+    needs: release-please
+    if: needs.release-please.outputs.releases_created == 'true'
+    runs-on: ubuntu-latest
+    env:
+      HUSKY: 0
+    steps:
+      - uses: actions/checkout@v4
+        if: needs.release-please.outputs.ds_release == 'true'
+      - uses: pnpm/action-setup@v4
+        if: needs.release-please.outputs.ds_release == 'true'
+      - uses: actions/setup-node@v4
+        if: needs.release-please.outputs.ds_release == 'true'
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Upload design.zip
+        if: needs.release-please.outputs.ds_release == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.release-please.outputs.ds_tag }}
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm test
+          (cd design-system && rm -f design.zip && zip -qr design.zip design)
+          gh release upload "$TAG" design-system/design.zip --clobber
+
+      # 새 디자인 시스템 릴리즈를 받아 쓰는 저장소에 알린다. 받는 쪽은 design-system-released 이벤트로 토큰 · 실행 파일을 반영한다
       # 조직의 GitHub App(받는 저장소에만 설치, Contents 읽기·쓰기)으로 실행할 때마다 짧은 토큰을 받는다
       #   변수 DOWNSTREAM_APP_ID · 시크릿 DOWNSTREAM_APP_PRIVATE_KEY
-      - name: Check new release
-        id: release
+      - name: Check downstream app
+        id: app
+        if: needs.release-please.outputs.ds_release == 'true'
         env:
           APP_ID: ${{ vars.DOWNSTREAM_APP_ID }}
           APP_KEY: ${{ secrets.DOWNSTREAM_APP_PRIVATE_KEY }}
+          TAG: ${{ needs.release-please.outputs.ds_tag }}
         run: |
-          tag=$(git tag --points-at HEAD 'v*' | head -1)
-          if [ -z "$tag" ]; then echo "새 릴리즈 없음"; exit 0; fi
           if [ -z "$APP_ID" ] || [ -z "$APP_KEY" ]; then
-            echo "::warning::DOWNSTREAM_APP_ID · DOWNSTREAM_APP_PRIVATE_KEY가 없어 $tag 릴리즈를 알리지 않았다. 받는 쪽은 하루 한 번 확인할 때 반영한다"
+            echo "::warning::DOWNSTREAM_APP_ID · DOWNSTREAM_APP_PRIVATE_KEY가 없어 $TAG 릴리즈를 알리지 않았다. 받는 쪽은 하루 한 번 확인할 때 반영한다"
             exit 0
           fi
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "ok=true" >> "$GITHUB_OUTPUT"
 
       - uses: actions/create-github-app-token@v2
         id: app-token
-        if: steps.release.outputs.tag != ''
+        if: steps.app.outputs.ok == 'true'
         with:
           app-id: ${{ vars.DOWNSTREAM_APP_ID }}
           private-key: ${{ secrets.DOWNSTREAM_APP_PRIVATE_KEY }}
@@ -55,13 +123,19 @@ jobs:
           permission-contents: write
 
       - name: Notify downstream
-        if: steps.release.outputs.tag != ''
+        if: steps.app.outputs.ok == 'true'
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          TAG: ${{ steps.release.outputs.tag }}
+          TAG: ${{ needs.release-please.outputs.ds_tag }}
           DOWNSTREAM: daewoong-axtf/ax-desk-fe
         run: |
           for repo in $DOWNSTREAM; do
             gh api "repos/$repo/dispatches" -f event_type=design-system-released -f "client_payload[tag]=$TAG"
             echo "$repo ← $TAG"
           done
+
+      # GITHUB_TOKEN이 만든 릴리즈 · 태그는 pages.yml을 깨우지 않아서 직접 부른다
+      - name: Deploy Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"
