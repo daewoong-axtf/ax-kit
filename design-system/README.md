@@ -1,15 +1,15 @@
-![Daewoong Design System: 여러 서비스의 화면을 같은 컴포넌트로 만들어요](.github/hero.png)
+![Daewoong Design System: 여러 서비스의 화면을 같은 컴포넌트로 만들어요](../.github/hero.png)
 
 # Daewoong Design System
 
 대웅 서비스들이 공통으로 쓰는 디자인 시스템이다. 패키지로 배포하지 않는다 — 각 서비스는 아래 전달물을 보고
 **자기 언어·프레임워크로 구현**하거나, React라면 Storybook의 소스를 복사해 쓴다.
 
-[카탈로그](https://daewoong-axtf.github.io/daewoong-design-system/design/catalog.html) · [AI로 설치하기](#ai로-설치하기) · [직접 설치하기](#직접-설치하기) · [AI용 문서](design/llms.txt)
+[카탈로그](https://daewoong-axtf.github.io/daewoong-ax-standards/design/catalog.html) · [AI로 설치하기](#ai로-설치하기) · [직접 설치하기](#직접-설치하기) · [AI용 문서](design/llms.txt)
 
 ## 카탈로그
 
-토큰과 컴포넌트를 한 페이지에서 보는 [온라인 카탈로그](https://daewoong-axtf.github.io/daewoong-design-system/design/catalog.html)다. 원본은 [`design/catalog.html`](design/catalog.html)이다.
+토큰과 컴포넌트를 한 페이지에서 보는 [온라인 카탈로그](https://daewoong-axtf.github.io/daewoong-ax-standards/design/catalog.html)다. 원본은 [`design/catalog.html`](design/catalog.html)이다.
 
 ## AI로 설치하기
 
@@ -46,7 +46,7 @@ AI 도구에는 프로젝트 파일을 고칠 권한과 저장소를 받을 수 
    git clone --depth 1 --branch v1.2.0 https://github.com/daewoong-axtf/daewoong-ax-standards.git <임시 폴더>
    받은 뒤 `git rev-parse HEAD`로 커밋 값을 적어 둬. 저장소를 받지 못하면 내용을 추측하거나 설치했다고 말하지 말고, 받지 못한 이유를 사용자에게 알려줘.
 
-3. 받은 `design/README.md`, `design/llms.txt`, `design/design.md` 14장을 읽어줘. `design/` 전체는 참고 문서로 `docs/design-reference/`에 복사해줘. 이 폴더는 사용자에게 공개되는 경로에 두지 않는다. 그다음 아래에서 프로젝트에 맞는 경로 하나를 골라줘. 화면 실행에 쓰는 파일은 `fonts/`, `tokens.css`, `components.css`, `js/components.js`, `icons/`다.
+3. 받은 저장소의 `design-system/design/README.md`, `design-system/design/llms.txt`, `design-system/design/design.md` 14장을 읽어줘. 아래에서 `design/`은 받은 저장소의 `design-system/design/`을 말한다. `design/` 전체는 참고 문서로 `docs/design-reference/`에 복사해줘. 이 폴더는 사용자에게 공개되는 경로에 두지 않는다. 그다음 아래에서 프로젝트에 맞는 경로 하나를 골라줘. 화면 실행에 쓰는 파일은 `fonts/`, `tokens.css`, `components.css`, `js/components.js`, `icons/`다.
    - 서버가 HTML을 만드는 웹(Django, Flask, Spring, Ktor 등): 실행 파일을 정적 파일 경로 아래 `design/`에 복사하고 `fonts/pretendard.css`, `tokens.css`, `components.css`, `js/components.js`를 공통 템플릿에 연결한다. 경로는 프레임워크의 정적 파일 방식을 따른다. 마크업은 `catalog.html`에서 복사한다.
    - React·Next.js: Tailwind CSS v4와 shadcn/ui를 쓴다. 없으면 각 공식 설치 방법으로 설치한다. 단, 이미 다른 UI 라이브러리(MUI, Chakra, Ant Design, styled-components 등)를 쓰고 있으면 설치하기 전에 사용자에게 물어보고, 쓰지 않기로 하면 아래 Vue·Svelte 경로를 따른다. 실행 파일 중 `fonts/`, `icons/`, `tokens.css`, `shadcn.css`를 소스 경로(예: `src/design/`)에 복사하고 14.1절의 순서로 전역 CSS에서 불러온다. shadcn으로 받은 컴포넌트는 14.1절대로 비활성의 `pointer-events-none`을 지우고 메뉴·선택 항목의 `cursor-default`를 `cursor-pointer`로 바꿔 커서가 보이게 한다.
    - Vue·Svelte 등 그 밖의 프론트엔드 프레임워크: 실행 파일 중 `js/components.js`를 뺀 나머지를 번들러가 처리하는 소스 경로(예: `src/design/`)에 복사하고 `fonts/pretendard.css`, `tokens.css`, `components.css`를 전역으로 불러온다. 동작은 그 프레임워크로 구현한다. Tailwind를 권장한다. 이미 쓰고 있으면 화면 배치에 그대로 쓰고, 없으면 설치할지 사용자에게 물어본다.
@@ -92,7 +92,7 @@ AI 도구에는 프로젝트 파일을 고칠 권한과 저장소를 받을 수 
 
 ### 버전
 
-설치한 저장소·ref·커밋은 프로젝트의 `docs/design-system.md`에 남는다. 이미 설치한 프로젝트는 자동으로 바뀌지 않는다. [자동 반영](#릴리즈와-자동-반영)에 등록한 저장소만 새 릴리즈가 PR로 온다. 올릴 때는 [업데이트 기록](https://daewoong-axtf.github.io/daewoong-design-system/design/catalog.html#page-history-title)을 확인하고, 프로젝트에서 고친 파일을 덮어쓰지 않는지 비교한다.
+설치한 저장소·ref·커밋은 프로젝트의 `docs/design-system.md`에 남는다. 이미 설치한 프로젝트는 자동으로 바뀌지 않는다. [자동 반영](#릴리즈와-자동-반영)에 등록한 저장소만 새 릴리즈가 PR로 온다. 올릴 때는 [업데이트 기록](https://daewoong-axtf.github.io/daewoong-ax-standards/design/catalog.html#page-history-title)을 확인하고, 프로젝트에서 고친 파일을 덮어쓰지 않는지 비교한다.
 
 ## 직접 설치하기
 
@@ -100,12 +100,12 @@ AI 없이 파일을 복사해 연결한다. 패키지 설치는 필요 없다.
 
 ### 1. 받기
 
-최신 릴리즈의 [`design.zip`](https://github.com/daewoong-axtf/daewoong-design-system/releases/latest/download/design.zip)을 받아 압축을 푼다. 받은 버전을 프로젝트에 적어 두면 나중에 비교하기 쉽다.
+[릴리즈 목록](https://github.com/daewoong-axtf/daewoong-ax-standards/releases)에서 `design-system-v`로 시작하는 가장 새 릴리즈의 `design.zip`을 받아 압축을 푼다. 이 저장소는 규칙 등 다른 폴더도 따로 릴리즈하므로 "Latest" 표시만 보고 받지 않는다. 받은 버전을 프로젝트에 적어 두면 나중에 비교하기 쉽다.
 
-특정 버전을 저장소째 받으려면 태그를 지정한다.
+특정 버전을 저장소째 받으려면 태그를 지정한다. 받은 저장소의 `design-system/design/`이 `design.zip`의 `design/`과 같다. `v1.2.0` 이전 태그는 저장소 맨 위에 `design/`이 있다.
 
 ```bash
-git clone --depth 1 --branch <태그> https://github.com/daewoong-axtf/daewoong-design-system.git
+git clone --depth 1 --branch design-system-v<버전> https://github.com/daewoong-axtf/daewoong-ax-standards.git
 ```
 
 ### 2. 복사하기
@@ -167,7 +167,7 @@ body {
 | 전달물 | 대상 | 내용 |
 | --- | --- | --- |
 | Figma 링크 | 디자이너·기획자 | 컴포넌트·토큰 라이브러리 _(준비 중)_ |
-| [카탈로그](https://daewoong-axtf.github.io/daewoong-design-system/design/catalog.html) | 모두 | 토큰과 컴포넌트를 한 페이지에서 보는 HTML. 언어와 무관하게 마크업을 복사해 쓴다 |
+| [카탈로그](https://daewoong-axtf.github.io/daewoong-ax-standards/design/catalog.html) | 모두 | 토큰과 컴포넌트를 한 페이지에서 보는 HTML. 언어와 무관하게 마크업을 복사해 쓴다 |
 | Storybook 링크 | React 개발자 | 동작하는 React 컴포넌트 모음 _(준비 중)_ |
 | [`design/`](design/) | 개발자·AI 에이전트 | 언어 무관 정본 — 토큰, 컴포넌트 명세, 순수 HTML/CSS 레퍼런스, 가이드 |
 | [`design/ai/setup-prompt.md`](design/ai/setup-prompt.md) · [`design/llms.txt`](design/llms.txt) | 현업·AI 에이전트 | 복사해서 쓰는 설정 프롬프트와 AI용 문서 |
@@ -191,19 +191,21 @@ pnpm test               # 토큰·가드 테스트
 
 ## 릴리즈와 자동 반영
 
-`main`에 머지하면 `.github/workflows/release.yml`이 커밋 타입으로 버전을 정해 태그·`CHANGELOG.md`·GitHub Release(`design.zip`)를 만든다. `feat:`은 마이너, `fix:`·`perf:`는 패치를 올리고 `docs:`·`chore:`·`ci:`는 릴리즈하지 않는다.
-
-새 릴리즈가 나오면 등록한 저장소에 알린다. 받는 저장소가 알아서 반영한다.
+이 폴더는 `daewoong-ax-standards` 저장소 안에서 따로 버전을 매긴다. 태그는 `design-system-vX.Y.Z`다. 폴더를 나누기 전의 릴리즈는 `v1.0.0`~`v1.2.0`이다.
 
 ```
-main 머지 → 릴리즈 vX.Y.Z → GitHub App이 받는 저장소에 repository_dispatch(design-system-released, tag)
-                                   ↓
-                     받는 저장소의 워크플로가 새 판을 가져와 PR을 만든다
+main 머지 → release-please가 릴리즈 PR을 만들거나 갱신 (버전 · CHANGELOG · 업데이트 기록 · 설치 ref)
+릴리즈 PR 머지 → design-system-vX.Y.Z 태그 · GitHub Release(design.zip)
+              → GitHub App이 받는 저장소에 repository_dispatch(design-system-released, tag)
+              → Pages에 카탈로그 · 설정 프롬프트 게시물(guides/design-system/<버전>.md) 다시 올림
 ```
+
+`design-system/` 아래를 바꾼 `feat:`은 마이너, `fix:`·`perf:`는 패치를 올리고 `docs:`·`chore:`·`ci:`·`refactor:`는 릴리즈하지 않는다. 한 PR에서 다른 폴더(`rules/` 등)도 함께 고치면 그 폴더의 버전도 오른다.
 
 | 항목 | 내용 |
 | --- | --- |
-| 받는 저장소 | `daewoong-axtf/ax-desk-fe` — `.github/workflows/design-system-sync.yml` |
+| 받는 저장소 | `daewoong-axtf/ax-desk-fe` — `.github/workflows/design-system-sync.yml`. 토큰 · 실행 파일을 PR로 받는다 |
+| AX Desk 가이드 화면 | Pages의 `guides/index.json`을 읽어 최신 설정 프롬프트를 보인다. AX Desk를 다시 배포하지 않는다 |
 | 알리는 계정 | 조직 GitHub App `daewoong-design-system-sync`. 권한은 Contents 쓰기 하나이고 받는 저장소에만 설치한다 |
 | 이 저장소 설정 | 변수 `DOWNSTREAM_APP_ID`, 시크릿 `DOWNSTREAM_APP_PRIVATE_KEY`(App 개인 키). 없으면 경고만 남기고 넘어간다 |
 | 놓쳤을 때 | 받는 저장소가 하루 한 번 최신 릴리즈를 직접 확인한다 |
