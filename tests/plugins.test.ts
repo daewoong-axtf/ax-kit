@@ -77,3 +77,12 @@ test('플러그인 설명에 Notion 연결이 필요하다고 알린다', () => 
     assert.match(json(`plugins/${n}/.claude-plugin/plugin.json`).description, /Notion/)
   }
 })
+
+test('plugins/README.md는 모든 플러그인과 Notion 연결 안내를 담고, 루트 README · AGENTS.md가 가리킨다', () => {
+  const guide = read('plugins/README.md')
+  for (const n of plugins) assert.ok(guide.includes(`${n}@ax-kit`), `${n}: 설치 명령이 없다`)
+  assert.ok(guide.includes('/plugin marketplace add daewoong-axtf/ax-kit'))
+  assert.match(guide, /Notion/)
+  assert.ok(read('README.md').includes('(plugins/README.md'))
+  assert.ok(read('AGENTS.md').includes('(plugins/README.md)'))
+})

@@ -6,8 +6,9 @@
 | --- | --- | --- | --- |
 | [`design-system/`](design-system/README.md) | Daewoong Design System — 토큰 · 컴포넌트 명세 · [카탈로그](https://daewoong-axtf.github.io/ax-kit/design/catalog.html) · Storybook | [![design-system](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=design-system-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) | [설치 프롬프트](https://daewoong-axtf.github.io/ax-kit/guides/design-system/latest.md) |
 | [`rules/safety-rules/`](rules/README.md) | AI로 만든 웹앱 최소 안전 규칙 | [![safety-rules](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=safety-rules-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) | [규칙 원문](https://daewoong-axtf.github.io/ax-kit/guides/safety-rules/latest.md) |
+| [`plugins/`](plugins/README.md) | 팀 Claude 스킬 — 플러그인 마켓플레이스 `ax-kit` | 플러그인마다 `<이름>-vX.Y.Z` | [설치법](plugins/README.md#설치) |
 
-폴더 이름을 누르면 그 폴더의 안내로 간다. "AI에 붙여 넣기"는 최신 릴리즈판 원문이다. 전체를 복사해 AI 대화창에 붙여 넣거나 프로젝트에 파일로 둔다.
+폴더 이름을 누르면 그 폴더의 안내로 간다. "AI에 붙여 넣기"는 최신 릴리즈판 원문이다. 전체를 복사해 AI 대화창에 붙여 넣거나 프로젝트에 파일로 둔다. 스킬은 붙여 넣지 않고 플러그인으로 설치한다.
 
 [가이드 게시물 목록](https://daewoong-axtf.github.io/ax-kit/guides/index.json) · [릴리즈](https://github.com/daewoong-axtf/ax-kit/releases)
 
@@ -15,7 +16,7 @@
 
 커밋 메시지(conventional commits)와 바뀐 파일의 폴더로 버전이 정해진다. `feat:`은 마이너, `fix:`·`perf:`는 패치, `feat!:`은 메이저를 올리고 `docs:`·`chore:`·`ci:`·`refactor:`는 릴리즈하지 않는다.
 
-1. `main`에 머지하면 [release-please](https://github.com/googleapis/release-please)가 바뀐 폴더마다 릴리즈 PR을 만들거나 갱신한다. 설정은 `release-please-config.json`, 지금 버전은 `.release-please-manifest.json`에 있다.
+1. `main`에 머지하면 [release-please](https://github.com/googleapis/release-please)가 바뀐 폴더마다 릴리즈 PR을 따로 만들거나 갱신한다. 설정은 `release-please-config.json`, 지금 버전은 `.release-please-manifest.json`에 있다.
 2. 릴리즈 PR을 확인하고 머지하면 태그 · CHANGELOG · GitHub Release가 생긴다.
 3. 릴리즈 뒤 Pages를 다시 올린다. 디자인 시스템이면 `design.zip` 업로드와 받는 저장소 알림도 한다 — `.github/workflows/release.yml`
 
