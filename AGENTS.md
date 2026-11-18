@@ -1,7 +1,11 @@
 # AGENTS.md
 
-이 저장소에서 UI를 구현하거나 디자인 시스템을 수정하는 에이전트는 **[design/README.md](design/README.md)를 먼저 읽는다.**
-읽는 순서, 정본 우선순위(`tokens.json` > `components/<name>.md` > `catalog.html`), 금지사항이 거기 있다.
+이 저장소는 폴더마다 따로 버전을 매긴다. 고치는 폴더의 안내를 먼저 읽는다.
 
-- `design/tokens.css`는 생성 파일이다. 직접 고치지 말고 `design/tokens.json`을 고친 뒤 `pnpm build:tokens`.
-- 변경 후 `pnpm test`(가드 테스트)가 통과해야 한다.
+| 폴더 | 내용 | 먼저 읽을 것 |
+| --- | --- | --- |
+| `design-system/` | Daewoong Design System | [design-system/design/README.md](design-system/design/README.md) — 읽는 순서, 정본 우선순위(`tokens.json` > `components/<name>.md` > `catalog.html`), 금지사항 |
+| `rules/` | AI 코딩 규칙 원문 | [rules/README.md](rules/README.md) |
+
+- `design-system/design/tokens.css`는 생성 파일이다. 직접 고치지 말고 `design-system/design/tokens.json`을 고친 뒤 `pnpm -C design-system build:tokens`.
+- 변경 후 루트에서 `pnpm test`(가드 테스트)가 통과해야 한다.
