@@ -129,3 +129,9 @@ test('shadcn.css and components.css share the cursor defaults', () => {
     for (const cursor of ['pointer', 'not-allowed', 'progress']) assert.match(css, new RegExp(`:where\\(button[^{]*\\{\\s*cursor: ${cursor};`), `${file}: ${cursor}`)
   }
 })
+
+test('link underline offset defaults to spacing-x1 everywhere', () => {
+  assert.match(read('shadcn.css'), /body \{[^}]*text-underline-offset: var\(--dw-spacing-x1\);/)
+  assert.match(read('components.css'), /:root \{ text-underline-offset: var\(--dw-spacing-x1\); \}/)
+  assert.doesNotMatch(read('components.css'), /text-underline-offset: (?!var\(--dw-spacing-)/)
+})

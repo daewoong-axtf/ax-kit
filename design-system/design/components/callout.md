@@ -45,7 +45,7 @@
 | --- | --- |
 | Root | `display: flex; align-items: center`, 너비 100%, min-height 50px, padding 14px `x3_5`, gap 12px `x3`, radius 10px `r2_5` |
 | Icon | 16px `x4`, `flex-shrink: 0` |
-| Content | `margin-right: auto`, 줄높이 19px. Title t4 14/19 **bold** · Description t4 regular · Link t4 regular, `underline`, `text-underline-offset: 2px` |
+| Content | `margin-right: auto`, 줄높이 19px. Title t4 14/19 **bold** · Description t4 regular · Link t4 regular, `underline`, `text-underline-offset` 4px(`spacing-x1`, design.md 3.5) |
 | 부위 사이 | Title 뒤·Description 뒤(마지막이 아니면)에 공백 2칸(`::after { content: "  "; white-space: pre }`) |
 | Close | 16px 아이콘, 크기 40×40px `x10`(아이콘 둘레로 음수 margin -12px), 터치 화면에서 히트 영역 44px, radius 8px `r2`, hover `bg-transparent-pressed` |
 
