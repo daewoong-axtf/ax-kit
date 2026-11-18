@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { buildIndex, fillPrompt, kstDate, parseTag, readSource, sourcePath } from '../scripts/build-site.ts'
+import { buildIndex, fillPrompt, kstDate, latestCopies, parseTag, readSource, sourcePath } from '../scripts/build-site.ts'
 
 test('옛 태그는 디자인 시스템, 접두사 태그는 그 문서', () => {
   assert.deepEqual(parseTag('v1.2.0'), { slug: 'design-system', version: '1.2.0' })
@@ -47,4 +47,16 @@ test('기준일은 한국 시간 날짜', () => {
 
 test('태그에 원문이 없으면 태그 이름을 넣어 실패한다', () => {
   assert.throws(() => readSource('safety-rules-v1.0.0', 'nope.md'), /safety-rules-v1\.0\.0/)
+})
+
+test('가이드마다 최신 판을 latest.md로도 낸다 — README 링크가 버전과 상관없이 최신 릴리즈판을 가리킨다', () => {
+  const index = buildIndex([
+    { slug: 'design-system', version: '1.2.0', updatedAt: '2026-11-12' },
+    { slug: 'design-system', version: '1.3.0', updatedAt: '2026-11-18' },
+    { slug: 'safety-rules', version: '1.0.0', updatedAt: '2026-11-05' },
+  ])
+  assert.deepEqual(latestCopies(index), [
+    { from: 'guides/design-system/1.3.0.md', to: 'guides/design-system/latest.md' },
+    { from: 'guides/safety-rules/1.0.0.md', to: 'guides/safety-rules/latest.md' },
+  ])
 })
