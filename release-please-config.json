@@ -4,6 +4,7 @@
   "include-component-in-tag": true,
   "tag-separator": "-",
   "pull-request-title-pattern": "chore: ${component} ${version} 릴리즈",
+  "separate-pull-requests": true,
   "changelog-sections": [
     { "type": "feat", "section": "새로 추가된 기능" },
     { "type": "fix", "section": "수정된 문제" },
@@ -18,6 +19,16 @@
     "rules/safety-rules": {
       "release-type": "simple",
       "component": "safety-rules"
+    },
+    "plugins/write-prd": {
+      "release-type": "simple",
+      "component": "write-prd",
+      "extra-files": [{ "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" }]
+    },
+    "plugins/ax-mail-inquiry-log": {
+      "release-type": "simple",
+      "component": "ax-mail-inquiry-log",
+      "extra-files": [{ "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" }]
     }
   }
 }
