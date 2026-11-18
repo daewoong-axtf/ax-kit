@@ -12,6 +12,25 @@
 
 [가이드 게시물 목록](https://daewoong-axtf.github.io/ax-kit/guides/index.json) · [릴리즈](https://github.com/daewoong-axtf/ax-kit/releases)
 
+## 팀 Claude 스킬 쓰기
+
+스킬은 플러그인으로 설치한다. 마켓플레이스를 한 번 등록하고 필요한 것만 고른다.
+
+```
+/plugin marketplace add daewoong-axtf/ax-kit
+/plugin install write-prd@ax-kit
+/plugin install ax-mail-inquiry-log@ax-kit
+```
+
+데스크톱 앱 · claude.ai는 Customize → Plugins → Add → Add marketplace에 `daewoong-axtf/ax-kit`을 넣는다. 두 스킬 모두 **Notion 연결이 필요하다.**
+
+| 스킬 | 이렇게 말한다 | 결과 |
+| --- | --- | --- |
+| `write-prd` | "PRD 써줘 — <노션 티켓 · 회의록 링크>", "이 PRD 기준에 맞는지 점검해줘" | 노션 'PRD 작성 기준'대로 초안을 `prd-drafts/`에 쓴다. 저장하라고 하면 'AX PRD 문서' DB에 올린다 |
+| `ax-mail-inquiry-log` | "이 메일 문의 노션에 기록해줘"(원문을 붙여 넣는다), "지난번 문의 건에 오늘 회신 추가해줘" | 'AX 라운지 메일·메신저 문의' DB에 `[부서] 문의 요약` 페이지를 만들거나 대응 이력을 덧붙인다 |
+
+Notion 연결 확인, 업데이트, 스킬을 추가하는 법은 [plugins/README.md](plugins/README.md).
+
 ## 버전과 릴리즈
 
 커밋 메시지(conventional commits)와 바뀐 파일의 폴더로 버전이 정해진다. `feat:`은 마이너, `fix:`·`perf:`는 패치, `feat!:`은 메이저를 올리고 `docs:`·`chore:`·`ci:`·`refactor:`는 릴리즈하지 않는다.
