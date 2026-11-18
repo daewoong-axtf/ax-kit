@@ -58,3 +58,12 @@ test('setup prompt fills its placeholders and requires shadcn only for React', a
   assert.match(prompt, /설치하기 전에 사용자에게 물어보고/)
   assert.match(prompt, /새로 설치하지 않는다/)
 })
+
+test('옛 저장소 이름과 옛 Pages 주소가 남지 않는다', () => {
+  // GitHub App 이름(daewoong-design-system-sync)은 그대로 쓰므로 주소 모양만 본다
+  const stale = ['github.com/daewoong-axtf/daewoong-design-system', 'github.io/daewoong-design-system', 'releases/latest/download']
+  for (const file of ['../README.md', '../design/catalog.html', '../design/ai/setup-prompt.md']) {
+    const text = readFileSync(new URL(file, import.meta.url), 'utf8')
+    for (const s of stale) assert.ok(!text.includes(s), `${file}에 ${s}가 남아 있다`)
+  }
+})

@@ -2,7 +2,8 @@ node_modules/
 .cache/
 .superpowers/
 .DS_Store
-storybook-static/
+design-system/storybook-static/
 *.log
 docs/
-design.zip
+design-system/design.zip
+_site/
