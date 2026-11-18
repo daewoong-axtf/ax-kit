@@ -6,7 +6,7 @@
 | --- | --- | --- | --- |
 | [`design-system/`](design-system/README.md) | Daewoong Design System — 토큰 · 컴포넌트 명세 · [카탈로그](https://daewoong-axtf.github.io/ax-kit/design/catalog.html) · Storybook | [![design-system](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=design-system-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) | [설치 프롬프트](https://daewoong-axtf.github.io/ax-kit/guides/design-system/latest.md) |
 | [`rules/safety-rules/`](rules/README.md) | AI로 만든 웹앱 최소 안전 규칙 | [![safety-rules](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=safety-rules-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) | [규칙 원문](https://daewoong-axtf.github.io/ax-kit/guides/safety-rules/latest.md) |
-| [`plugins/`](plugins/README.md) | 팀 Claude 스킬 — 플러그인 마켓플레이스 `ax-kit` | 플러그인마다 `<이름>-vX.Y.Z` | [설치법](plugins/README.md#설치) |
+| [`plugins/`](plugins/README.md) | 팀 Claude 스킬 — 플러그인 마켓플레이스 `ax-kit` | 플러그인마다 `<이름>-vX.Y.Z` | [설치 · 쓰는 법](plugins/README.md) |
 
 폴더 이름을 누르면 그 폴더의 안내로 간다. "AI에 붙여 넣기"는 최신 릴리즈판 원문이다. 전체를 복사해 AI 대화창에 붙여 넣거나 프로젝트에 파일로 둔다. 스킬은 붙여 넣지 않고 플러그인으로 설치한다.
 
