@@ -26,3 +26,12 @@ test('릴리즈 뒤 Pages 배포는 앞 단계가 실패해도 돈다', () => {
 test('전환 전에 만든 브랜치는 rebase해야 한다고 안내한다', () => {
   assert.match(read('README.md'), /rebase/)
 })
+
+test('릴리즈 PR이 폴더마다 따로여도 디자인 시스템 PR 브랜치에만 준비 커밋을 한다', () => {
+  const yml = read('.github/workflows/release.yml')
+  assert.doesNotMatch(yml, /fromJSON\(steps\.rp\.outputs\.pr\)/)
+  assert.match(yml, /ds_pr_branch:.*release-please--branches--main--components--design-system/)
+  const job = yml.slice(yml.indexOf('\n  prepare-pr:'), yml.indexOf('\n  after-release:'))
+  assert.match(job, /if: needs\.release-please\.outputs\.ds_pr_branch != ''/)
+  assert.match(job, /ref: \$\{\{ needs\.release-please\.outputs\.ds_pr_branch \}\}/)
+})

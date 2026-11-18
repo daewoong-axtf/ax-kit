@@ -1,9 +1,9 @@
 name: Release
 
 # 폴더마다 따로 릴리즈한다 (release-please-config.json).
-#   main에 머지 → release-please가 바뀐 폴더의 릴리즈 PR을 만들거나 갱신한다
-#   릴리즈 PR 머지 → design-system-vX.Y.Z · safety-rules-vX.Y.Z 태그와 GitHub Release
-# 디자인 시스템 릴리즈면 design.zip을 올리고 받는 저장소(ax-desk-fe)에 알린다. 어느 릴리즈든 Pages를 다시 올린다.
+#   main에 머지 → release-please가 바뀐 폴더마다 릴리즈 PR을 따로 만들거나 갱신한다
+#   릴리즈 PR 머지 → <폴더>-vX.Y.Z 태그(design-system · safety-rules · 플러그인 이름)와 GitHub Release
+# 디자인 시스템 릴리즈면 design.zip을 올리고 받는 저장소(ax-desk-fe)에 알린다. 플러그인 릴리즈에는 없다. 어느 릴리즈든 Pages를 다시 올린다.
 on:
   push:
     branches: [main]
@@ -36,8 +36,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      prs_created: ${{ steps.rp.outputs.prs_created }}
-      pr_branch: ${{ steps.rp.outputs.prs_created == 'true' && fromJSON(steps.rp.outputs.pr).headBranchName || '' }}
+      # 릴리즈 PR이 폴더마다 따로라 디자인 시스템 PR은 브랜치 이름으로 찾는다
+      ds_pr_branch: ${{ contains(steps.rp.outputs.prs, '"release-please--branches--main--components--design-system"') && 'release-please--branches--main--components--design-system' || '' }}
       releases_created: ${{ steps.rp.outputs.releases_created }}
       ds_release: ${{ steps.rp.outputs['design-system--release_created'] }}
       ds_tag: ${{ steps.rp.outputs['design-system--tag_name'] }}
@@ -51,14 +51,14 @@ jobs:
   # 릴리즈 PR에 디자인 시스템 버전이 오르면 업데이트 기록 · 설치 ref · 생성 파일을 같은 PR에 넣는다
   prepare-pr:
     needs: release-please
-    if: needs.release-please.outputs.prs_created == 'true'
+    if: needs.release-please.outputs.ds_pr_branch != ''
     runs-on: ubuntu-latest
     env:
       HUSKY: 0
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.release-please.outputs.pr_branch }}
+          ref: ${{ needs.release-please.outputs.ds_pr_branch }}
           fetch-depth: 0
       - id: version
         run: |

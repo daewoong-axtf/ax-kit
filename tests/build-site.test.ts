@@ -8,6 +8,8 @@ test('옛 태그는 디자인 시스템, 접두사 태그는 그 문서', () => 
   assert.deepEqual(parseTag('safety-rules-v1.0.0'), { slug: 'safety-rules', version: '1.0.0' })
   assert.equal(parseTag('v1.2'), null)
   assert.equal(parseTag('skills-v1.0.0'), null)
+  assert.equal(parseTag('write-prd-v1.0.0'), null)
+  assert.equal(parseTag('ax-mail-inquiry-log-v1.0.0'), null)
 })
 
 test('원문 위치는 태그 형식을 따른다', () => {

@@ -6,6 +6,7 @@
 | --- | --- | --- |
 | `design-system/` | Daewoong Design System | [design-system/design/README.md](design-system/design/README.md) — 읽는 순서, 정본 우선순위(`tokens.json` > `components/<name>.md` > `catalog.html`), 금지사항 |
 | `rules/` | AI 코딩 규칙 원문 | [rules/README.md](rules/README.md) |
+| `plugins/` | 팀 Claude 스킬(플러그인 마켓플레이스) | [plugins/README.md](plugins/README.md) — 추가하는 법. 스킬 원문은 받은 그대로 넣는다 |
 
 - `design-system/design/tokens.css`는 생성 파일이다. 직접 고치지 말고 `design-system/design/tokens.json`을 고친 뒤 `pnpm -C design-system build:tokens`.
 - 변경 후 루트에서 `pnpm test`(가드 테스트)가 통과해야 한다.

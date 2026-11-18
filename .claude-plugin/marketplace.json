@@ -1,0 +1,19 @@
+{
+  "name": "ax-kit",
+  "owner": { "name": "daewoong-axtf" },
+  "metadata": { "description": "대웅 AX팀이 함께 쓰는 Claude 스킬. 필요한 것만 골라 설치한다" },
+  "plugins": [
+    {
+      "name": "ax-mail-inquiry-log",
+      "source": "./plugins/ax-mail-inquiry-log",
+      "description": "메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 기록한다. Notion 연결 필요",
+      "category": "productivity"
+    },
+    {
+      "name": "write-prd",
+      "source": "./plugins/write-prd",
+      "description": "노션 'PRD 작성 기준'대로 PRD를 쓰고 'AX PRD 문서' DB에 저장한다. Notion 연결 필요",
+      "category": "productivity"
+    }
+  ]
+}
