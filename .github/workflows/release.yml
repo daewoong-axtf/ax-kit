@@ -14,7 +14,26 @@ permissions:
   actions: write
 
 jobs:
+  # 가드 테스트를 통과해야 릴리즈 PR을 만들거나 릴리즈한다
+  test:
+    runs-on: ubuntu-latest
+    env:
+      HUSKY: 0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
   release-please:
+    needs: test
     runs-on: ubuntu-latest
     outputs:
       prs_created: ${{ steps.rp.outputs.prs_created }}
@@ -91,7 +110,6 @@ jobs:
           TAG: ${{ needs.release-please.outputs.ds_tag }}
         run: |
           pnpm install --frozen-lockfile
-          pnpm test
           (cd design-system && rm -f design.zip && zip -qr design.zip design)
           gh release upload "$TAG" design-system/design.zip --clobber
 
@@ -136,6 +154,7 @@ jobs:
 
       # GITHUB_TOKEN이 만든 릴리즈 · 태그는 pages.yml을 깨우지 않아서 직접 부른다
       - name: Deploy Pages
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"
