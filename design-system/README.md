@@ -215,6 +215,8 @@ curl https://daewoong-axtf.github.io/ax-kit/guides/design-system/latest.md
 - 버전과 원문을 정확히 맞춰 보이려면 `index.json`을 먼저 받고 그 안의 `path`로 원문을 받는다. `latest.md`를 따로 받으면 릴리즈 직후 잠깐 버전이 어긋날 수 있다.
 - 서버에서 받아 캐시하고, 받지 못하면 저장해 둔 사본을 보이는 것을 권한다. AX Desk가 이렇게 한다(5분 캐시).
 
+요청 · 응답 형식과 호출 예시는 [API.md](API.md).
+
 ## 릴리즈와 자동 반영
 
 이 폴더는 `ax-kit` 저장소 안에서 따로 버전을 매긴다. 태그는 `design-system-vX.Y.Z`다. 폴더를 나누기 전의 릴리즈는 `v1.0.0`~`v1.2.0`이다.
