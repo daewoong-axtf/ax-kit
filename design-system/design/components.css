@@ -1676,7 +1676,8 @@ html[data-dw-scroll-lock] { overflow: hidden; }
   width: 100%;
   max-width: 480px;
   max-height: min(90%, 100% - env(safe-area-inset-top, 0px));
-  padding-bottom: env(safe-area-inset-bottom, 0);
+  /* 시트 자체 아래 여백 16px. 홈 인디케이터가 있으면 그 높이(safe-area)가 더 크다 */
+  padding-bottom: max(var(--dw-spacing-x4), env(safe-area-inset-bottom, 0px));
   overflow: hidden;
   outline: none;
   border-radius: var(--dw-radius-r6) var(--dw-radius-r6) 0 0;

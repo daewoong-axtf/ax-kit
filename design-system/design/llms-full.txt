@@ -1201,7 +1201,7 @@ WAI-ARIA APG **Accordion** 패턴.
 | --- | --- |
 | 배치 | 화면 아래에 붙어 가운데, **max-width 480px**, 최대 높이 `min(90%, 100% − safe-area-top)` |
 | Backdrop | `bg-overlay` |
-| Content | bg `bg-layer-floating`, 위 모서리 radius 24px `r6`, 아래 padding = safe-area-bottom, 세로 배치 |
+| Content | bg `bg-layer-floating`, 위 모서리 radius 24px `r6`, 아래 padding `max(16px x4, safe-area-bottom)`(시트 자체 여백. 홈 인디케이터가 있으면 그 높이), 세로 배치 |
 | Handle | 36×4px, `radius-full`, top 6px 가운데, `stroke-neutral-weak`(gray-400) · hover `gray-500`, 히트 44×44px |
 | Header | padding-top 24px `x6`, padding-bottom 16px `x4`, gap 8px `x2` |
 | Title | t8 22/30 bold, `fg-neutral`, 좌우 padding 16px(gutter). Close가 있으면 오른쪽 56px |
