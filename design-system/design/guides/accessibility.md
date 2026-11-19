@@ -42,7 +42,7 @@ ARIA 속성과 CSS 표기는 웹 기준이다. 웹이 아닌 환경은 같은 �
 
 - 모든 상호작용 요소에 [design.md 11장](../design.md#11-포커스)의 포커스 표시를 적용한다: `outline: 2px solid`(`stroke-focus-ring`), `outline-offset: 2px`.
 - `:focus-visible`만 쓴다. 마우스 클릭 뒤에는 남지 않는다.
-- 입력 필드는 outline 대신 테두리를 2px `stroke-neutral-contrast`로 바꾼다([Text Input](../components/text-input.md)).
+- 입력 필드는 outline 대신 테두리를 1px `stroke-focus-ring`으로 바꾸고 바깥에 3px 링(`stroke-focus-ring` 50%)을 두른다([design.md 11장](../design.md#11-포커스)). 오류 상태면 링을 `stroke-critical-solid` 20%로 바꾼다.
 - 포커스 순서는 시각 순서와 같다.
 
 ```css

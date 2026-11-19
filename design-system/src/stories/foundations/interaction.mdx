@@ -48,7 +48,7 @@ outline-offset: 2px;
 .dw-focus-demo { height: 40px; padding: 0 var(--dw-spacing-x4); border: 0; border-radius: var(--dw-radius-r2); background: var(--dw-bg-neutral-weak); color: var(--dw-fg-neutral); font-weight: 700; cursor: pointer; }
 .dw-focus-demo:focus-visible { outline: 2px solid var(--dw-stroke-focus-ring); outline-offset: 2px; }
 .dw-focus-input { height: 40px; padding: 0 var(--dw-spacing-x3_5); border: 1px solid var(--dw-stroke-neutral-weak); border-radius: var(--dw-radius-r2); background: var(--dw-bg-layer-default); color: var(--dw-fg-neutral); outline: none; }
-.dw-focus-input:focus { border: 2px solid var(--dw-stroke-neutral-contrast); padding: 0 calc(var(--dw-spacing-x3_5) - 1px); }
+.dw-focus-input:focus { border-color: var(--dw-stroke-focus-ring); box-shadow: 0 0 0 3px color-mix(in oklab, var(--dw-stroke-focus-ring) 50%, transparent); }
 .dw-link { color: var(--dw-fg-brand); text-decoration: underline; text-underline-offset: 4px; }
 .dw-link:focus-visible { outline: 2px solid var(--dw-stroke-focus-ring); outline-offset: 2px; border-radius: 2px; }
 `}</style>
@@ -59,7 +59,7 @@ outline-offset: 2px;
   <input className="dw-focus-input" aria-label="포커스 예시 입력" placeholder="입력 필드는 테두리로" />
 </div>
 
-입력 필드는 outline 대신 테두리를 2px `stroke-neutral-contrast`로 바꿉니다.
+입력 필드는 outline 대신 테두리를 1px `stroke-focus-ring`으로 바꾸고 바깥에 3px 링(같은 색 50%)을 두릅니다.
 
 - 포커스 표시를 지우지 않습니다. 키보드만 쓰는 사람에게는 지금 어디에 있는지 알려주는 유일한 표시입니다.
 - 포커스 링은 `:focus-visible`로만 그립니다.

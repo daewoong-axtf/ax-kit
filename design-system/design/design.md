@@ -497,7 +497,12 @@ outline: 2px solid var(--dw-stroke-focus-ring);
 outline-offset: 2px;
 ```
 
-마우스 클릭으로는 보이지 않는다(`:focus-visible`만 사용). 입력 필드는 outline 대신 테두리를 2px `stroke-neutral-contrast`로 바꾸는 방식을 쓴다([Text Input](components/text-input.md)).
+마우스 클릭으로는 보이지 않는다(`:focus-visible`만 사용). 입력 필드(Text Input·Select·Time Select)는 outline 대신 테두리를 1px `stroke-focus-ring`으로 바꾸고 바깥에 3px 링(`stroke-focus-ring` 50%)을 두른다. 마우스로 눌러 입력할 때도 보인다([Text Input](components/text-input.md)).
+
+```css
+box-shadow: inset 0 0 0 1px var(--dw-stroke-focus-ring),
+            0 0 0 3px color-mix(in oklab, var(--dw-stroke-focus-ring) 50%, transparent);
+```
 
 ### 11.1 커서
 

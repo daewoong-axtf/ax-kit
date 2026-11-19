@@ -64,9 +64,8 @@
 | 상태 | 트리거 | 변화 | 전환 |
 | --- | --- | --- | --- |
 | hover | 포인터 | bg `bg-transparent-pressed` | `duration-color-transition` |
-| focus | 포커스 | 테두리 2px `stroke-neutral-contrast` | `duration-d2` |
-| focus-visible | 키보드 | outline 2px `stroke-focus-ring`, offset 2px | `duration-d3` |
-| invalid | `aria-invalid="true"` | 테두리 2px `stroke-critical-solid` | |
+| focus | 포커스 | 1px `stroke-focus-ring` 테두리 + 바깥 3px 링(`stroke-focus-ring` 50%). 별도 outline은 두지 않는다 | `duration-d2` |
+| invalid | `aria-invalid="true"` | 테두리 2px `stroke-critical-solid`. 포커스 때 링은 `stroke-critical-solid` 20% | |
 | disabled | `disabled` | bg `bg-disabled`, 글자·아이콘 `fg-disabled` | |
 
 ## Behavior & Accessibility

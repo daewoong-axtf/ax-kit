@@ -570,7 +570,12 @@ outline: 2px solid var(--dw-stroke-focus-ring);
 outline-offset: 2px;
 ```
 
-마우스 클릭으로는 보이지 않는다(`:focus-visible`만 사용). 입력 필드는 outline 대신 테두리를 2px `stroke-neutral-contrast`로 바꾸는 방식을 쓴다([Text Input](components/text-input.md)).
+마우스 클릭으로는 보이지 않는다(`:focus-visible`만 사용). 입력 필드(Text Input·Select·Time Select)는 outline 대신 테두리를 1px `stroke-focus-ring`으로 바꾸고 바깥에 3px 링(`stroke-focus-ring` 50%)을 두른다. 마우스로 눌러 입력할 때도 보인다([Text Input](components/text-input.md)).
+
+```css
+box-shadow: inset 0 0 0 1px var(--dw-stroke-focus-ring),
+            0 0 0 3px color-mix(in oklab, var(--dw-stroke-focus-ring) 50%, transparent);
+```
 
 ### 11.1 커서
 
@@ -5418,9 +5423,8 @@ Root에 `data-multiple`을 주고, 제출 이름은 `data-name`, 값이 없을 �
 | --- | --- |
 | 기본 | bg `bg-transparent`, 테두리 `inset 0 0 0 1px stroke-neutral-weak`, 그림자 없음, Value `fg-neutral`, placeholder `fg-neutral-subtle`, Chevron `fg-neutral-muted` |
 | hover | bg `bg-transparent-pressed` |
-| 열림·포커스 | `::after` 2px `stroke-neutral-contrast` (Text Input 포커스와 같음) |
-| focus-visible | `outline 2px stroke-focus-ring`, offset 2px |
-| invalid | `::after` 2px `stroke-critical-solid` |
+| 열림·포커스 | 1px `stroke-focus-ring` 테두리 + 바깥 3px 링(`stroke-focus-ring` 50%) (Text Input 포커스와 같음). readonly도 포커스 때 같다. 별도 outline은 두지 않는다 |
+| invalid | `::after` 2px `stroke-critical-solid`. 포커스·열림 때 링은 `stroke-critical-solid` 20% |
 | disabled | bg `bg-disabled`, 글자·아이콘 `fg-disabled` |
 | readonly | bg `bg-disabled`, 글자 `fg-neutral`, 열리지 않음 |
 
@@ -6511,7 +6515,8 @@ underline은 좌우 여백·모서리가 없다.
 | --- | --- | --- |
 | Root 테두리 (outline) | 기본 | `inset 0 0 0 1px stroke-neutral-weak` (box-shadow), 그림자 없음 |
 | Root 테두리 (underline) | 기본 | 아래쪽만 `inset 0 -1px 0 0 stroke-neutral-weak` |
-| `::after` 테두리 | focus(포커스 안에 있음) | 2px `stroke-neutral-contrast` (underline은 아래쪽만) |
+| Root 테두리 (outline) | focus(포커스 안에 있음) | 1px `stroke-focus-ring` 테두리 + 바깥 3px 링(`stroke-focus-ring` 50%). invalid면 테두리는 아래 `::after`, 링은 `stroke-critical-solid` 20% |
+| `::after` 테두리 (underline) | focus | 아래쪽 2px `stroke-focus-ring` |
 | `::after` 테두리 | invalid (포커스 여부 무관) | 2px `stroke-critical-solid` |
 | Root 배경 | 기본 | 투명(부모 표면) |
 | Root 배경 (outline) | disabled · readonly | `bg-disabled` |
@@ -6528,7 +6533,7 @@ underline은 좌우 여백·모서리가 없다.
 | 상태 | 트리거 | 변화 | 전환 |
 | --- | --- | --- | --- |
 | Enabled | — | 1px weak 테두리 | — |
-| Focus | Value에 포커스(`:focus-within`) | 2px contrast 테두리. readonly도 같다(키보드 사용자에게 위치를 보인다) | `border-color` 100ms `easing-easing` |
+| Focus | Value에 포커스(`:focus-within`) | 파란 테두리와 바깥 링. readonly도 같다(키보드 사용자에게 위치를 보인다) | `box-shadow` 100ms `easing-easing` |
 | Invalid | `aria-invalid="true"` | 2px critical 테두리 | 같음 |
 | Valid | Field에 `data-valid` | 테두리는 그대로, Status에 성공 아이콘, Field에 성공 메시지 | 없음(즉시) |
 | Disabled | `disabled` | `bg-disabled`(outline), 글자 `fg-disabled`, `cursor: not-allowed` | — |
@@ -6739,9 +6744,8 @@ Status가 있는 Root에서 지우기 버튼은 입력 중이거나 마우스를
 | 상태 | 트리거 | 변화 | 전환 |
 | --- | --- | --- | --- |
 | hover | 포인터 | bg `bg-transparent-pressed` | `duration-color-transition` |
-| focus | 포커스 | 테두리 2px `stroke-neutral-contrast` | `duration-d2` |
-| focus-visible | 키보드 | outline 2px `stroke-focus-ring`, offset 2px | `duration-d3` |
-| invalid | `aria-invalid="true"` | 테두리 2px `stroke-critical-solid` | |
+| focus | 포커스 | 1px `stroke-focus-ring` 테두리 + 바깥 3px 링(`stroke-focus-ring` 50%). 별도 outline은 두지 않는다 | `duration-d2` |
+| invalid | `aria-invalid="true"` | 테두리 2px `stroke-critical-solid`. 포커스 때 링은 `stroke-critical-solid` 20% | |
 | disabled | `disabled` | bg `bg-disabled`, 글자·아이콘 `fg-disabled` | |
 
 ## Behavior & Accessibility
@@ -7182,7 +7186,7 @@ ARIA 속성과 CSS 표기는 웹 기준이다. 웹이 아닌 환경은 같은 �
 
 - 모든 상호작용 요소에 [design.md 11장](../design.md#11-포커스)의 포커스 표시를 적용한다: `outline: 2px solid`(`stroke-focus-ring`), `outline-offset: 2px`.
 - `:focus-visible`만 쓴다. 마우스 클릭 뒤에는 남지 않는다.
-- 입력 필드는 outline 대신 테두리를 2px `stroke-neutral-contrast`로 바꾼다([Text Input](../components/text-input.md)).
+- 입력 필드는 outline 대신 테두리를 1px `stroke-focus-ring`으로 바꾸고 바깥에 3px 링(`stroke-focus-ring` 50%)을 두른다([design.md 11장](../design.md#11-포커스)). 오류 상태면 링을 `stroke-critical-solid` 20%로 바꾼다.
 - 포커스 순서는 시각 순서와 같다.
 
 ```css

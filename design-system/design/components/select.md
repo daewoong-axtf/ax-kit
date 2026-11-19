@@ -121,9 +121,8 @@ Root에 `data-multiple`을 주고, 제출 이름은 `data-name`, 값이 없을 �
 | --- | --- |
 | 기본 | bg `bg-transparent`, 테두리 `inset 0 0 0 1px stroke-neutral-weak`, 그림자 없음, Value `fg-neutral`, placeholder `fg-neutral-subtle`, Chevron `fg-neutral-muted` |
 | hover | bg `bg-transparent-pressed` |
-| 열림·포커스 | `::after` 2px `stroke-neutral-contrast` (Text Input 포커스와 같음) |
-| focus-visible | `outline 2px stroke-focus-ring`, offset 2px |
-| invalid | `::after` 2px `stroke-critical-solid` |
+| 열림·포커스 | 1px `stroke-focus-ring` 테두리 + 바깥 3px 링(`stroke-focus-ring` 50%) (Text Input 포커스와 같음). readonly도 포커스 때 같다. 별도 outline은 두지 않는다 |
+| invalid | `::after` 2px `stroke-critical-solid`. 포커스·열림 때 링은 `stroke-critical-solid` 20% |
 | disabled | bg `bg-disabled`, 글자·아이콘 `fg-disabled` |
 | readonly | bg `bg-disabled`, 글자 `fg-neutral`, 열리지 않음 |
 
