@@ -877,7 +877,7 @@
   document.addEventListener('scroll', followTriggers, true)
   window.addEventListener('resize', followTriggers)
 
-  /* ── Tooltip: hover 300ms·키보드 포커스 즉시, 옆 Trigger로는 대기 없이 교체 ── */
+  /* ── Tooltip: hover 300ms·키보드 포커스 즉시, 옆 Trigger로는 대기 없이 교체. 터치는 탭으로 열고 닫는다 ── */
   const TOOLTIP_GAP = 12 // Trigger와 4px + 꼬리 8px
   const TOOLTIP_OPEN_DELAY = 300
   const TOOLTIP_CLOSE_DELAY = 100
@@ -926,7 +926,23 @@
     }
   })
 
+  // 터치는 hover가 없으므로 탭으로 연다. Trigger 본래 동작(click)은 막지 않는다
+  let touchTap = false
+  document.addEventListener('pointerdown', (e) => {
+    touchTap = e.pointerType === 'touch'
+    if (touchTap && tip && !tip.trigger.contains(target(e))) hideTooltip()
+  })
+
+  document.addEventListener('click', (e) => {
+    if (!touchTap) return
+    const trigger = target(e).closest(TOOLTIP_TRIGGER)
+    if (!trigger) return
+    if (tip?.trigger === trigger) hideTooltip()
+    else showTooltip(trigger, false)
+  })
+
   document.addEventListener('pointerout', (e) => {
+    if (e.pointerType === 'touch') return
     const from = target(e).closest(`${TOOLTIP_TRIGGER}, .dw-tooltip`)
     if (!from) return
     if (e.relatedTarget instanceof Element && from.contains(e.relatedTarget)) return

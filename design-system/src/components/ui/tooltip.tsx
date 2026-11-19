@@ -17,16 +17,75 @@ function TooltipProvider({
   )
 }
 
+// 터치 기기는 hover가 없으므로 Trigger를 탭해 열고 닫는다. Radix는 click에 닫으므로 그 닫기를 한 번 무시한다
+const TouchTapContext = React.createContext<((wasOpen: boolean) => void) | null>(null)
+
 function Tooltip({
+  open: openProp,
+  defaultOpen = false,
+  onOpenChange,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
-  return <TooltipPrimitive.Root data-slot="tooltip" {...props} />
+  const [openState, setOpenState] = React.useState(defaultOpen)
+  const open = openProp ?? openState
+  const touchOpening = React.useRef(false)
+
+  const setOpen = React.useCallback(
+    (next: boolean) => {
+      if (openProp === undefined) setOpenState(next)
+      onOpenChange?.(next)
+    },
+    [openProp, onOpenChange]
+  )
+
+  const touchTap = React.useCallback(
+    (wasOpen: boolean) => {
+      touchOpening.current = !wasOpen
+      setOpen(!wasOpen)
+      setTimeout(() => (touchOpening.current = false))
+    },
+    [setOpen]
+  )
+
+  return (
+    <TouchTapContext.Provider value={touchTap}>
+      <TooltipPrimitive.Root
+        data-slot="tooltip"
+        open={open}
+        onOpenChange={(next) => {
+          if (!next && touchOpening.current) return
+          setOpen(next)
+        }}
+        {...props}
+      />
+    </TouchTapContext.Provider>
+  )
 }
 
 function TooltipTrigger({
+  onPointerDown,
+  onClick,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
+  const touchTap = React.useContext(TouchTapContext)
+  const tap = React.useRef<{ touch: boolean; wasOpen: boolean }>({ touch: false, wasOpen: false })
+
+  return (
+    <TooltipPrimitive.Trigger
+      data-slot="tooltip-trigger"
+      onPointerDown={(event) => {
+        // Radix가 pointerdown에 닫기 전의 열림 상태를 남긴다
+        const trigger = event.currentTarget
+        tap.current = { touch: event.pointerType === "touch", wasOpen: trigger.dataset.state !== "closed" && trigger.dataset.state !== undefined }
+        onPointerDown?.(event)
+      }}
+      onClick={(event) => {
+        onClick?.(event)
+        if (tap.current.touch) touchTap?.(tap.current.wasOpen)
+      }}
+      {...props}
+    />
+  )
 }
 
 function TooltipContent({

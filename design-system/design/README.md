@@ -55,6 +55,7 @@
 - [ ] States 표의 hover·pressed·focus-visible·disabled·loading을 구현했다
 - [ ] 키보드로 전부 조작할 수 있고 포커스가 보인다
 - [ ] `375 · 768 · 1024px`에서 깨지지 않고, 터치 타깃이 44×44px 이상이다
+- [ ] hover로만 보이는 정보가 없다. 터치에서는 탭으로 열린다
 - [ ] 줄이 바뀔 때 단어가 음절 중간에서 끊기지 않는다 (`word-break: keep-all`)
 - [ ] 라이트·다크 양쪽에서 확인했다
 - [ ] `prefers-reduced-motion`에서 이동 애니메이션이 줄어든다
