@@ -12,7 +12,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '마우스 올림·포커스 때 짧은 보충 설명을 띄운다. 명세는 `design/components/tooltip.md`.',
+        component: '마우스 올림·포커스·터치 탭 때 짧은 보충 설명을 띄운다. 명세는 `design/components/tooltip.md`.',
       },
     },
   },
@@ -45,3 +45,19 @@ export const Default: Story = {
 }
 
 export const Open: Story = { args: { defaultOpen: true } }
+
+/** 터치 기기는 hover가 없으므로 탭으로 열고, 다시 탭하거나 바깥을 탭하면 닫는다 */
+export const TouchTap: Story = {
+  play: async ({ canvasElement }) => {
+    const button = within(canvasElement).getByRole('button', { name: '공유' })
+    const body = within(document.body)
+    await userEvent.pointer({ keys: '[TouchA]', target: button })
+    await expect(await body.findByRole('tooltip')).toHaveTextContent('링크를 복사해 공유합니다')
+    await userEvent.pointer({ keys: '[TouchA]', target: button })
+    await waitFor(() => expect(body.queryByRole('tooltip')).not.toBeInTheDocument())
+    await userEvent.pointer({ keys: '[TouchA]', target: button })
+    await body.findByRole('tooltip')
+    await userEvent.pointer({ keys: '[TouchA]', target: document.body })
+    await waitFor(() => expect(body.queryByRole('tooltip')).not.toBeInTheDocument())
+  },
+}
