@@ -1,5 +1,14 @@
 # 변경 기록
 
+## [1.3.1](https://github.com/daewoong-axtf/ax-kit/compare/design-system-v1.3.0...design-system-v1.3.1) (2026-11-19)
+
+
+### 수정된 문제
+
+* Tooltip을 터치 기기에서 탭하면 연다 ([#12](https://github.com/daewoong-axtf/ax-kit/issues/12)) ([81dae14](https://github.com/daewoong-axtf/ax-kit/commit/81dae14d7b93dffb4e56f7b0c0eab34a753d7c7a))
+* 제출 버튼은 누르는 즉시 loading으로 잠그고 요청이 끝나면 푼다 ([#14](https://github.com/daewoong-axtf/ax-kit/issues/14)) ([8c68ab2](https://github.com/daewoong-axtf/ax-kit/commit/8c68ab236e8b793c7566f94f993ac082ec005a90))
+* 카탈로그 입력 필드 포커스를 React와 같은 파란 테두리 · 링으로 ([#13](https://github.com/daewoong-axtf/ax-kit/issues/13)) ([0bda6f6](https://github.com/daewoong-axtf/ax-kit/commit/0bda6f6adcebdb60d1b78b2320d53d465fa6e5e1))
+
 ## [1.3.0](https://github.com/daewoong-axtf/daewoong-ax-standards/compare/design-system-v1.2.0...design-system-v1.3.0) (2026-11-18)
 
 
