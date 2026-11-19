@@ -92,7 +92,8 @@ underline은 좌우 여백·모서리가 없다.
 | --- | --- | --- |
 | Root 테두리 (outline) | 기본 | `inset 0 0 0 1px stroke-neutral-weak` (box-shadow), 그림자 없음 |
 | Root 테두리 (underline) | 기본 | 아래쪽만 `inset 0 -1px 0 0 stroke-neutral-weak` |
-| `::after` 테두리 | focus(포커스 안에 있음) | 2px `stroke-neutral-contrast` (underline은 아래쪽만) |
+| Root 테두리 (outline) | focus(포커스 안에 있음) | 1px `stroke-focus-ring` 테두리 + 바깥 3px 링(`stroke-focus-ring` 50%). invalid면 테두리는 아래 `::after`, 링은 `stroke-critical-solid` 20% |
+| `::after` 테두리 (underline) | focus | 아래쪽 2px `stroke-focus-ring` |
 | `::after` 테두리 | invalid (포커스 여부 무관) | 2px `stroke-critical-solid` |
 | Root 배경 | 기본 | 투명(부모 표면) |
 | Root 배경 (outline) | disabled · readonly | `bg-disabled` |
@@ -109,7 +110,7 @@ underline은 좌우 여백·모서리가 없다.
 | 상태 | 트리거 | 변화 | 전환 |
 | --- | --- | --- | --- |
 | Enabled | — | 1px weak 테두리 | — |
-| Focus | Value에 포커스(`:focus-within`) | 2px contrast 테두리. readonly도 같다(키보드 사용자에게 위치를 보인다) | `border-color` 100ms `easing-easing` |
+| Focus | Value에 포커스(`:focus-within`) | 파란 테두리와 바깥 링. readonly도 같다(키보드 사용자에게 위치를 보인다) | `box-shadow` 100ms `easing-easing` |
 | Invalid | `aria-invalid="true"` | 2px critical 테두리 | 같음 |
 | Valid | Field에 `data-valid` | 테두리는 그대로, Status에 성공 아이콘, Field에 성공 메시지 | 없음(즉시) |
 | Disabled | `disabled` | `bg-disabled`(outline), 글자 `fg-disabled`, `cursor: not-allowed` | — |
