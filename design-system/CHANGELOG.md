@@ -1,5 +1,12 @@
 # 변경 기록
 
+## [1.3.2](https://github.com/daewoong-axtf/ax-kit/compare/design-system-v1.3.1...design-system-v1.3.2) (2026-11-19)
+
+
+### 수정된 문제
+
+* Bottom Sheet 아래에 시트 자체 여백 16px ([#18](https://github.com/daewoong-axtf/ax-kit/issues/18)) ([4f47583](https://github.com/daewoong-axtf/ax-kit/commit/4f47583f82813bacc3da8e7f42ad941cb48d64fe))
+
 ## [1.3.1](https://github.com/daewoong-axtf/ax-kit/compare/design-system-v1.3.0...design-system-v1.3.1) (2026-11-19)
 
 
