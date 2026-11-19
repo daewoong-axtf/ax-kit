@@ -119,6 +119,7 @@
 - icon-only는 `aria-label` 필수(예: `aria-label="닫기"`). 아이콘 SVG는 `aria-hidden="true"`.
 - disabled `<a>`는 `aria-disabled="true"` + `tabindex="-1"` + 클릭 차단.
 - loading 중에는 `aria-busy="true"`, 클릭·Enter·Space를 무시한다. 포커스는 유지한다. 스피너에 `role="progressbar"`나 텍스트를 붙이지 않는다(`aria-busy`로 충분).
+- 서버에 요청을 보내는 버튼은 **누르는 즉시** loading으로 바꾸고 요청이 끝나면 푼다. 연속 클릭으로 같은 요청이 두 번 나가지 않게 하기 위해서다([인터랙션 가이드 7장](../guides/interaction.md#7-제출-처리-중-잠금)).
 
 | 키 | 동작 |
 | --- | --- |
@@ -145,6 +146,7 @@
 - **Do** 화면당 `brand-solid`는 1개(주된 행동)만 둔다.
 - **Do** 두 버튼을 나란히 둘 때 주된 행동을 오른쪽(가로 배치) 또는 위쪽(세로 쌓기)에 둔다.
 - **Do** 되돌릴 수 없는 행동에는 `critical-solid`를 쓰고 확인 다이얼로그를 거친다.
+- **Do** 저장·제출 버튼은 누르는 즉시 loading으로 바꾼다. 요청이 끝난 뒤 바꾸면 그 사이 두 번 눌린다.
 - **Don't** 라벨을 두 줄로 만들지 않는다. 길면 문구를 줄인다.
 - **Don't** 브랜드 색 버튼을 한 화면에 여러 개 두지 않는다.
 - **Don't** icon-only 버튼에서 `aria-label`을 빼지 않는다.
