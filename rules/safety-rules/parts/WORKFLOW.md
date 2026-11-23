@@ -34,7 +34,7 @@
 | 프론트엔드(Java 계열)      | Spring Boot가 제공하는 Thymeleaf 화면. JV 규칙을 쓰는 앱에서만 사용                   | JV-8         |
 | 백엔드(기본)               | Python 3.15 + FastAPI                                                                 | PY 규칙      |
 | 백엔드(Java 계열)          | Java 25 LTS 또는 Kotlin 2.4 + Spring Boot                                             | JV 규칙      |
-| DB                         | MariaDB 또는 PostgreSQL(운영 기준). SQLite는 로컬 개발에서만 사용                     | 13번         |
+| DB                         | PostgreSQL(운영 기준). SQLite는 로컬 개발에서만 사용                                  | 13번         |
 | 배포 단위                  | 프론트엔드·백엔드 컨테이너 각 1개(FastAPI + HTML, Spring Boot + Thymeleaf 구조는 1개) | 13번         |
 
 - 런타임은 위 표의 버전을 쓰고, 그 버전 안에서 최신 패치를 설치한다. 최신 패치는 AI가 기억하는 버전이 아니라 공식 사이트(nodejs.org, python.org, kotlinlang.org, Java는 사용하는 JDK 배포처)나 설치 도구로 확인한다. 표의 버전을 지원하지 않는 라이브러리가 있으면 임의로 버전을 낮추지 말고 사용자에게 알린다. 확인할 수 없으면 사용자에게 알리고 묻는다.
