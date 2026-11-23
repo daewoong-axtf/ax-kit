@@ -3,6 +3,7 @@ name: Release
 # 폴더마다 따로 릴리즈한다 (release-please-config.json).
 #   main에 머지 → release-please가 바뀐 폴더마다 릴리즈 PR을 따로 만들거나 갱신한다
 #   릴리즈 PR 머지 → <폴더>-vX.Y.Z 태그(design-system · safety-rules · 플러그인 이름)와 GitHub Release
+# 최소 안전 규칙 릴리즈 PR에는 통합본 첫머리의 버전 · 기준일을 새 버전으로 다시 만들어 넣는다 (scripts/build-rules.ts).
 # 디자인 시스템 릴리즈면 design.zip을 올리고 받는 저장소(ax-desk-fe)에 알린다. 플러그인 릴리즈에는 없다. 어느 릴리즈든 Pages를 다시 올린다.
 on:
   push:
@@ -38,6 +39,7 @@ jobs:
     outputs:
       # 릴리즈 PR이 폴더마다 따로라 디자인 시스템 PR은 브랜치 이름으로 찾는다
       ds_pr_branch: ${{ contains(steps.rp.outputs.prs, '"release-please--branches--main--components--design-system"') && 'release-please--branches--main--components--design-system' || '' }}
+      rules_pr_branch: ${{ contains(steps.rp.outputs.prs, '"release-please--branches--main--components--safety-rules"') && 'release-please--branches--main--components--safety-rules' || '' }}
       releases_created: ${{ steps.rp.outputs.releases_created }}
       ds_release: ${{ steps.rp.outputs['design-system--release_created'] }}
       ds_tag: ${{ steps.rp.outputs['design-system--tag_name'] }}
@@ -84,6 +86,30 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -am "chore: 디자인 시스템 $NEXT 릴리즈 준비 (업데이트 기록 · 설치 ref)"
+          git push
+
+  # 최소 안전 규칙 릴리즈 PR이 version.txt를 올리면 통합본을 새 버전 · 기준일로 다시 만들어 같은 PR에 넣는다
+  prepare-rules-pr:
+    needs: release-please
+    if: needs.release-please.outputs.rules_pr_branch != ''
+    runs-on: ubuntu-latest
+    env:
+      HUSKY: 0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.release-please.outputs.rules_pr_branch }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      # build-rules는 의존성이 없어 설치하지 않는다
+      - run: |
+          node scripts/build-rules.ts
+          if git diff --quiet; then echo "바뀐 것 없음"; exit 0; fi
+          version=$(cat rules/safety-rules/version.txt)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: 최소 안전 규칙 $version 릴리즈 준비 (통합본 버전 · 기준일)"
           git push
 
   after-release:
