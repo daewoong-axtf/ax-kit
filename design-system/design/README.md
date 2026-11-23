@@ -15,6 +15,7 @@
 3. `components/<name>.md` — 구현할 컴포넌트 명세 ([템플릿](components/_template.md))
 4. [`catalog.html`](catalog.html) — 동작하는 예시. 마크업은 여기서 복사한다
 5. 필요할 때 [`guides/`](guides/) — [접근성](guides/accessibility.md), [상호작용](guides/interaction.md), [UX 문구](guides/ux-writing.md), [콘텐츠·다국어](guides/content-i18n.md), [UX 가이드라인](guides/ux-guideline.md). 기본안이므로 서비스에 맞게 고쳐 쓴다
+6. 화면을 만들거나 고친 뒤 [점검 스킬](#점검-스킬) 두 개로 점검한다
 
 ## 정본 우선순위
 
@@ -41,6 +42,30 @@
 | `catalog.html` | 토큰과 컴포넌트를 한 페이지에서 보는 카탈로그. 마크업 레퍼런스. 맨 아래 업데이트 기록은 릴리즈 때 자동으로 추가된다 | 절은 직접, 아이콘·메뉴 구역은 생성 — `pnpm build:catalog` |
 | `catalog.css` · `js/catalog.js` | 카탈로그 페이지 틀. 제품에 쓰지 않는다 | 직접 |
 
+## 점검 스킬
+
+디자인 시스템으로 화면을 만들거나 고쳤으면 끝내기 전에 아래 두 스킬로 점검한다. 둘 다 필수다. [설정 프롬프트](ai/setup-prompt.md)가 프로젝트에 설치하고 AI 규칙에 등록한다.
+
+| 스킬 | 점검하는 것 | 받는 곳 |
+| --- | --- | --- |
+| `web-design-guidelines` | UI 코드가 Web Interface Guidelines를 지키는지. 점검할 때마다 규칙 원문을 인터넷에서 받아 온다 | `npx skills add vercel-labs/agent-skills --skill web-design-guidelines` |
+| `ux-heuristics` | 화면과 흐름의 사용성 (Nielsen 휴리스틱, Krug 원칙, 심각도 등급) | `npx skills add wondelai/skills --skill ux-heuristics` |
+
+- 스킬은 어느 서비스에나 통하는 일반 점검이다. 이 시스템이 정한 것(토큰, 컴포넌트 명세, `design.md`, `guides/`)과 지적이 어긋나면 이 시스템을 따르고, 어긋난 항목을 보고에 적는다.
+- 지적을 고칠 때도 토큰과 있는 컴포넌트로 고친다. 휴리스틱별로 어떤 컴포넌트를 쓰는지는 [UX 가이드 1장](guides/ux-guideline.md#1-사용성-휴리스틱)에 있다.
+- 아래는 스킬과 이 시스템이 다르게 정한 곳이다. 스킬이 지적해도 고치지 않고, 보고에 다시 올리지 않는다.
+
+| 주제 | 스킬의 지적 | 이 시스템의 결정 |
+| --- | --- | --- |
+| 파괴적 행동 | 확인 창보다 되돌리기를 둔다 | [Alert Dialog](components/alert-dialog.md)로 확인한다. 되돌릴 수 있는 행동만 Toast Action으로 되돌린다 ([interaction.md 5·6장](guides/interaction.md#5-피드백)) |
+| 입력 검증 시점 | 필드를 벗어날 때 검증한다 | 첫 오류는 제출할 때 보이고, 그 뒤로는 입력할 때마다 다시 검증한다 ([interaction.md 8장](guides/interaction.md#8-폼-제출-검증)) |
+| 문구 | 영어 표기 규칙 (Title Case, 둥근 따옴표, `…`로 끝나는 placeholder·로딩 문구) | 한국어 문구는 [ux-writing.md](guides/ux-writing.md)를 따른다 |
+| 날짜·숫자 표기 | 포맷을 코드에 직접 쓰지 않는다 | 표기는 [content-i18n.md](guides/content-i18n.md)의 표로 정해져 있다. 만들 때는 로케일 포맷 기능을 쓴다 |
+| 검색창 위치 | 헤더에 항상 보이는 검색창을 둔다 | 목록의 필터 줄에 두고, 모바일은 조건 시트 안에 둔다 ([ux-guideline.md 5.2](guides/ux-guideline.md#52-필터-줄)·[6.3](guides/ux-guideline.md#63-필터)) |
+| 도움말 | 도움말·문서를 둔다 (Nielsen 10번) | 10번은 정보 계층으로 바꿔 쓴다 ([ux-guideline.md 1장](guides/ux-guideline.md#1-사용성-휴리스틱)) |
+
+- 스킬은 외부 저장소의 것이다. 이 저장소에 원문을 두지 않고 버전을 고정하지 않는다. 프로젝트에 설치된 판은 그 프로젝트의 `skills-lock.json`에 기록된다.
+
 ## 금지사항
 
 - 색·간격·모서리·글자를 토큰 없이 쓰지 않는다. 스케일 밖 수치를 만들지 않는다.
@@ -60,6 +85,7 @@
 - [ ] 라이트·다크 양쪽에서 확인했다
 - [ ] `prefers-reduced-motion`에서 이동 애니메이션이 줄어든다
 - [ ] 상태를 색 하나로만 알리지 않는다
+- [ ] `web-design-guidelines`와 `ux-heuristics` 스킬로 점검하고 지적 사항을 처리했다
 
 ## 브랜드 색 교체
 
