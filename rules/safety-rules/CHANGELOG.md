@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/daewoong-axtf/ax-kit/compare/safety-rules-v1.1.0...safety-rules-v1.2.0) (2026-11-23)
+
+
+### 새로 추가된 기능
+
+* 최소 안전 규칙을 조각으로 나누고 커밋 규칙 추가 ([#23](https://github.com/daewoong-axtf/ax-kit/issues/23)) ([168a105](https://github.com/daewoong-axtf/ax-kit/commit/168a1053ff4c4aa92f87fef36f50ed11e093dbca))
+
 ## [1.1.0](https://github.com/daewoong-axtf/ax-kit/compare/safety-rules-v1.0.0...safety-rules-v1.1.0) (2026-11-19)
 
 
