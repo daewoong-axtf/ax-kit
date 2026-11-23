@@ -135,3 +135,17 @@ test('link underline offset defaults to spacing-x1 everywhere', () => {
   assert.match(read('components.css'), /:root \{ text-underline-offset: var\(--dw-spacing-x1\); \}/)
   assert.doesNotMatch(read('components.css'), /text-underline-offset: (?!var\(--dw-spacing-)/)
 })
+
+test('React components name controls in Korean for screen readers', () => {
+  const english: string[] = []
+  for (const f of readdirSync('src/components/ui')) {
+    const src = readFileSync(`src/components/ui/${f}`, 'utf8')
+    const names = [
+      ...src.matchAll(/\b(?:aria-label|title)=["']([^"']+)["']/g),
+      ...src.matchAll(/sr-only["']>([^<{]+)</g),
+      ...src.matchAll(/<Button[^>]*>([A-Za-z][^<{]*)<\/Button>/g),
+    ].map((m) => m[1].trim())
+    for (const name of names) if (name && !/[가-힣]/.test(name)) english.push(`${f}: ${name}`)
+  }
+  assert.deepEqual(english, [])
+})
