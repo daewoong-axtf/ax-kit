@@ -1,5 +1,12 @@
 # 변경 기록
 
+## [1.4.0](https://github.com/daewoong-axtf/ax-kit/compare/design-system-v1.3.2...design-system-v1.4.0) (2026-11-23)
+
+
+### 새로 추가된 기능
+
+* 설정 프롬프트가 화면 점검 스킬 두 개를 설치하고 필수 점검으로 등록 ([#25](https://github.com/daewoong-axtf/ax-kit/issues/25)) ([749337d](https://github.com/daewoong-axtf/ax-kit/commit/749337d4f4fce18c441b486ec07330a0c3cc5b7f))
+
 ## [1.3.2](https://github.com/daewoong-axtf/ax-kit/compare/design-system-v1.3.1...design-system-v1.3.2) (2026-11-19)
 
 
