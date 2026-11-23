@@ -41,6 +41,8 @@ Notion 연결 확인, 업데이트, 스킬을 추가하는 법은 [plugins/READM
 
 한 PR에서 두 폴더를 고치면 두 폴더의 버전이 함께 오른다. 폴더별로 PR을 나눈다.
 
+최소 안전 규칙을 고쳐 배포하는 순서는 [rules/README.md](rules/README.md#고치고-배포하기)에 처음 하는 사람 기준으로 적어 두었다. 규칙은 `rules/safety-rules/parts/`의 조각만 고치고, 통합본(`daewoong-coding-guide.md`)과 버전 표기는 자동으로 만들어진다.
+
 release-please는 커밋이 바꾼 파일의 경로로 폴더를 정한다. 폴더를 나누기 전(`design/`이 맨 위에 있던 때)에 만든 브랜치는 이 저장소 구조 위로 **rebase**해 경로를 `design-system/` 아래로 맞춘 뒤 머지한다. 그대로 merge commit으로 넣으면 어느 폴더에도 속하지 않아 릴리즈가 일어나지 않는다.
 
 ## AX Desk에 보이는 흐름
@@ -51,6 +53,7 @@ AX Desk의 코딩 가이드 화면은 Pages에 올린 게시물을 읽는다. �
 릴리즈 → .github/workflows/pages.yml → scripts/build-site.ts
   guides/index.json                 문서별 최신 버전 · 기준일 · 경로
   guides/<문서>/<버전>.md            태그마다 한 파일. 한 번 올린 판은 바뀌지 않는다
+  guides/safety-rules/<버전>/<조각>.md  최소 안전 규칙을 이루는 조각 (rules/safety-rules/parts/)
   design/ · index.html              디자인 시스템 카탈로그 (main 기준)
 ```
 
@@ -63,7 +66,8 @@ AX Desk의 코딩 가이드 화면은 Pages에 올린 게시물을 읽는다. �
 
 ```bash
 pnpm install
-pnpm test                 # 디자인 시스템 가드 테스트 + 게시물 빌드 테스트
+pnpm test                 # 디자인 시스템 가드 테스트 + 게시물 빌드 테스트 + 규칙 통합본 가드
+pnpm build:rules          # rules/safety-rules/parts/ → daewoong-coding-guide.md
 pnpm -C design-system build
 ```
 

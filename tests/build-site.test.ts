@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { buildIndex, fillPrompt, kstDate, latestCopies, parseTag, readSource, sourcePath } from '../scripts/build-site.ts'
+import { buildIndex, fillPrompt, kstDate, latestCopies, listParts, parseTag, readSource, sourcePath } from '../scripts/build-site.ts'
 
 test('옛 태그는 디자인 시스템, 접두사 태그는 그 문서', () => {
   assert.deepEqual(parseTag('v1.2.0'), { slug: 'design-system', version: '1.2.0' })
@@ -61,4 +61,26 @@ test('가이드마다 최신 판을 latest.md로도 낸다 — README 링크가 
     { from: 'guides/design-system/1.3.0.md', to: 'guides/design-system/latest.md' },
     { from: 'guides/safety-rules/1.0.0.md', to: 'guides/safety-rules/latest.md' },
   ])
+})
+
+test('조각이 있는 판은 files에 조각 경로를 싣고 latest/ 폴더도 낸다', () => {
+  const index = buildIndex([
+    { slug: 'safety-rules', version: '1.1.0', updatedAt: '2026-11-19', files: [] },
+    { slug: 'safety-rules', version: '1.2.0', updatedAt: '2026-11-30', files: ['COMMIT.md', 'SECURITY.md'] },
+  ])
+  const [v120, v110] = index.guides['safety-rules'].versions
+  assert.deepEqual(v120.files, [
+    { name: 'COMMIT.md', path: 'guides/safety-rules/1.2.0/COMMIT.md' },
+    { name: 'SECURITY.md', path: 'guides/safety-rules/1.2.0/SECURITY.md' },
+  ])
+  assert.equal(v120.path, 'guides/safety-rules/1.2.0.md')
+  assert.ok(!('files' in v110), '조각으로 나누기 전의 판에는 files가 없다')
+  assert.deepEqual(latestCopies(index), [
+    { from: 'guides/safety-rules/1.2.0.md', to: 'guides/safety-rules/latest.md' },
+    { from: 'guides/safety-rules/1.2.0', to: 'guides/safety-rules/latest' },
+  ])
+})
+
+test('조각으로 나누기 전의 태그에는 조각이 없다', () => {
+  assert.deepEqual(listParts('safety-rules-v1.0.0'), [])
 })

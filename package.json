@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "pnpm -C design-system test && node --test \"tests/**/*.test.ts\"",
+    "build:rules": "node scripts/build-rules.ts",
     "prepare": "husky"
   },
   "devDependencies": {

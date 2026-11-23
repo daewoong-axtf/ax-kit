@@ -2,6 +2,7 @@
 //   index.html · design/          디자인 시스템 카탈로그 (HEAD의 design-system/)
 //   guides/index.json             문서별 최신 버전 · 기준일 · 경로 — AX Desk가 읽는다
 //   guides/<slug>/<version>.md    태그마다 한 파일. 한 번 올린 판은 바뀌지 않는다
+//   guides/safety-rules/<version>/<조각>.md   통합본을 이루는 조각(parts/). 조각이 생긴 판부터 있다
 //   node scripts/build-site.ts <outDir>
 import { execFileSync } from 'node:child_process'
 import { cpSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
@@ -23,6 +24,8 @@ export interface GuideVersion {
   version: string
   updatedAt: string
   path: string
+  /** 통합본을 이루는 조각. 조각으로 나누기 전의 판에는 없다 */
+  files?: { name: string; path: string }[]
 }
 
 export interface GuideIndex {
@@ -41,6 +44,19 @@ export function sourcePath(slug: Slug, tag: string): string {
   return tag.startsWith('v') ? 'design/ai/setup-prompt.md' : 'design-system/design/ai/setup-prompt.md'
 }
 
+/** 최소 안전 규칙 조각이 있는 폴더 */
+export const PARTS_PATH = 'rules/safety-rules/parts'
+
+/** 그 태그의 조각 파일 이름. 조각으로 나누기 전의 태그면 빈 배열 */
+export function listParts(tag: string): string[] {
+  try {
+    const out = execFileSync('git', ['ls-tree', '--name-only', `${tag}:${PARTS_PATH}`], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] })
+    return out.split('\n').filter((name) => name.endsWith('.md'))
+  } catch {
+    return []
+  }
+}
+
 export function fillPrompt(raw: string, ref: string): string {
   const out = raw.replaceAll('{{REPOSITORY}}', REPOSITORY).replaceAll('{{REF}}', ref)
   if (out.includes('{{')) throw new Error(`설정 프롬프트(${ref})에 채우지 못한 자리표시자가 있다`)
@@ -52,27 +68,34 @@ const compare = (a: string, b: string): number => {
   return x[0] - y[0] || x[1] - y[1] || x[2] - y[2]
 }
 
-export function buildIndex(entries: { slug: Slug; version: string; updatedAt: string }[]): GuideIndex {
+export function buildIndex(entries: { slug: Slug; version: string; updatedAt: string; files?: string[] }[]): GuideIndex {
   const guides: GuideIndex['guides'] = {}
   for (const slug of Object.keys(FILE_NAMES) as Slug[]) {
     const versions = entries
       .filter((e) => e.slug === slug)
       .sort((a, b) => compare(b.version, a.version))
-      .map(({ version, updatedAt }) => ({ version, updatedAt, path: `guides/${slug}/${version}.md` }))
+      .map(({ version, updatedAt, files }) => ({
+        version,
+        updatedAt,
+        path: `guides/${slug}/${version}.md`,
+        ...(files?.length ? { files: files.map((name) => ({ name, path: `guides/${slug}/${version}/${name}` })) } : {}),
+      }))
     if (versions.length) guides[slug] = { fileName: FILE_NAMES[slug], latest: versions[0].version, versions }
   }
   return { guides }
 }
 
-/** 태그 날짜를 한국 시간 YYYY-MM-DD로 */
-/** 가이드마다 최신 판을 latest.md로 한 벌 더 — 버전이 올라도 바뀌지 않는 링크 */
+/** 가이드마다 최신 판을 latest.md로 한 벌 더 — 버전이 올라도 바뀌지 않는 링크. 조각이 있으면 latest/ 폴더도 낸다 */
 export function latestCopies(index: GuideIndex): { from: string; to: string }[] {
-  return Object.entries(index.guides).map(([slug, guide]) => ({
-    from: guide.versions.find((v) => v.version === guide.latest)!.path,
-    to: `guides/${slug}/latest.md`,
-  }))
+  return Object.entries(index.guides).flatMap(([slug, guide]) => {
+    const latest = guide.versions.find((v) => v.version === guide.latest)!
+    const copies = [{ from: latest.path, to: `guides/${slug}/latest.md` }]
+    if (latest.files?.length) copies.push({ from: `guides/${slug}/${latest.version}`, to: `guides/${slug}/latest` })
+    return copies
+  })
 }
 
+/** 태그 날짜를 한국 시간 YYYY-MM-DD로 */
 export function kstDate(iso: string): string {
   return new Date(Date.parse(iso) + 9 * 3600_000).toISOString().slice(0, 10)
 }
@@ -106,10 +129,15 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const text = parsed.slug === 'design-system' ? fillPrompt(raw, tag) : raw
     mkdirSync(join(out, 'guides', parsed.slug), { recursive: true })
     writeFileSync(join(out, 'guides', parsed.slug, `${parsed.version}.md`), text)
-    entries.push({ ...parsed, updatedAt: kstDate(date) })
+    const files = parsed.slug === 'safety-rules' ? listParts(tag) : []
+    for (const name of files) {
+      mkdirSync(join(out, 'guides', parsed.slug, parsed.version), { recursive: true })
+      writeFileSync(join(out, 'guides', parsed.slug, parsed.version, name), readSource(tag, `${PARTS_PATH}/${name}`))
+    }
+    entries.push({ ...parsed, updatedAt: kstDate(date), files })
   }
   const index = buildIndex(entries)
   writeFileSync(join(out, 'guides/index.json'), `${JSON.stringify(index, null, 2)}\n`)
-  for (const { from, to } of latestCopies(index)) cpSync(join(out, from), join(out, to))
+  for (const { from, to } of latestCopies(index)) cpSync(join(out, from), join(out, to), { recursive: true })
   console.log(`${out}: ${entries.map((e) => `${e.slug}@${e.version}`).join(', ')}`)
 }
