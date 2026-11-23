@@ -6,6 +6,7 @@ AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인
 | --- | --- | --- | --- |
 | [`write-prd`](write-prd/skills/write-prd/SKILL.md) | 노션 'PRD 작성 기준'을 매번 읽어 그대로 PRD를 쓰고 'AX PRD 문서' DB에 저장한다. 기존 PRD 점검도 한다 | Notion — 'PRD 작성 기준' · 'AX PM 문서' 페이지와 'AX PRD 문서' DB | [![write-prd](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=write-prd-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
 | [`ax-mail-inquiry-log`](ax-mail-inquiry-log/skills/ax-mail-inquiry-log/SKILL.md) | 메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 정해진 형식으로 기록한다 | Notion — 'AX 라운지 메일·메신저 문의' DB | [![ax-mail-inquiry-log](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=ax-mail-inquiry-log-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
+| [`dds`](dds/skills/dds/SKILL.md) | Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 토큰·컴포넌트를 적용한 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 | GitHub 접속 — 설정 프롬프트와 점검 스킬 두 개를 처음 한 번 받아 온다 | [![dds](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=dds-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
 
 ## 설치
 
@@ -17,6 +18,7 @@ AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인
 /plugin marketplace add daewoong-axtf/ax-kit
 /plugin install write-prd@ax-kit
 /plugin install ax-mail-inquiry-log@ax-kit
+/plugin install dds@ax-kit
 ```
 
 `/plugin`을 열면 목록에서 골라 설치할 수도 있다.
@@ -29,9 +31,17 @@ Customize → Plugins → Add → Add marketplace에 `daewoong-axtf/ax-kit`을 �
 
 \+ → Add plugins에서 `ax-kit` 플러그인을 고른다. 마켓플레이스가 목록에 없으면 위 Claude Code 명령으로 먼저 등록한다.
 
+**Codex · Cursor 등 다른 AI 도구**
+
+`dds`은 프로젝트 맨 위 폴더에서 아래 명령으로도 설치한다. 스킬이 프로젝트의 `.agents/skills/`에 들어가 그 프로젝트를 여는 AI 도구가 함께 쓴다.
+
+```
+npx skills add daewoong-axtf/ax-kit --skill dds
+```
+
 ### 2. Notion 연결 확인
 
-두 플러그인 모두 Notion을 읽고 쓴다. 플러그인에는 Notion 연결이 들어 있지 않고, 각자 연결해 둔 Notion을 쓴다.
+`write-prd`와 `ax-mail-inquiry-log`는 Notion을 읽고 쓴다. `dds`은 Notion을 쓰지 않으니 이 단계를 건너뛴다. 플러그인에는 Notion 연결이 들어 있지 않고, 각자 연결해 둔 Notion을 쓴다.
 
 - **데스크톱 앱 · claude.ai**: Settings → Connectors에서 Notion을 연결한다.
 - **Claude Code**: `/mcp`에 Notion이 보이면 된다. claude.ai 계정에 연결한 Notion이 그대로 보인다. 없으면 `claude mcp add --transport http notion https://mcp.notion.com/mcp`로 추가하고 `/mcp`에서 로그인한다.
@@ -64,6 +74,19 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
 - 'AX 라운지 메일·메신저 문의' DB에 `[부서] 문의 요약` 제목과 문제 · 어려움 · 지원 · 결과 · 대응 이력 형식으로 페이지를 만든다.
 - 같은 건이 이미 있으면 새로 만들지 않고 업데이트할지 묻는다. 추가 대응은 대응 이력 끝에 덧붙인다.
 - 대화로 확정되지 않은 값(부서 · 유형 · 상태 등)은 추정해 채우고, 무엇을 추정했는지 알려 준다.
+
+**dds**
+
+```
+디자인 시스템 설정해줘
+디자인 시스템 써서 회원 목록 화면 만들어줘
+이 화면 디자인 시스템 기준으로 점검해줘
+```
+
+- 프로젝트에 `docs/design-system.md`가 없으면 최신 [설정 프롬프트](../design-system/design/ai/setup-prompt.md)를 받아 그대로 설정한다. 붙여 넣을 필요가 없다.
+- 화면을 만들거나 고치면 프로젝트에 복사된 `docs/design-reference/`를 읽고 토큰과 컴포넌트를 쓴다.
+- 끝내기 전에 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다. 두 스킬은 처음 한 번 GitHub에서 받아 프로젝트의 `.agents/skills/`에 두고, 그 뒤로는 프로젝트에 있는 것을 계속 쓴다.
+- 스킬 지적이 디자인 시스템과 어긋나면 디자인 시스템을 따른다.
 
 ## 업데이트
 

@@ -4,6 +4,12 @@
   "metadata": { "description": "대웅 AX팀이 함께 쓰는 Claude 스킬. 필요한 것만 골라 설치한다" },
   "plugins": [
     {
+      "name": "dds",
+      "source": "./plugins/dds",
+      "description": "Daewoong Design System을 프로젝트에 설정하고, 화면을 만들 때 적용한 뒤 web-design-guidelines · ux-heuristics 스킬로 점검한다. GitHub 접속 필요",
+      "category": "development"
+    },
+    {
       "name": "ax-mail-inquiry-log",
       "source": "./plugins/ax-mail-inquiry-log",
       "description": "메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 기록한다. Notion 연결 필요",
