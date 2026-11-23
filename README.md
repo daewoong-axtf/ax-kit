@@ -20,14 +20,16 @@
 /plugin marketplace add daewoong-axtf/ax-kit
 /plugin install write-prd@ax-kit
 /plugin install ax-mail-inquiry-log@ax-kit
+/plugin install dds@ax-kit
 ```
 
-데스크톱 앱 · claude.ai는 Customize → Plugins → Add → Add marketplace에 `daewoong-axtf/ax-kit`을 넣는다. 두 스킬 모두 **Notion 연결이 필요하다.**
+데스크톱 앱 · claude.ai는 Customize → Plugins → Add → Add marketplace에 `daewoong-axtf/ax-kit`을 넣는다. `write-prd`와 `ax-mail-inquiry-log`는 **Notion 연결이 필요하다.**
 
 | 스킬 | 이렇게 말한다 | 결과 |
 | --- | --- | --- |
 | `write-prd` | "PRD 써줘 — <노션 티켓 · 회의록 링크>", "이 PRD 기준에 맞는지 점검해줘" | 노션 'PRD 작성 기준'대로 초안을 `prd-drafts/`에 쓴다. 저장하라고 하면 'AX PRD 문서' DB에 올린다 |
 | `ax-mail-inquiry-log` | "이 메일 문의 노션에 기록해줘"(원문을 붙여 넣는다), "지난번 문의 건에 오늘 회신 추가해줘" | 'AX 라운지 메일·메신저 문의' DB에 `[부서] 문의 요약` 페이지를 만들거나 대응 이력을 덧붙인다 |
+| `dds` | "디자인 시스템 설정해줘", "디자인 시스템 써서 이 화면 만들어줘" | Daewoong Design System을 프로젝트에 설정하고, 화면을 만든 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 |
 
 Notion 연결 확인, 업데이트, 스킬을 추가하는 법은 [plugins/README.md](plugins/README.md).
 
