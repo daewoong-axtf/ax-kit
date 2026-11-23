@@ -12,6 +12,8 @@
 
 Nielsen 10 휴리스틱을 바탕으로 하고, 10번은 도움말 대신 정보 계층을 둔다.
 
+휴리스틱에 비춰 화면을 평가하고 심각도를 매기는 일은 `ux-heuristics` 스킬로 한다([점검 스킬](../README.md#점검-스킬)). 아래 표는 평가 방법이 아니라, 원칙마다 이 시스템의 어떤 컴포넌트로 지키고 고치는지를 정한다.
+
 | 원칙 | 적용 | 참고 |
 | --- | --- | --- |
 | 1. 시스템 상태 가시성 | 결과는 [Toast](../components/toast.md), 진행은 [Button](../components/button.md) `loading`·[Progress Circle](../components/progress-circle.md)·[Skeleton](../components/skeleton.md)으로 알린다 | [interaction.md 4장](interaction.md#4-로딩-피드백) |
@@ -226,12 +228,10 @@ Nielsen 10 휴리스틱을 바탕으로 하고, 10번은 도움말 대신 정보
 
 접근성은 [accessibility.md 8장](accessibility.md#8-체크리스트), 인터랙션은 [interaction.md 16장](interaction.md#16-do--dont)을 함께 본다.
 
+아래는 이 시스템이 정한 것만 확인한다. 일반 사용성과 웹 UI 품질은 `ux-heuristics`·`web-design-guidelines` 스킬로 점검한다([점검 스킬](../README.md#점검-스킬)).
+
 ### 8.1 플로우
 
-- [ ] 모든 상태에 다음 행동이 있다(빈 상태·오류 상태 포함)
-- [ ] 파괴적 행동에 확인과 결과 설명이 있다
-- [ ] 현재 위치가 보인다(Breadcrumb 또는 단계 텍스트)
-- [ ] 막힌 경로가 없고 뒤로·취소 경로가 있다
 - [ ] 화면 형태와 목록 형태를 고른 근거가 있다
 - [ ] 카드 전체 클릭과 내부 버튼이 겹치지 않는다
 - [ ] 표의 모바일 대응이 정해져 있다
@@ -245,5 +245,3 @@ Nielsen 10 휴리스틱을 바탕으로 하고, 10번은 도움말 대신 정보
 - [ ] 색은 역할 토큰만 쓴다([design.md 1장](../design.md#1-원칙))
 - [ ] 간격은 [spacing 스케일](../design.md#5-간격) 안에서 고른다
 - [ ] 같은 일에 같은 컴포넌트를 쓴다
-- [ ] 불필요한 정보로 화면을 어지럽히지 않는다
-- [ ] 고아 텍스트와 정렬 오류가 없다
