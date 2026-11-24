@@ -54,7 +54,7 @@
 | --- | --- | --- | --- |
 | size | `medium` · `large` · `responsive` | `medium` | Root `.dw-select--<size>` + Control `.dw-text-input--<size>` |
 | value | 보기 값 | 없음 | hidden input `value` + input `value`(문구) + Item `aria-selected` |
-| multiple | boolean | false | Root `data-multiple`, `data-name="<제출 이름>"`. hidden input을 두지 않는다 |
+| multiple | boolean | false | Root `data-multiple`, `data-name="<제출 이름>"`. hidden input을 두지 않는다. 보기는 뒤 `check`를 그대로 쓰고 Select 다중 선택의 `.dw-select__item-checkbox`는 쓰지 않는다 |
 | highlight | boolean | false | Root `data-highlight` |
 | invalid · disabled · readonly · required | boolean | false | Input `aria-invalid` / `disabled` / `readonly` / `required` |
 | 문구 | 문자열 | 아래 표 | Root `data-msg-idle`·`-loading`·`-empty`·`-error`·`-results`·`-remove` |

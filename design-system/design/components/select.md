@@ -201,6 +201,7 @@ WAI-ARIA APG **Select-Only Combobox** 패턴.
 - Trigger: `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded`, `aria-controls`, 강조 중 `aria-activedescendant="<item id>"`. 포커스는 Trigger에 머문다.
 - Content: `role="listbox"`, Item: `role="option"` + `aria-selected`, 비활성은 `aria-disabled="true"`.
 - 다중 선택의 Item checkbox는 장식이다. `aria-hidden="true"`이고 포커스를 받지 않으며 `<input>`이 아니다. 켜짐은 Item의 `aria-selected`가 알리고, 포커스는 그대로 Trigger에 머문다. 색만이 아니라 체크 표시로도 켜짐을 보인다.
+- 강제 색 모드(`forced-colors: active`)에서는 Item checkbox를 시스템 색으로 다시 그린다. 상자 `1px solid CanvasText`, 켜짐은 `Highlight` 상자에 `HighlightText` 체크, 비활성은 `GrayText` 테두리·체크.
 - 바깥 클릭·Esc·Tab으로 닫힌다(Tab은 닫고 다음 요소로).
 - 폼 값은 hidden input으로 제출.
 

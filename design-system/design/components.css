@@ -1489,8 +1489,31 @@ html[data-dw-scroll-lock] { overflow: hidden; }
 
 .dw-select__item[aria-disabled="true"] > .dw-select__item-checkbox::after { background-color: var(--dw-fg-disabled); }
 
-/* 체크박스가 있는 보기는 뒤 check를 쓰지 않는다 */
-.dw-select__item:has(> .dw-select__item-checkbox) > .dw-select__check { display: none; }
+/* 강제 색 모드 — box-shadow 테두리와 background-color로 채운 마스크가 사라지므로 시스템 색으로 다시 그린다 */
+@media (forced-colors: active) {
+  .dw-select__item-checkbox {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+
+  .dw-select__item-checkbox::after {
+    forced-color-adjust: none;
+    background-color: HighlightText;
+  }
+
+  .dw-select__item[aria-selected="true"] > .dw-select__item-checkbox {
+    forced-color-adjust: none;
+    border-color: Highlight;
+    background-color: Highlight;
+  }
+
+  .dw-select__item[aria-disabled="true"] > .dw-select__item-checkbox {
+    border-color: GrayText;
+    background-color: Canvas;
+  }
+
+  .dw-select__item[aria-disabled="true"] > .dw-select__item-checkbox::after { background-color: GrayText; }
+}
 
 .dw-select__item[aria-disabled="true"] { color: var(--dw-fg-disabled); cursor: not-allowed; }
 .dw-select__item[aria-disabled="true"] :is(.dw-select__item-label, .dw-select__item-description) { color: var(--dw-fg-disabled); }
