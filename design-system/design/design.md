@@ -558,7 +558,7 @@ box-shadow: inset 0 0 0 1px var(--dw-stroke-focus-ring),
 ### 14.1 React · Next.js — Tailwind + shadcn
 
 0. Tailwind CSS v4와 shadcn/ui가 없으면 각 공식 설치 방법으로 설치한다. shadcn 설치가 만든 전역 CSS의 색 변수는 아래 `shadcn.css`가 덮어쓴다.
-1. 컴포넌트는 `npx shadcn add <name>`의 원본이 아니라 **DDS 저장소의 `design-system/src/components/ui/<name>.tsx`를 복사한다.** shadcn 원본에 높이·커서·문구 훅을 더한 DDS 자체 파일이다(아래 예외와 6번). 함께 `src/lib/dw-locale.tsx`와 `src/lib/dw-messages.ts`를 복사한다. `calendar.tsx`·`date-picker.tsx`는 여기에 더해 `src/lib/dw-date.ts`와 `date-fns` 의존성이 필요하다. 다른 컴포넌트는 `date-fns` 없이 빌드된다. 파일이 불러오는 다른 `ui` 파일과 패키지(`radix-ui` 등)도 함께 둔다. **복사한 소스의 구조·변형 이름·색 클래스는 고치지 않는다.**
+1. 컴포넌트는 `npx shadcn add <name>`의 원본이 아니라 **DDS 저장소의 `design-system/src/components/ui/<name>.tsx`를 복사한다.** shadcn 원본에 높이·커서·문구 훅을 더한 DDS 자체 파일이다(아래 예외와 6번). 처음 셋팅할 때는 `design-system/src/lib/dw-locale.tsx`와 `design-system/src/lib/dw-messages.ts`만 프로젝트의 `src/lib/`에 복사한다. 컴포넌트는 화면에 필요할 때 프로젝트의 `docs/design-system.md`에 적힌 ref로 저장소를 받아 `@/components/ui`에 복사한다. `calendar.tsx`·`date-picker.tsx`는 여기에 더해 `src/lib/dw-date.ts`와 `date-fns` 의존성이 필요하다. 다른 컴포넌트는 `date-fns` 없이 빌드된다. 파일이 불러오는 다른 `ui` 파일도 함께 둔다. `@/lib/utils`나 `@/hooks/use-mobile`을 불러오는 컴포넌트도 있다. 프로젝트에 없으면 저장소의 `design-system/src/lib/utils.ts`·`design-system/src/hooks/use-mobile.ts`를 복사한다. 복사한 파일이 불러오는 패키지(`radix-ui` 등)는 설치해도 된다. shadcn으로 컴포넌트를 받을 때 함께 설치되던 패키지다. **복사한 소스의 구조·변형 이름·색 클래스는 고치지 않는다.**
 2. `design/tokens.css`와 `design/shadcn.css`를 프로젝트에 복사하고 전역 CSS에서 순서대로 불러온다.
 
 ```css
@@ -604,7 +604,7 @@ React 없이 HTML에 클래스만 붙이면 같은 모양이 된다. 다이얼�
 <!-- 다이얼로그 마크업은 catalog.html의 Dialog 예시를 그대로 복사한다 -->
 ```
 
-- 언어는 `<html lang="en">`처럼 `lang`으로 정한다. `en`으로 시작하면 영어, 그 밖에는 한국어다. 스크립트가 만드는 문구(접근 가능한 이름·안내·상태 문구)만 언어에 맞춰지고, 마크업에 적힌 문구는 서버 템플릿이 번역해서 내려준다. 문구를 바꾸려면 요소의 `data-label-*`·`data-msg-*`·`data-text-*` 속성이나 `window.dwMessages = {...}`를 쓴다. `dwMessages`는 `defer`로 불러오는 `components.js` 태그보다 앞에 두는 스크립트에서 정한다. 실행 중에 바꿀 때는 `components.js`가 실행된 뒤 `window.dw.setMessages({...})`를 쓴다(이미 그려진 문구는 바뀌지 않는다). 영어 마크업 예시는 [`catalog.en.html`](catalog.en.html)이다. 자세한 내용은 [content-i18n.md 5.3](guides/content-i18n.md#53-서버-템플릿-웹).
+- 언어는 `<html lang="en">`처럼 `lang`으로 정한다. `en`으로 시작하면 영어, 그 밖에는 한국어다. 한국어 화면이면 `<html lang="ko">`인지 먼저 확인한다. 템플릿에 처음부터 있던 `lang="en"`이 남아 있으면 스크립트 문구가 영어로 나온다. 스크립트가 만드는 문구(접근 가능한 이름·안내·상태 문구)만 언어에 맞춰지고, 마크업에 적힌 문구는 서버 템플릿이 번역해서 내려준다. 문구를 바꾸려면 요소의 `data-label-*`·`data-msg-*`·`data-text-*` 속성이나 `window.dwMessages = {...}`를 쓴다. `dwMessages`는 `defer`로 불러오는 `components.js` 태그보다 앞에 두는 스크립트에서 정한다. 실행 중에 바꿀 때는 `components.js`가 실행된 뒤 `window.dw.setMessages({...})`를 쓴다(이미 그려진 문구는 바뀌지 않는다). 영어 마크업 예시는 [`catalog.en.html`](catalog.en.html)이다. 자세한 내용은 [content-i18n.md 5.3](guides/content-i18n.md#53-서버-템플릿-웹).
 - 있는 컴포넌트의 클래스 이름과 마크업 구조는 [`catalog.html`](catalog.html)에서 복사한다. 없는 컴포넌트는 프로젝트에서 토큰을 써서 만든다([README](README.md#사용-방법)).
 - 동작 훅은 `data-dw="<name>"`(컴포넌트 루트), `data-dw-open="<id>"`(여는 버튼), `data-dw-close`(닫는 버튼)이다.
 - 코드에서 열고 닫을 때는 `window.dw`의 `openModal`·`closeModal`·`showToast`를 쓴다.

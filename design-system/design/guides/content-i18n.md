@@ -49,7 +49,7 @@
 
 ### 5.1 문구 표 고치기
 
-`messages.json`을 고치고 `pnpm build:messages`를 돌린다. 생성되는 곳은 React용 `src/lib/dw-messages.ts`와 동작 스크립트 `js/components.ts`의 `MESSAGES` 구역이다(`pnpm build`에도 들어 있다). 테스트가 모든 키에 `ko`·`en`이 있는지, 자리표시가 같은지, 컴포넌트와 스크립트에 문구가 직접 적혀 있지 않은지, 생성 파일이 최신인지 본다.
+`messages.json`을 고치고 `pnpm build`를 돌린다. 생성되는 곳은 React용 `src/lib/dw-messages.ts`와 동작 스크립트 `js/components.ts`의 `MESSAGES` 구역이다. `pnpm build:messages`만 돌리면 브라우저가 읽는 `js/components.js`가 이전 문구로 남는다. 이 파일은 `pnpm build:catalog`가 만든다. 테스트가 모든 키에 `ko`·`en`이 있는지, 자리표시가 같은지, 컴포넌트와 스크립트에 문구가 직접 적혀 있지 않은지, 생성 파일이 최신인지 본다.
 
 ### 5.2 React
 
@@ -95,7 +95,7 @@ t('filter.applied', { count: 2 })    // '조회 조건 — 2개 적용됨' · 'F
 
 ### 5.3 서버 템플릿 웹
 
-`components.js`는 `<html lang>`을 읽는다. 값이 `en`으로 시작하면(대소문자 무관) 영어, 그 밖의 값은 한국어다. 문구를 만드는 때마다 읽으므로 `lang`을 바꾼 뒤에 만드는 문구부터 바뀐다.
+`components.js`는 `<html lang>`을 읽는다. 값이 `en`으로 시작하면(대소문자 무관) 영어, 그 밖의 값은 한국어다. 한국어 화면이면 `<html lang="ko">`인지 먼저 확인한다. 템플릿에 처음부터 있던 `lang="en"`이 남아 있으면 스크립트 문구가 영어로 나온다. 문구를 만드는 때마다 읽으므로 `lang`을 바꾼 뒤에 만드는 문구부터 바뀐다.
 
 ```html
 <html lang="en">
@@ -135,7 +135,7 @@ DDS는 한국어·영어만 담는다. 다른 언어는 프로젝트가 자기 �
 2. `catalog.en.json`에 영어를 더한다. 키는 한국어 단위 그대로, 값은 영어다. 같은 한국어가 절마다 다르게 옮겨져야 하면 `"<절 id>::<한국어>"`로 적는다.
 3. `pnpm build:catalog`를 돌린다.
 
-`node scripts/build-catalog.ts --missing [절 id…]`가 번역표에 없는 단위를 JSON으로 보여 준다. 번역 단위 규칙은 [`scripts/translate-catalog.ts`](../../scripts/translate-catalog.ts) 머리의 주석과 [`scripts/build-catalog.ts`](../../scripts/build-catalog.ts) 머리의 형식 설명에 있다. 번역표에 없는 단위, 쓰이지 않는 항목, 영어판에 남은 한글은 테스트가 실패시킨다. 컴포넌트 문구와 같은 말은 `messages.json`의 영어와 맞춰야 한다.
+`node scripts/build-catalog.ts --missing [절 id…]`가 번역표에 없는 단위를 JSON으로 보여 준다. 번역 단위 규칙은 DDS 저장소의 `design-system/scripts/translate-catalog.ts` 머리의 주석과 `design-system/scripts/build-catalog.ts` 머리의 형식 설명에 있다. 번역표에 없는 단위, 쓰이지 않는 항목, 영어판에 남은 한글은 테스트가 실패시킨다. 컴포넌트 문구와 같은 말은 `messages.json`의 영어와 맞춰야 한다.
 
 설정 프롬프트(원문 [`ai/setup-prompt.md`](../ai/setup-prompt.md))와 업데이트 기록 목록은 번역하지 않는다. 둘 다 릴리즈 때마다 바뀌기 때문이다. 영어판에서는 `lang="ko"`를 붙여 한국어로 둔다.
 
