@@ -162,7 +162,7 @@
   function msg(key, values, attr) {
     // window.dwMessages·setMessages에 숫자 같은 값이 와도 멈추지 않게 글자로 바꾼다
     const text = String(attr ?? overrides[key] ?? MESSAGES[dwLocale()][key])
-    return values ? text.replace(/\{(\w+)\}/g, (whole, name) => (name in values ? String(values[name]) : whole)) : text
+    return values ? text.replace(/\{(\w+)\}/g, (whole, name) => (Object.hasOwn(values, name) ? String(values[name]) : whole)) : text
   }
   /* I18N:end */
 

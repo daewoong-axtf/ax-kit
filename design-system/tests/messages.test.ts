@@ -78,6 +78,12 @@ test('behavior script msg: attr > overrides > table, placeholders always filled'
   assert.equal(i18n.msg('pagination.next', {}, ''), '', '속성이 있으면 빈 값도 그대로 쓴다 (기존 ?? 동작)')
 })
 
+test('behavior script msg fills only own placeholder values', () => {
+  // values에 없는 이름은 Object.prototype의 것(toString 등)이어도 채우지 않는다
+  const i18n = loadI18n('ko')
+  assert.equal(i18n.msg('combobox.remove', { label: 'A' }, '{toString} {constructor} {label}'), '{toString} {constructor} A')
+})
+
 test('behavior script has no hard-coded copy', () => {
   const code = behaviorTs
     .replace(region('MESSAGES'), '')
