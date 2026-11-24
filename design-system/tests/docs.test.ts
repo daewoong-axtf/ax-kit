@@ -89,6 +89,9 @@ test('update prompt names what an agent cannot guess', () => {
   assert.ok(prompt.includes('docs/design-reference/'))
   assert.ok(prompt.includes('design.md` 14'))
   assert.doesNotMatch(prompt, /\{\{/, '스킬이 클론에서 그대로 읽으므로 채울 자리가 없어야 한다')
+  // 임시 폴더는 정해진 방법으로 만들고 멈출 때도 지운다
+  assert.ok(prompt.includes('mktemp -d'))
+  assert.match(prompt, /어느 단계에서 멈추든 .*임시 폴더/)
 })
 
 test('llms.txt lists the update prompt next to the setup prompt', () => {
