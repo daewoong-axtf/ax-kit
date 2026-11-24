@@ -21,6 +21,19 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+// 화면 낭독기가 읽는 이름(aria-label·title·sr-only 글자) 중 영어 낱말이 든 것. 라이브러리 기본 문구가 새는지 본다
+// Storybook이 body에 미리 깔아 두는 자리표시(.sb-wrapper)는 뺀다
+function englishNames(...roots: ParentNode[]) {
+  const own = (selector: string) =>
+    roots.flatMap((root) => [...root.querySelectorAll(selector)]).filter((el) => !el.closest('.sb-wrapper'))
+  const names = [
+    ...own('[aria-label]').map((el) => el.getAttribute('aria-label') ?? ''),
+    ...own('[title]').map((el) => el.getAttribute('title') ?? ''),
+    ...own('.sr-only').map((el) => el.textContent ?? ''),
+  ]
+  return [...new Set(names.filter((name) => /[A-Za-z]{2,}/.test(name)))]
+}
+
 function SingleDemo() {
   const [date, setDate] = useState<Date | undefined>(new Date(2026, 4, 20))
   return (
@@ -76,4 +89,36 @@ export const WithDropdown: Story = { render: () => <DropdownDemo /> }
 export const Mobile: Story = {
   render: () => <SingleDemo />,
   globals: { viewport: { value: 'mobile1', isRotated: false } },
+}
+
+function NamesDemo() {
+  const [date, setDate] = useState<Date | undefined>(new Date())
+  return (
+    <Calendar
+      mode='single'
+      selected={date}
+      onSelect={setDate}
+      showWeekNumber
+      captionLayout='dropdown'
+      startMonth={new Date(2020, 0)}
+      endMonth={new Date(2035, 11)}
+      className='rounded-md border'
+    />
+  )
+}
+
+/** 한국어일 때 달력의 이름(이전·다음 달, 연·월 선택, 오늘·선택됨, 주 번호)에 영어가 없다 */
+export const KoreanNames: Story = {
+  render: () => <NamesDemo />,
+  globals: { locale: 'ko' },
+  // 주 번호 칸(CalendarWeekNumber)이 td에 scope를 그대로 넘기는 기존 결함이 있다. 이 스토리는 이름만 보므로 그 규칙만 끈다
+  parameters: { a11y: { config: { rules: [{ id: 'scope-attr-valid', enabled: false }] } } },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await expect(englishNames(canvasElement, document.body)).toEqual([])
+    await expect(canvas.getByRole('button', { name: '다음 달' })).toBeInTheDocument()
+    await expect(canvas.getByRole('button', { name: /^오늘, .+, 선택됨$/ })).toBeInTheDocument()
+    await expect(canvas.getByRole('combobox', { name: '연도' })).toBeInTheDocument()
+    await expect(canvas.getAllByRole('rowheader', { name: /^\d+주차$/ }).length).toBeGreaterThan(0)
+  },
 }

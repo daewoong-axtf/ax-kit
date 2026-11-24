@@ -6,6 +6,7 @@ import { DatePicker } from '@/components/ui/date-picker'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { DwLocaleProvider } from '@/lib/dw-locale'
 
 const meta = {
   title: 'Component/Inputs/Date Picker',
@@ -108,5 +109,20 @@ export const InDialog: Story = {
     const grid = await body.findByRole('grid')
     await userEvent.click(within(grid).getByRole('button', { name: /15일/ }))
     await waitFor(() => expect(body.getByTestId('picked').textContent).toMatch(/-15$/))
+  },
+}
+
+/** 영어는 긴 달 이름이다 — 동작 스크립트(Intl dateStyle long + 요일)와 같은 "September 20, 2026 (Sun)" */
+export const EnglishLongDate: Story = {
+  render: () => (
+    <DwLocaleProvider locale='en'>
+      <div className='grid w-64 gap-2'>
+        <Label htmlFor='en-date'>Delivery date</Label>
+        <DatePicker id='en-date' value='2026-09-20' onChange={() => {}} />
+      </div>
+    </DwLocaleProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    await expect(within(canvasElement).getByLabelText('Delivery date')).toHaveTextContent(/^September 20, 2026 \(Sun\)$/)
   },
 }

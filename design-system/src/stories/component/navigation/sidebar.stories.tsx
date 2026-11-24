@@ -97,7 +97,7 @@ export const Desktop: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await expect(canvas.getByRole('link', { name: '홈' })).toHaveAttribute('aria-current', 'page')
-    await userEvent.click(canvas.getByRole('button', { name: 'Toggle Sidebar' }))
+    await userEvent.click(canvas.getByRole('button', { name: '메뉴 접기' }))
     await expect(canvasElement.querySelector('[data-state="collapsed"]')).not.toBeNull()
   },
 }
