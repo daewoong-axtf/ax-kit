@@ -1,5 +1,12 @@
 # 변경 기록
 
+## [1.5.0](https://github.com/daewoong-axtf/ax-kit/compare/design-system-v1.4.0...design-system-v1.5.0) (2026-11-24)
+
+
+### 새로 추가된 기능
+
+* 컴포넌트 문구와 카탈로그의 한국어 · 영어 지원 ([#31](https://github.com/daewoong-axtf/ax-kit/issues/31)) ([f63fa5b](https://github.com/daewoong-axtf/ax-kit/commit/f63fa5b457c2e9daaf674a9af28712ab8428975f))
+
 ## [1.4.0](https://github.com/daewoong-axtf/ax-kit/compare/design-system-v1.3.2...design-system-v1.4.0) (2026-11-23)
 
 
