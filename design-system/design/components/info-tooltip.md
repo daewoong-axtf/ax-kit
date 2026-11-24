@@ -89,6 +89,8 @@ Trigger는 `<label>` 밖에 둔다. 안에 두면 누를 때 입력으로 포커
 | Tab (열림) | 닫고 Trigger 다음 요소로 |
 | Shift+Tab (열림) | 닫고 Trigger로 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `infoTooltip.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

@@ -127,6 +127,8 @@ Panel은 상태와 무관하게 `bg-layer-default` + 아래 테두리 `stroke-ne
 | Tab | Retry → Close |
 | Enter · Space | 버튼 실행 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `connectionBanner.*`·`common.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

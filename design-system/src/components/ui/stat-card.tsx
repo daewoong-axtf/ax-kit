@@ -1,7 +1,10 @@
+"use client"
+
 import { MinusIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react"
 import type * as React from "react"
 
 import { Card, CardContent } from "@/components/ui/card"
+import { useDwMessages } from "@/lib/dw-locale"
 import { cn } from "@/lib/utils"
 
 type StatCardTone = "positive" | "critical" | "neutral"
@@ -28,17 +31,18 @@ const TONE_CLASS: Record<StatCardTone, string> = {
 }
 
 function directionOf(delta: number) {
-  if (delta > 0) return { Icon: TrendingUpIcon, text: "증가", tone: "positive" as const, sign: "+" }
-  if (delta < 0) return { Icon: TrendingDownIcon, text: "감소", tone: "critical" as const, sign: "" }
-  return { Icon: MinusIcon, text: "변동 없음", tone: "neutral" as const, sign: "" }
+  if (delta > 0) return { Icon: TrendingUpIcon, text: "statCard.increase" as const, tone: "positive" as const, sign: "+" }
+  if (delta < 0) return { Icon: TrendingDownIcon, text: "statCard.decrease" as const, tone: "critical" as const, sign: "" }
+  return { Icon: MinusIcon, text: "statCard.noChange" as const, tone: "neutral" as const, sign: "" }
 }
 
 function StatCardDelta({ delta, tone }: { delta: number; tone?: StatCardTone }) {
+  const t = useDwMessages()
   const { Icon, text, tone: signTone, sign } = directionOf(delta)
   return (
     <span className={cn("flex items-center gap-0.5 font-medium tabular-nums", TONE_CLASS[tone ?? signTone])}>
       <Icon aria-hidden className="size-4 shrink-0" />
-      <span className="sr-only">{text}</span>
+      <span className="sr-only">{t(text)}</span>
       {sign}
       {delta}%
     </span>

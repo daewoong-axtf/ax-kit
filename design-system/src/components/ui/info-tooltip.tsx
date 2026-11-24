@@ -4,6 +4,7 @@ import { InfoIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { useDwMessages } from "@/lib/dw-locale"
 
 interface InfoTooltipProps {
   /** 무엇에 대한 안내인지. 트리거는 "{label} 안내"로 읽힌다 */
@@ -18,7 +19,8 @@ interface InfoTooltipProps {
  * 닫기는 다시 누르기·바깥 누르기·Esc. 명세는 design/components/info-tooltip.md.
  */
 function InfoTooltip({ label, items, className }: InfoTooltipProps) {
-  const name = `${label} 안내`
+  const t = useDwMessages()
+  const name = t("infoTooltip.label", { label })
 
   return (
     <Popover>

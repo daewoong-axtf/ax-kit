@@ -1,6 +1,9 @@
+"use client"
+
 import { ChevronLeftIcon } from "lucide-react"
 import type * as React from "react"
 
+import { useDwMessages } from "@/lib/dw-locale"
 import { cn } from "@/lib/utils"
 
 interface PageHeaderProps extends Omit<React.ComponentProps<"div">, "title"> {
@@ -24,11 +27,12 @@ function PageHeader({
   description,
   actions,
   backHref,
-  backLabel = "뒤로",
+  backLabel,
   hideTitleOnMobile = false,
   className,
   ...props
 }: PageHeaderProps) {
+  const t = useDwMessages()
   return (
     <div
       data-slot="page-header"
@@ -45,7 +49,7 @@ function PageHeader({
             className="relative -ml-1 flex w-fit items-center gap-1 rounded-sm text-sm text-(--dw-fg-neutral-subtle) transition-colors outline-none before:absolute before:inset-x-0 before:-inset-y-3 before:content-[''] hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 active:text-foreground"
           >
             <ChevronLeftIcon aria-hidden className="size-4 shrink-0" />
-            {backLabel}
+            {backLabel ?? t("pageHeader.back")}
           </a>
         )}
         <h1

@@ -97,11 +97,16 @@ export const Desktop: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await expect(canvas.getByRole('link', { name: '홈' })).toHaveAttribute('aria-current', 'page')
-    await userEvent.click(canvas.getByRole('button', { name: 'Toggle Sidebar' }))
+    await userEvent.click(canvas.getByRole('button', { name: '메뉴 접기' }))
     await expect(canvasElement.querySelector('[data-state="collapsed"]')).not.toBeNull()
   },
 }
 
 export const Mobile: Story = {
   globals: { viewport: { value: 'mobile' } },
+  play: async ({ canvasElement }) => {
+    // 모바일에서는 state가 아니라 서랍이 열렸는지로 이름이 정해진다
+    const canvas = within(canvasElement)
+    await expect(canvas.getByRole('button', { name: '메뉴 펼치기' })).toBeInTheDocument()
+  },
 }

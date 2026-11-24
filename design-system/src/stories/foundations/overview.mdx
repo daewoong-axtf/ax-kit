@@ -73,6 +73,9 @@ export const paletteCount = Object.keys(tokens.palette.light).length
   <DocBullet lead="브랜드 색은 역할 토큰으로만 부릅니다">
     브랜드 색은 대웅 오렌지(`#F18A00`)입니다. 화면에서는 `orange-*` 대신 `bg-brand-solid`처럼 역할 토큰으로만 부르세요.
   </DocBullet>
+  <DocBullet lead="문구는 한국어·영어를 지원합니다">
+    툴바의 언어(한국어·English)로 컴포넌트 문구를 바꿔 볼 수 있습니다. 앱에서는 `DwLocaleProvider`로 감싸며, 없으면 한국어입니다. 문구의 정본은 `design/messages.json`입니다.
+  </DocBullet>
   <DocBullet lead="색 값은 oklch입니다">
     `tokens.json`의 색은 oklch로 적혀 있고, Figma의 색은 그것을 sRGB로 옮긴 것이라 미세하게 다를 수 있습니다.
   </DocBullet>

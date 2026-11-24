@@ -61,6 +61,8 @@
 | PageDown / PageUp | 10 step |
 | Home / End | min / max |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `slider.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

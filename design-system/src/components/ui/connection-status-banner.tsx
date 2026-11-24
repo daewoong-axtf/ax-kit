@@ -11,33 +11,35 @@ import {
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
+import { useDwMessages } from '@/lib/dw-locale'
+import type { DwMessageKey } from '@/lib/dw-messages'
 import { cn } from '@/lib/utils'
 
 type ConnectionBannerStatus = 'offline' | 'reconnecting' | 'unstable' | 'online'
 
 const STATUS_STYLES: Record<
   ConnectionBannerStatus,
-  { Icon: React.ComponentType<{ className?: string }>; icon: string; title: string }
+  { Icon: React.ComponentType<{ className?: string }>; icon: string; title: DwMessageKey }
 > = {
   offline: {
     Icon: WifiOffIcon,
     icon: 'bg-(--dw-bg-critical-weak) text-(--dw-fg-critical)',
-    title: '서버에 연결할 수 없어요. 잠시 후 다시 시도해주세요.',
+    title: 'connectionBanner.offline',
   },
   reconnecting: {
     Icon: LoaderCircleIcon,
     icon: 'bg-(--dw-bg-neutral-weak) text-(--dw-fg-neutral-subtle)',
-    title: '다시 연결하는 중이에요',
+    title: 'connectionBanner.reconnecting',
   },
   unstable: {
     Icon: TriangleAlertIcon,
     icon: 'bg-(--dw-bg-warning-weak) text-(--dw-fg-warning)',
-    title: '연결이 불안정해요. 일부 내용이 늦게 보일 수 있어요.',
+    title: 'connectionBanner.unstable',
   },
   online: {
     Icon: CheckIcon,
     icon: 'bg-(--dw-bg-positive-weak) text-(--dw-fg-positive)',
-    title: '다시 연결됐어요',
+    title: 'connectionBanner.online',
   },
 }
 
@@ -68,6 +70,7 @@ function ConnectionStatusBanner({
   onRetry,
   onDismiss,
 }: ConnectionStatusBannerProps) {
+  const t = useDwMessages()
   const rootRef = React.useRef<HTMLDivElement>(null)
   const hadFocus = React.useRef(false)
   const [rendered, setRendered] = React.useState(open)
@@ -126,7 +129,7 @@ function ConnectionStatusBanner({
             />
           </span>
           <p className='min-w-0 flex-1 text-sm font-medium text-(--dw-fg-neutral)'>
-            {title ?? defaultTitle}
+            {title ?? t(defaultTitle)}
           </p>
           {showRetry && (
             <Button
@@ -138,7 +141,7 @@ function ConnectionStatusBanner({
               className='shrink-0'
             >
               <RefreshCwIcon aria-hidden='true' />
-              다시 시도
+              {t('common.retry')}
             </Button>
           )}
           {onDismiss && (
@@ -147,7 +150,7 @@ function ConnectionStatusBanner({
               variant='ghost'
               size='icon-sm'
               onClick={onDismiss}
-              aria-label='연결 안내 닫기'
+              aria-label={t('connectionBanner.dismiss')}
               className='-mx-1 shrink-0 text-(--dw-fg-neutral-subtle)'
             >
               <XIcon aria-hidden='true' />

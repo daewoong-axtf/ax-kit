@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, within } from 'storybook/test'
 
 import {
   Pagination,
@@ -9,6 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import { en } from '@/lib/dw-messages'
 
 const meta = {
   title: 'Component/Navigation/Pagination',
@@ -57,4 +59,18 @@ export const Default: Story = {
       </PaginationContent>
     </Pagination>
   ),
+}
+
+/** 툴바 언어가 English면 탐색 영역과 이전·다음 링크 이름이 영어다 */
+export const English: Story = {
+  ...Default,
+  globals: { locale: 'en' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const nav = canvas.getByRole('navigation', { name: en['pagination.label'] })
+    await expect(within(nav).getByRole('link', { name: en['pagination.previous'] })).toHaveAttribute('href', '?page=1')
+    await expect(within(nav).getByRole('link', { name: en['pagination.next'] })).toHaveAttribute('href', '?page=3')
+    await expect(nav).toHaveTextContent(en['pagination.previousShort'])
+    await expect(nav).toHaveTextContent(en['pagination.more'])
+  },
 }

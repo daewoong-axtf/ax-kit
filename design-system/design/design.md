@@ -558,7 +558,7 @@ box-shadow: inset 0 0 0 1px var(--dw-stroke-focus-ring),
 ### 14.1 React · Next.js — Tailwind + shadcn
 
 0. Tailwind CSS v4와 shadcn/ui가 없으면 각 공식 설치 방법으로 설치한다. shadcn 설치가 만든 전역 CSS의 색 변수는 아래 `shadcn.css`가 덮어쓴다.
-1. 필요한 컴포넌트를 `npx shadcn add <name>`으로 가져온다. **컴포넌트 소스의 구조·변형 이름·색 클래스는 고치지 않는다.**
+1. 컴포넌트는 `npx shadcn add <name>`의 원본이 아니라 **DDS 저장소의 `design-system/src/components/ui/<name>.tsx`를 복사한다.** shadcn 원본에 높이·커서·문구 훅을 더한 DDS 자체 파일이다(아래 예외와 6번). 처음 셋팅할 때는 `design-system/src/lib/dw-locale.tsx`와 `design-system/src/lib/dw-messages.ts`만 프로젝트의 `src/lib/`에 복사한다. 컴포넌트는 화면에 필요할 때 프로젝트의 `docs/design-system.md`에 적힌 ref로 저장소를 받아 `@/components/ui`에 복사한다. `calendar.tsx`·`date-picker.tsx`는 여기에 더해 `src/lib/dw-date.ts`와 `date-fns` 의존성이 필요하다. 다른 컴포넌트는 `date-fns` 없이 빌드된다. 파일이 불러오는 다른 `ui` 파일도 함께 둔다. `@/lib/utils`나 `@/hooks/use-mobile`을 불러오는 컴포넌트도 있다. 프로젝트에 없으면 저장소의 `design-system/src/lib/utils.ts`·`design-system/src/hooks/use-mobile.ts`를 복사한다. 복사한 파일이 불러오는 패키지(`radix-ui` 등)는 설치해도 된다. shadcn으로 컴포넌트를 받을 때 함께 설치되던 패키지다. **복사한 소스의 구조·변형 이름·색 클래스는 고치지 않는다.**
 2. `design/tokens.css`와 `design/shadcn.css`를 프로젝트에 복사하고 전역 CSS에서 순서대로 불러온다.
 
 ```css
@@ -573,8 +573,15 @@ box-shadow: inset 0 0 0 1px var(--dw-stroke-focus-ring),
 3. 다크 모드를 next-themes로 켜면 `<ThemeProvider attribute="data-theme">`로 둔다(`class` 방식이 아니다).
 4. 색을 바꾸고 싶으면 컴포넌트나 `shadcn.css`가 아니라 `tokens.json`을 고치고 `tokens.css`를 다시 만든다.
 5. shadcn에 없는 컴포넌트(Callout · Chip · Bottom Sheet 등)는 `components/<name>.md` 치수대로 Tailwind로 만들고, 색은 `bg-[var(--dw-bg-brand-solid)]`처럼 역할 토큰으로 부른다.
+6. 언어를 정한다. 컴포넌트가 만드는 문구(접근 가능한 이름·안내 문구)는 `src/lib/dw-locale.tsx`의 `DwLocaleProvider`가 정한다. 앱 최상단을 감싸고, Provider가 없으면 한국어다. `src/lib/dw-messages.ts`는 `design/messages.json`에서 생성한 파일이므로 고치지 말고 `dw-locale.tsx`와 함께 복사한다(1번). Provider는 `<html lang>`을 바꾸지 않으므로 앱이 직접 맞춘다.
 
-컨트롤 높이는 예외로 이 저장소의 `src/components/ui`에서 5장 스케일에 맞췄다. 프로젝트에서 shadcn을 새로 받았다면 Button·Input·Select·Toggle의 높이를 같은 값으로 맞춘다.
+```tsx
+<DwLocaleProvider locale="en">{children}</DwLocaleProvider>
+```
+
+이 문구 훅 때문에 아래 컴포넌트는 클라이언트 컴포넌트(`'use client'`)다. 서버 컴포넌트에서 바로 쓰면 클라이언트 경계가 생긴다: `breadcrumb` · `filter-button` · `filter-sheet` · `filter-tags` · `form-section` · `list-footer` · `page-header` · `pagination` · `sidebar` · `slider` · `sonner` · `spinner` · `stat-card` · `stepper`. 사용법과 다른 언어를 붙이는 방법은 [content-i18n.md 5장](guides/content-i18n.md#5-다국어-전환)에 있다.
+
+컨트롤 높이는 예외로 이 저장소의 `src/components/ui`에서 5장 스케일에 맞췄다. DDS에 없는 컴포넌트를 shadcn에서 새로 받았다면 Button·Input·Select·Toggle의 높이를 같은 값으로 맞춘다.
 
 커서도 예외다(11.1). shadcn 원본은 비활성을 `disabled:pointer-events-none`·`data-[disabled]:pointer-events-none`으로 막고, 메뉴·선택 항목에 `cursor-default`를 붙인다. 그대로 두면 `shadcn.css`의 커서 규칙이 가려진다. 새로 받은 컴포넌트에서 앞의 둘은 지우고(비활성 커서는 `shadcn.css`가 붙인다), 항목의 `cursor-default`는 `cursor-pointer`로 바꾼다. `aria-disabled:pointer-events-none`(비활성 링크)은 그대로 둔다. 그 밖의 크기·변형은 명세와 조금 다를 수 있고, 차이는 Storybook 각 스토리 설명에 적었다.
 
@@ -597,6 +604,7 @@ React 없이 HTML에 클래스만 붙이면 같은 모양이 된다. 다이얼�
 <!-- 다이얼로그 마크업은 catalog.html의 Dialog 예시를 그대로 복사한다 -->
 ```
 
+- 언어는 `<html lang="en">`처럼 `lang`으로 정한다. `en`으로 시작하면 영어, 그 밖에는 한국어다. 한국어 화면이면 `<html lang="ko">`인지 먼저 확인한다. 템플릿에 처음부터 있던 `lang="en"`이 남아 있으면 스크립트 문구가 영어로 나온다. 스크립트가 만드는 문구(접근 가능한 이름·안내·상태 문구)만 언어에 맞춰지고, 마크업에 적힌 문구는 서버 템플릿이 번역해서 내려준다. 문구를 바꾸려면 요소의 `data-label-*`·`data-msg-*`·`data-text-*` 속성이나 `window.dwMessages = {...}`를 쓴다. `dwMessages`는 `defer`로 불러오는 `components.js` 태그보다 앞에 두는 스크립트에서 정한다. 실행 중에 바꿀 때는 `components.js`가 실행된 뒤 `window.dw.setMessages({...})`를 쓴다(이미 그려진 문구는 바뀌지 않는다). 영어 마크업 예시는 [`catalog.en.html`](catalog.en.html)이다. 자세한 내용은 [content-i18n.md 5.3](guides/content-i18n.md#53-서버-템플릿-웹).
 - 있는 컴포넌트의 클래스 이름과 마크업 구조는 [`catalog.html`](catalog.html)에서 복사한다. 없는 컴포넌트는 프로젝트에서 토큰을 써서 만든다([README](README.md#사용-방법)).
 - 동작 훅은 `data-dw="<name>"`(컴포넌트 루트), `data-dw-open="<id>"`(여는 버튼), `data-dw-close`(닫는 버튼)이다.
 - 코드에서 열고 닫을 때는 `window.dw`의 `openModal`·`closeModal`·`showToast`를 쓴다.

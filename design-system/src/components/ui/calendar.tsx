@@ -1,6 +1,6 @@
 'use client'
 
-import { ko } from 'date-fns/locale'
+import { format } from 'date-fns'
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -12,9 +12,12 @@ import {
   type DayButton,
   DayPicker,
   getDefaultClassNames,
+  type Labels,
 } from 'react-day-picker'
 
 import { Button, buttonVariants } from '@/components/ui/button'
+import { useDwDate } from '@/lib/dw-date'
+import { useDwMessages } from '@/lib/dw-locale'
 import { cn } from '@/lib/utils'
 
 function Calendar({
@@ -24,14 +27,41 @@ function Calendar({
   fixedWeeks = true,
   captionLayout = 'label',
   buttonVariant = 'ghost',
-  locale = ko,
+  locale,
   formatters,
   components,
+  labels,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>['variant']
 }) {
   const defaultClassNames = getDefaultClassNames()
+  const t = useDwMessages()
+  const { dateLocale } = useDwDate()
+  // 월 드롭다운은 Intl로 만든다. 달력에 쓰는 date-fns 로케일의 code(ko·en-US·ja 등)를 그대로 넘긴다
+  const intlLocale = (locale ?? dateLocale).code
+  // react-day-picker가 기본으로 내보내는 영어 이름을 문구 표로 바꾼다
+  const dwLabels = React.useMemo<Partial<Labels>>(() => {
+    const dayName: Labels['labelDayButton'] = (date, modifiers, options, dateLib) => {
+      let label = dateLib ? dateLib.format(date, 'PPPP') : format(date, 'PPPP', options)
+      if (modifiers?.today) label = t('calendar.today', { date: label })
+      if (modifiers?.selected) label = t('calendar.selected', { date: label })
+      return label
+    }
+    return {
+      labelNav: () => t('calendar.nav'),
+      labelPrevious: () => t('calendar.previousMonth'),
+      labelNext: () => t('calendar.nextMonth'),
+      labelYearDropdown: () => t('calendar.year'),
+      labelMonthDropdown: () => t('calendar.month'),
+      labelWeekNumber: (week) => t('calendar.week', { week }),
+      labelWeekNumberHeader: () => t('calendar.weekHeader'),
+      labelDayButton: dayName,
+      // 누를 수 없는 달력의 날 칸 — 선택됨은 aria-selected가 따로 알린다
+      labelGridcell: (date, modifiers, options, dateLib) =>
+        dayName(date, { ...modifiers, selected: false }, options, dateLib),
+    }
+  }, [t])
 
   return (
     <DayPicker
@@ -44,10 +74,11 @@ function Calendar({
         className,
       )}
       captionLayout={captionLayout}
-      locale={locale}
+      locale={locale ?? dateLocale}
+      labels={{ ...dwLabels, ...labels }}
       formatters={{
         formatMonthDropdown: (date) =>
-          date.toLocaleString('ko-KR', { month: 'short' }),
+          date.toLocaleString(intlLocale, { month: 'short' }),
         ...formatters,
       }}
       classNames={{

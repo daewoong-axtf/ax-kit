@@ -79,6 +79,8 @@ React는 보기를 문자열 목록(`options`)으로 받는다. 보이는 문구
 | 글자 입력 | 좁히기 |
 | ↓ ↑ · Enter · Esc | Combobox와 같다 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `searchableSelect.*`·`combobox.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

@@ -85,6 +85,7 @@
 - 번호는 `<ol>`이 이미 읽으므로 `aria-hidden`이다.
 - 좁은 화면에서 숨긴 Label은 시각적으로만 감춘다. `display: none`을 쓰지 않는다.
 - 다단계 흐름의 뒤로 가기는 [interaction.md 13장](../guides/interaction.md#13-다단계-흐름)을 따른다.
+- 영어 문구는 [`messages.json`](../messages.json)의 `stepper.*`를 따른다.
 
 키보드 조작이 없다. 포커스를 받지 않는다.
 

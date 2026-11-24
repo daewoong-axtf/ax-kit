@@ -9,6 +9,163 @@
  * 훅: data-dw="<name>" (컴포넌트 루트), data-dw-open="<id>" (열기 트리거), data-dw-close (닫기)
  */
 
+  // 컴포넌트 문구 — 정본은 design/messages.json, 이 구역은 pnpm build:messages가 채운다
+  /* MESSAGES:start */
+  const MESSAGES = {
+    ko: {
+      "common.close": "닫기",
+      "common.loading": "불러오는 중",
+      "common.retry": "다시 시도",
+      "breadcrumb.label": "현재 위치",
+      "breadcrumb.more": "접힌 단계",
+      "calendar.previousMonth": "이전 달",
+      "calendar.nextMonth": "다음 달",
+      "calendar.year": "연도",
+      "calendar.month": "월",
+      "calendar.today": "오늘, {date}",
+      "calendar.selected": "{date}, 선택됨",
+      "calendar.week": "{week}주차",
+      "calendar.weekHeader": "주 번호",
+      "calendar.nav": "달 이동",
+      "combobox.open": "목록 열기",
+      "combobox.placeholder": "{min}자 이상 입력",
+      "combobox.idle": "{min}자 이상 입력해주세요",
+      "combobox.loading": "검색 중…",
+      "combobox.empty": "검색 결과가 없어요",
+      "combobox.error": "검색하지 못했어요. 다시 시도해주세요.",
+      "combobox.list": "검색 결과",
+      "combobox.results": "검색 결과 {count}개",
+      "combobox.remove": "{label} 빼기",
+      "connectionBanner.offline": "서버에 연결할 수 없어요. 잠시 후 다시 시도해주세요.",
+      "connectionBanner.reconnecting": "다시 연결하는 중이에요",
+      "connectionBanner.unstable": "연결이 불안정해요. 일부 내용이 늦게 보일 수 있어요.",
+      "connectionBanner.online": "다시 연결됐어요",
+      "connectionBanner.dismiss": "연결 안내 닫기",
+      "datePicker.label": "날짜 선택",
+      "datePicker.clear": "날짜 지우기",
+      "filter.label": "조회 조건",
+      "filter.applied": "조회 조건 — {count}개 적용됨",
+      "filter.description": "{title}을 고른 뒤 조회해요.",
+      "filter.reset": "초기화",
+      "filter.apply": "조회",
+      "filter.tags": "적용된 조회 조건",
+      "filter.remove": "{label} 조건 지우기",
+      "formSection.required": "필수",
+      "infoTooltip.label": "{label} 안내",
+      "listFooter.totalItems": "총 {count}개",
+      "listFooter.totalPeople": "총 {count}명",
+      "pageHeader.back": "뒤로",
+      "pagination.label": "페이지",
+      "pagination.previous": "이전 페이지",
+      "pagination.next": "다음 페이지",
+      "pagination.previousShort": "이전",
+      "pagination.nextShort": "다음",
+      "pagination.more": "생략된 페이지",
+      "pagination.page": "{page} 페이지",
+      "passwordInput.show": "비밀번호 표시",
+      "searchInput.clear": "입력 지우기",
+      "searchableSelect.all": "전체",
+      "searchableSelect.clear": "{label} 지우기",
+      "sidebar.title": "주 메뉴",
+      "sidebar.description": "화면을 이동하는 메뉴예요.",
+      "sidebar.collapse": "메뉴 접기",
+      "sidebar.expand": "메뉴 펼치기",
+      "slider.minimum": "최솟값",
+      "slider.maximum": "최댓값",
+      "slider.value": "{total}개 중 {index}번째 값",
+      "statCard.increase": "증가",
+      "statCard.decrease": "감소",
+      "statCard.noChange": "변동 없음",
+      "stepper.completed": "완료",
+      "toast.region": "알림",
+    },
+    en: {
+      "common.close": "Close",
+      "common.loading": "Loading",
+      "common.retry": "Try again",
+      "breadcrumb.label": "Breadcrumb",
+      "breadcrumb.more": "More levels",
+      "calendar.previousMonth": "Previous month",
+      "calendar.nextMonth": "Next month",
+      "calendar.year": "Year",
+      "calendar.month": "Month",
+      "calendar.today": "Today, {date}",
+      "calendar.selected": "{date}, selected",
+      "calendar.week": "Week {week}",
+      "calendar.weekHeader": "Week number",
+      "calendar.nav": "Month navigation",
+      "combobox.open": "Open list",
+      "combobox.placeholder": "Type {min}+ characters",
+      "combobox.idle": "Type {min}+ characters to search",
+      "combobox.loading": "Searching…",
+      "combobox.empty": "No results",
+      "combobox.error": "Couldn't search. Try again.",
+      "combobox.list": "Search results",
+      "combobox.results": "Results: {count}",
+      "combobox.remove": "Remove {label}",
+      "connectionBanner.offline": "Can't connect to the server. Try again in a moment.",
+      "connectionBanner.reconnecting": "Reconnecting",
+      "connectionBanner.unstable": "Your connection is unstable. Some content may load slowly.",
+      "connectionBanner.online": "Reconnected",
+      "connectionBanner.dismiss": "Close connection notice",
+      "datePicker.label": "Select date",
+      "datePicker.clear": "Clear date",
+      "filter.label": "Filters",
+      "filter.applied": "Filters — {count} applied",
+      "filter.description": "Choose {title}, then apply",
+      "filter.reset": "Reset",
+      "filter.apply": "Apply",
+      "filter.tags": "Applied filters",
+      "filter.remove": "Remove filter {label}",
+      "formSection.required": "Required",
+      "infoTooltip.label": "About {label}",
+      "listFooter.totalItems": "Total: {count}",
+      "listFooter.totalPeople": "Total: {count}",
+      "pageHeader.back": "Back",
+      "pagination.label": "Pagination",
+      "pagination.previous": "Previous page",
+      "pagination.next": "Next page",
+      "pagination.previousShort": "Previous",
+      "pagination.nextShort": "Next",
+      "pagination.more": "More pages",
+      "pagination.page": "Page {page}",
+      "passwordInput.show": "Show password",
+      "searchInput.clear": "Clear input",
+      "searchableSelect.all": "All",
+      "searchableSelect.clear": "Clear {label}",
+      "sidebar.title": "Main menu",
+      "sidebar.description": "Menu for moving between screens",
+      "sidebar.collapse": "Collapse menu",
+      "sidebar.expand": "Expand menu",
+      "slider.minimum": "Minimum",
+      "slider.maximum": "Maximum",
+      "slider.value": "Value {index} of {total}",
+      "statCard.increase": "Increase",
+      "statCard.decrease": "Decrease",
+      "statCard.noChange": "No change",
+      "stepper.completed": "Completed",
+      "toast.region": "Notifications",
+    },
+  }
+  /* MESSAGES:end */
+
+  /* I18N:start */
+  // 문구는 <html lang>이 en으로 시작하면 영어, 아니면 한국어다. 우선순위: 요소의 data-* 값 > setMessages > MESSAGES
+  // 프로젝트는 이 스크립트보다 먼저 window.dwMessages = { 'toast.region': '…' }를 두어 처음 그리는 문구도 바꾼다
+  const preloaded = typeof window !== 'undefined' ? window.dwMessages : undefined
+  const overrides = preloaded && typeof preloaded === 'object' && !Array.isArray(preloaded) ? { ...preloaded } : {}
+
+  function dwLocale() {
+    return /^en/i.test(document.documentElement.lang) ? 'en' : 'ko'
+  }
+
+  function msg(key, values, attr) {
+    // window.dwMessages·setMessages에 숫자 같은 값이 와도 멈추지 않게 글자로 바꾼다
+    const text = String(attr ?? overrides[key] ?? MESSAGES[dwLocale()][key])
+    return values ? text.replace(/\{(\w+)\}/g, (whole, name) => (Object.hasOwn(values, name) ? String(values[name]) : whole)) : text
+  }
+  /* I18N:end */
+
   const FOCUSABLE =
     'a[href], area[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), [contenteditable="true"]'
 
@@ -1002,9 +1159,9 @@
       region = document.createElement('div')
       region.className = 'dw-toast-region'
       region.setAttribute('role', 'region')
-      region.setAttribute('aria-label', '알림')
       document.body.append(region)
     }
+    region.setAttribute('aria-label', msg('toast.region')) // 영역은 재사용되므로 띄울 때마다 현재 언어로 맞춘다
     region.replaceChildren() // 닫히는 중인 이전 Toast도 바로 뺀다
 
     const el = document.createElement('div')
@@ -1203,14 +1360,14 @@
       }
       const el = cell('dw-pagination__page', n)
       el.textContent = String(n)
-      el.setAttribute('aria-label', `${n} 페이지`)
+      el.setAttribute('aria-label', msg('pagination.page', { page: n }))
       if (n === page) el.setAttribute('aria-current', 'page')
       return el
     }
     const cells = [
-      nav(page - 1, '이전 페이지', 'chevron-left', page === 1),
+      nav(page - 1, msg('pagination.previous'), 'chevron-left', page === 1),
       ...paginationRange(page, total, siblings).map(number),
-      nav(page + 1, '다음 페이지', 'chevron-right', page === total),
+      nav(page + 1, msg('pagination.next'), 'chevron-right', page === total),
     ]
     list.replaceChildren(...cells.map((el) => {
       const li = document.createElement('li')
@@ -1321,7 +1478,7 @@
     nav.dataset.state = state
     const trigger = nav.querySelector(':scope > .dw-sidenav__trigger')
     trigger?.setAttribute('aria-expanded', String(!collapsed))
-    trigger?.setAttribute('aria-label', collapsed ? '메뉴 펼치기' : '메뉴 접기')
+    trigger?.setAttribute('aria-label', msg(collapsed ? 'sidebar.expand' : 'sidebar.collapse'))
     syncSidenavTooltips(nav, collapsed)
   }
 
@@ -1426,7 +1583,7 @@
     const button = document.querySelector(`[data-dw-open="${sheet.id}"]`)
     const count = button?.querySelector('.dw-filter-button__count')
     if (button && count) {
-      button.setAttribute('aria-label', values.size > 0 ? `조회 조건 — ${values.size}개 적용됨` : '조회 조건')
+      button.setAttribute('aria-label', values.size > 0 ? msg('filter.applied', { count: values.size }) : msg('filter.label'))
       count.dataset.count = String(values.size)
       count.hidden = values.size === 0
     }
@@ -1446,7 +1603,7 @@
       const chip = item.querySelector('.dw-chip')
       if (chip) {
         chip.dataset.key = name
-        chip.setAttribute('aria-label', `${text} 조건 지우기`)
+        chip.setAttribute('aria-label', msg('filter.remove', { label: text }))
       }
       item.querySelector('.dw-chip__label')?.append(text)
       return item
@@ -1673,10 +1830,16 @@
     const dropdown = root.dataset.caption === 'dropdown'
     const header = document.createElement('div')
     header.className = 'dw-calendar__header'
-    header.innerHTML = `<button type="button" class="dw-calendar__nav" data-dw-calendar-nav="-1" aria-label="${root.dataset.labelPrev ?? '이전 달'}">${calendarIcon('chevron-left')}</button>`
-      + `<div class="dw-calendar__selects"${dropdown ? '' : ' hidden'}><select class="dw-calendar__select" data-dw-calendar-part="year" aria-label="${root.dataset.labelYear ?? '연도'}"></select><select class="dw-calendar__select" data-dw-calendar-part="month" aria-label="${root.dataset.labelMonth ?? '월'}"></select></div>`
+    header.innerHTML = `<button type="button" class="dw-calendar__nav" data-dw-calendar-nav="-1">${calendarIcon('chevron-left')}</button>`
+      + `<div class="dw-calendar__selects"${dropdown ? '' : ' hidden'}><select class="dw-calendar__select" data-dw-calendar-part="year"></select><select class="dw-calendar__select" data-dw-calendar-part="month"></select></div>`
       + `<div class="dw-calendar__title" id="${titleId}" aria-live="polite"${dropdown ? ' hidden' : ''}></div>`
-      + `<button type="button" class="dw-calendar__nav" data-dw-calendar-nav="1" aria-label="${root.dataset.labelNext ?? '다음 달'}">${calendarIcon('chevron-right')}</button>`
+      + `<button type="button" class="dw-calendar__nav" data-dw-calendar-nav="1">${calendarIcon('chevron-right')}</button>`
+    // 이름은 마크업에 끼우지 않고 속성으로 넣는다 — 문구에 " 나 < 가 있어도 그대로 남는다
+    const [prevButton, nextButton] = header.querySelectorAll('[data-dw-calendar-nav]')
+    prevButton.setAttribute('aria-label', msg('calendar.previousMonth', undefined, root.dataset.labelPrev))
+    nextButton.setAttribute('aria-label', msg('calendar.nextMonth', undefined, root.dataset.labelNext))
+    header.querySelector('[data-dw-calendar-part="year"]')?.setAttribute('aria-label', msg('calendar.year', undefined, root.dataset.labelYear))
+    header.querySelector('[data-dw-calendar-part="month"]')?.setAttribute('aria-label', msg('calendar.month', undefined, root.dataset.labelMonth))
     const grid = document.createElement('table')
     grid.className = 'dw-calendar__grid'
     grid.setAttribute('role', 'grid')
@@ -2114,11 +2277,11 @@
     const { status, retry, list } = comboboxParts(root)
     const { msgIdle, msgLoading, msgEmpty, msgError, msgResults } = root.dataset
     const texts = {
-      idle: msgIdle ?? `${comboboxMin(root)}자 이상 입력해주세요`,
-      loading: msgLoading ?? '검색 중…',
-      empty: msgEmpty ?? '검색 결과가 없어요',
-      error: msgError ?? '검색하지 못했어요. 다시 시도해주세요.',
-      results: (msgResults ?? '검색 결과 {count}개').replace('{count}', String(count)),
+      idle: msg('combobox.idle', { min: comboboxMin(root) }, msgIdle),
+      loading: msg('combobox.loading', undefined, msgLoading),
+      empty: msg('combobox.empty', undefined, msgEmpty),
+      error: msg('combobox.error', undefined, msgError),
+      results: msg('combobox.results', { count }, msgResults),
     }
     status.dataset.state = state
     status.textContent = texts[state]
@@ -2342,7 +2505,7 @@
     const remove = document.createElement('button')
     remove.type = 'button'
     remove.className = 'dw-combobox__chip-remove'
-    remove.setAttribute('aria-label', (root.dataset.msgRemove ?? '{label} 빼기').replace('{label}', option.label))
+    remove.setAttribute('aria-label', msg('combobox.remove', { label: option.label }, root.dataset.msgRemove))
     remove.innerHTML = '<svg aria-hidden="true"><use href="#i-x"/></svg>'
     chip.append(label, remove)
     if (root.dataset.name) {
@@ -2534,11 +2697,11 @@
 
   /* ── Connection Status Banner: online·offline 이벤트로 끊김·복구를 알린다 ── */
 
-  const CONNECTION_STATUS_BANNER_TEXT = {
-    offline: '서버에 연결할 수 없어요. 잠시 후 다시 시도해주세요.',
-    reconnecting: '다시 연결하는 중이에요',
-    unstable: '연결이 불안정해요. 일부 내용이 늦게 보일 수 있어요.',
-    online: '다시 연결됐어요',
+  const CONNECTION_STATUS_BANNER_KEY = {
+    offline: 'connectionBanner.offline',
+    reconnecting: 'connectionBanner.reconnecting',
+    unstable: 'connectionBanner.unstable',
+    online: 'connectionBanner.online',
   }
   const CONNECTION_STATUS_BANNER_RECOVER_MS = 3000
   const CONNECTION_STATUS_BANNER_CHECK_MS = 5000
@@ -2580,7 +2743,7 @@
       panel.hidden = false
       delete panel.dataset.closing
       // 라이브 영역은 글자가 바뀌어야 읽으므로 패널을 연 뒤 넣는다
-      title.textContent = root.getAttribute(`data-text-${status}`) ?? CONNECTION_STATUS_BANNER_TEXT[status]
+      title.textContent = msg(CONNECTION_STATUS_BANNER_KEY[status], undefined, root.getAttribute(`data-text-${status}`) ?? undefined)
       if (retry) {
         retry.hidden = status === 'online'
         retry.toggleAttribute('data-loading', status === 'reconnecting')
@@ -2666,5 +2829,5 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', revealInit, { once: true })
   else revealInit()
 
-  window.dw = { openModal, closeModal, showToast }
+  window.dw = { openModal, closeModal, showToast, setMessages: (table) => void Object.assign(overrides, table) }
 })()

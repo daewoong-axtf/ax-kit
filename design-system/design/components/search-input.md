@@ -79,6 +79,8 @@
 | Esc | 브라우저 기본으로 값만 비운다. 조회는 하지 않는다 |
 | Tab | Value → Clear → Submit |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `searchInput.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

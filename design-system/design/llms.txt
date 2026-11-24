@@ -16,6 +16,7 @@
 - [토큰 정본](tokens.json)
 - [CSS 변수](tokens.css)
 - [서버 템플릿 웹용 클래스](components.css)
+- [컴포넌트 문구 표 (한국어·영어)](messages.json)
 - [마크업 예시](catalog.html)
 
 ## 컴포넌트

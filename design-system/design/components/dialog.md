@@ -122,6 +122,7 @@ WAI-ARIA APG **Dialog (Modal)** 패턴을 따른다.
 - 그림자는 [`design.md` 7장](../design.md#7-깊이)의 `shadow-s3`다.
 - 뒤 화면 `inert`는 Root를 `body` 바로 아래로 옮긴 뒤 그 형제에 건다.
 - 주 버튼은 자동으로 닫지 않는다. 화면이 작업을 끝내고 닫는다. 보조 버튼은 `neutral-weak`, 닫기만 하면 `data-dw-close`를 붙인다.
+- 영어 문구는 [`messages.json`](../messages.json)의 `common.*`를 따른다.
 
 ## Responsive
 

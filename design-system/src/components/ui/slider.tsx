@@ -1,6 +1,10 @@
+"use client"
+
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Slider as SliderPrimitive } from "radix-ui"
+
+import { useDwMessages } from "@/lib/dw-locale"
 
 function Slider({
   className,
@@ -10,6 +14,7 @@ function Slider({
   max = 100,
   ...props
 }: React.ComponentProps<typeof SliderPrimitive.Root>) {
+  const t = useDwMessages()
   const _values = React.useMemo(
     () =>
       Array.isArray(value)
@@ -50,7 +55,15 @@ function Slider({
         <SliderPrimitive.Thumb
           data-slot="slider-thumb"
           key={index}
-          aria-label={props['aria-label']}
+          // aria-label이 없으면 Radix가 영어(Minimum·Maximum·Value n of m)를 붙이므로 같은 규칙의 문구를 넘긴다
+          aria-label={
+            props["aria-label"] ||
+            (_values.length === 2
+              ? t(index === 0 ? "slider.minimum" : "slider.maximum")
+              : _values.length > 2
+                ? t("slider.value", { index: index + 1, total: _values.length })
+                : undefined)
+          }
           className="block size-4 shrink-0 rounded-full border border-primary bg-white shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:opacity-50"
         />
       ))}

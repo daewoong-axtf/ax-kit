@@ -1,3 +1,5 @@
+"use client"
+
 import { RotateCcwIcon } from "lucide-react"
 import * as React from "react"
 
@@ -12,6 +14,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { FilterButton } from "@/components/ui/filter-button"
+import { useDwMessages } from "@/lib/dw-locale"
 
 // 가로로 눕힌 휴대폰은 너비가 넓어도 모바일이다 (design.md 9장)
 const WIDE_QUERY = "(min-width: 768px) and (min-height: 501px)"
@@ -60,9 +63,11 @@ function FilterSheet({
   onApply,
   onReset,
   onDismiss,
-  title = "조회 조건",
+  title: titleProp,
   className,
 }: FilterSheetProps) {
+  const t = useDwMessages()
+  const title = titleProp ?? t("filter.label")
   const [open, setOpen] = React.useState(false)
   const wide = useWideLayout()
 
@@ -91,13 +96,13 @@ function FilterSheet({
                 {description ? (
                   <DrawerDescription>{description}</DrawerDescription>
                 ) : (
-                  <DrawerDescription className="sr-only">{title}을 고른 뒤 조회해요.</DrawerDescription>
+                  <DrawerDescription className="sr-only">{t("filter.description", { title })}</DrawerDescription>
                 )}
               </div>
               {onReset && (
                 <Button type="button" variant="ghost" size="sm" className="-mt-1 shrink-0" onClick={onReset}>
                   <RotateCcwIcon />
-                  초기화
+                  {t("filter.reset")}
                 </Button>
               )}
             </div>
@@ -105,7 +110,7 @@ function FilterSheet({
           <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-4 py-0.5">{children}</div>
           <DrawerFooter className="shrink-0 pb-[max(1rem,env(safe-area-inset-bottom))]">
             <Button type="submit" size="lg">
-              조회
+              {t("filter.apply")}
             </Button>
           </DrawerFooter>
         </form>

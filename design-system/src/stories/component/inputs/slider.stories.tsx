@@ -34,3 +34,14 @@ export const Default: Story = {
 export const Range: Story = { args: { defaultValue: [20, 80] } }
 
 export const Disabled: Story = { args: { disabled: true } }
+
+/** aria-label 없이 범위를 고르면 두 손잡이 이름은 최솟값·최댓값이다(라이브러리 기본 영어 대신) */
+export const KoreanNames: Story = {
+  args: { defaultValue: [20, 80], 'aria-label': undefined },
+  globals: { locale: 'ko' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await expect(canvas.getByRole('slider', { name: '최솟값' })).toHaveAttribute('aria-valuenow', '20')
+    await expect(canvas.getByRole('slider', { name: '최댓값' })).toHaveAttribute('aria-valuenow', '80')
+  },
+}

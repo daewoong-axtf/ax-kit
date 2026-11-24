@@ -1,7 +1,10 @@
+"use client"
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 import { Card, CardContent } from "@/components/ui/card"
+import { useDwMessages } from "@/lib/dw-locale"
 
 interface FormSectionProps extends React.ComponentProps<"section"> {
   title: string
@@ -28,6 +31,7 @@ function FormSection({
   children,
   ...props
 }: FormSectionProps) {
+  const t = useDwMessages()
   const titleId = React.useId()
   const Heading = `h${headingLevel}` as const
 
@@ -39,7 +43,7 @@ function FormSection({
             {title}
             {required && (
               <span className="mt-1 ml-1 inline-block size-1.5 rounded-full bg-destructive align-top">
-                <span className="sr-only">필수</span>
+                <span className="sr-only">{t("formSection.required")}</span>
               </span>
             )}
           </Heading>

@@ -5,6 +5,7 @@ import { CheckIcon, ChevronDownIcon, XIcon } from 'lucide-react'
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
+import { useDwMessages } from '@/lib/dw-locale'
 import { cn } from '@/lib/utils'
 
 const Combobox = ComboboxPrimitive.Root
@@ -40,7 +41,7 @@ function ComboboxInput({
   showTrigger = true,
   showClear = false,
   clearLabel,
-  triggerLabel = '목록 열기',
+  triggerLabel,
   ...props
 }: ComboboxPrimitive.Input.Props & {
   showTrigger?: boolean
@@ -50,6 +51,7 @@ function ComboboxInput({
   /** 펼침 버튼의 접근 가능한 이름 */
   triggerLabel?: string
 }) {
+  const t = useDwMessages()
   return (
     <div
       data-slot='combobox-control'
@@ -65,7 +67,7 @@ function ComboboxInput({
         {...props}
       />
       {showClear && <ComboboxClear disabled={disabled} aria-label={clearLabel} />}
-      {showTrigger && <ComboboxTrigger disabled={disabled} aria-label={triggerLabel} />}
+      {showTrigger && <ComboboxTrigger disabled={disabled} aria-label={triggerLabel ?? t('combobox.open')} />}
       {children}
     </div>
   )

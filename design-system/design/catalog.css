@@ -7,9 +7,12 @@ main > section { scroll-margin-top: 72px; }
 .page-header { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; gap: var(--dw-spacing-x2) var(--dw-spacing-x3); padding: var(--dw-spacing-x3) var(--dw-spacing-x4); background: var(--dw-bg-layer-default); border-bottom: 1px solid var(--dw-stroke-neutral-subtle); }
 .page-header h1 { display: flex; align-items: center; gap: var(--dw-spacing-x2); flex: 1 1 0; min-width: 0; margin: 0; font-size: var(--dw-font-t5-size); line-height: var(--dw-font-t5-line-height); }
 .page-search { order: 1; display: none; flex-basis: 100%; }
-.page-nav { order: 2; display: none; flex-basis: 100%; flex-direction: column; gap: var(--dw-spacing-x0_5); max-height: calc(100dvh - 128px); overflow-y: auto; overscroll-behavior: contain; }
+.page-nav { order: 2; display: none; flex-basis: 100%; flex-direction: column; gap: var(--dw-spacing-x0_5); max-height: calc(100dvh - 128px - var(--dw-spacing-x9) - var(--dw-spacing-x2)); overflow-y: auto; overscroll-behavior: contain; }
 .page-header[data-open] .page-search { display: flex; }
 .page-header[data-open] .page-nav { display: flex; }
+/* 좁은 화면은 제목이 한 줄에 들도록 언어 링크를 메뉴를 열 때 검색 아래에 둔다 */
+#lang { order: 1; }
+.page-header:not([data-open]) #lang { display: none; }
 .page-nav__title { margin: var(--dw-spacing-x5) 0 0; padding: 0 var(--dw-spacing-x2_5); color: var(--dw-fg-neutral); font-size: var(--dw-font-t4-size); line-height: var(--dw-font-t4-line-height); font-weight: var(--dw-font-weight-bold); }
 .page-nav__title:first-child { margin-top: var(--dw-spacing-x1); }
 .page-nav__group { margin: var(--dw-spacing-x3) 0 var(--dw-spacing-x0_5); padding: 0 var(--dw-spacing-x2_5); color: var(--dw-fg-neutral-subtle); font-size: var(--dw-font-t2-size); line-height: var(--dw-font-t2-line-height); font-weight: var(--dw-font-weight-bold); }
@@ -26,14 +29,18 @@ main > section { scroll-margin-top: 72px; }
 @media (min-width: 768px) {
   body { padding-left: 272px; }
   main > section { scroll-margin-top: var(--dw-spacing-x6); }
-  .page-header { position: fixed; inset: 0 auto 0 0; flex-wrap: nowrap; flex-direction: column; align-items: stretch; width: 272px; padding: var(--dw-spacing-x4) var(--dw-spacing-x3); border-bottom: 0; border-right: 1px solid var(--dw-stroke-neutral-subtle); }
+  /* 제목·검색·메뉴는 한 줄씩, 맨 아래 줄에 언어 링크와 테마 버튼을 나란히 둔다 */
+  .page-header { position: fixed; inset: 0 auto 0 0; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto minmax(0, 1fr) auto; align-items: stretch; gap: var(--dw-spacing-x2); width: 272px; padding: var(--dw-spacing-x4) var(--dw-spacing-x3); border-bottom: 0; border-right: 1px solid var(--dw-stroke-neutral-subtle); }
+  .page-header > :not(#lang, #theme) { grid-column: 1 / -1; }
   .page-header h1 { flex: none; padding-right: 40px; font-size: var(--dw-font-t4-size); line-height: 32px; white-space: nowrap; }
   .page-search,
   .page-header[data-open] .page-search { order: 0; display: flex; flex: none; }
   .page-nav,
   .page-header[data-open] .page-nav { order: 0; display: flex; flex: 1; flex-basis: auto; min-height: 0; max-height: none; }
   .page-menu-btn { display: none; }
-  #theme { align-self: flex-start; }
+  #lang,
+  .page-header:not([data-open]) #lang { order: 0; display: inline-flex; }
+  #theme { justify-self: start; }
   .page-sidebar-btn { display: inline-flex; }
   [data-sidebar="closed"] body { padding-left: 0; }
   [data-sidebar="closed"] main { padding-inline: var(--dw-spacing-x14); }

@@ -120,6 +120,8 @@ WAI-ARIA APG **Date Grid** 패턴.
 | Enter · Space | 그 날 선택 |
 | Tab | 칸에서 다음 요소로. 팝업·모달 안에서는 그 안에서 돈다 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `calendar.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

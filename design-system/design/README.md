@@ -23,6 +23,8 @@
 
 충돌하면 앞쪽이 맞다. 뒤쪽을 고친다. `design.md`의 규칙은 컴포넌트 명세가 따로 정하지 않은 자리에 쓴다.
 
+컴포넌트가 만드는 문구(접근 가능한 이름·안내·상태 문구)의 정본은 [`messages.json`](messages.json)이다. 한국어·영어 표는 여기서 고친다([`content-i18n.md` 5장](guides/content-i18n.md#5-다국어-전환)).
+
 ## 파일
 
 | 파일 | 내용 | 수정 |
@@ -33,13 +35,18 @@
 | `tokens.css` | `--dw-*` CSS 변수 | 생성 — `pnpm build:tokens` |
 | `shadcn.css` | shadcn 변수를 토큰에 연결 (Next.js·React) | 직접 |
 | `components.css` | 서버 템플릿 웹용 `dw-*` 클래스 | 직접 |
-| `js/components.ts` | 컴포넌트 동작 원본 | 직접 |
+| `messages.json` | 컴포넌트 문구의 정본. `{ 키: { ko, en } }` | 직접 |
+| `js/components.ts` | 컴포넌트 동작 원본. `MESSAGES` 구역은 `messages.json`에서 생성 | 직접 (`MESSAGES` 구역은 생성 — `pnpm build:messages`) |
 | `js/components.js` | 브라우저가 읽는 동작 파일 | 생성 — `pnpm build:catalog` |
+| `../src/lib/dw-messages.ts` | React 컴포넌트가 읽는 문구 표 | 생성 — `pnpm build:messages` |
+| `../src/lib/dw-locale.tsx` · `../src/lib/dw-date.ts` | React 문구 Provider·훅(`DwLocaleProvider`·`useDwMessages`·`useDwLocale`), 달력·날짜 선택의 날짜 기본값(`useDwDate`) | 직접 |
 | `icons/` | 아이콘 SVG·`sprite.svg`·`icons.json` | 생성 — `pnpm build:icons` |
 | `brand/` | 회사 로고(CI) SVG·PNG·원본 AI | 수정 금지. 교체할 때 통째로 바꾼다 |
 | `guides/*.md` | UX·문구·인터랙션·콘텐츠·접근성 기본안. 정본 우선순위에 들지 않는다 | 서비스 성격에 맞게 자유롭게 |
 | `fonts/` | Pretendard 공식 동적 서브셋·라이선스 | 수정 금지. 버전을 올릴 때 통째로 교체 |
 | `catalog.html` | 토큰과 컴포넌트를 한 페이지에서 보는 카탈로그. 마크업 레퍼런스. 맨 아래 업데이트 기록은 릴리즈 때 자동으로 추가된다 | 절은 직접, 아이콘·메뉴 구역은 생성 — `pnpm build:catalog` |
+| `catalog.en.json` | 카탈로그 영어 번역표. 키는 `catalog.html`의 한국어 단위 | 직접 |
+| `catalog.en.html` | `catalog.html`의 영어판. 설정 프롬프트와 업데이트 기록 목록은 한국어로 둔다 | 생성 — `pnpm build:catalog` |
 | `catalog.css` · `js/catalog.js` | 카탈로그 페이지 틀. 제품에 쓰지 않는다 | 직접 |
 
 ## 점검 스킬
@@ -71,6 +78,7 @@
 - 색·간격·모서리·글자를 토큰 없이 쓰지 않는다. 스케일 밖 수치를 만들지 않는다.
 - 유채색 팔레트(`orange`·`charcoal`·`blue`·`green`·`yellow`·`red`·`purple`)를 직접 쓰지 않는다. 역할 토큰으로 부른다.
 - 생성 파일을 손으로 고치지 않는다.
+- 컴포넌트에 문구를 직접 적지 않는다. 문구는 `messages.json`에 두고 키로 부른다.
 - 이미 있는 컴포넌트의 클래스 이름과 마크업 구조를 바꾸지 않는다. `catalog.html`에서 복사한다. 새 컴포넌트는 프로젝트의 이름으로 만들고 `dw-` 접두사를 쓰지 않는다.
 - [`design.md` 12장](design.md#12-하지-말-것)의 항목을 어기지 않는다.
 

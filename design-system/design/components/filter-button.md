@@ -62,6 +62,8 @@ Root의 크기·색·상태는 [Button](button.md)을 따른다. 높이 40px `x1
 | --- | --- |
 | Enter · Space | 조회 조건을 연다 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `filter.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

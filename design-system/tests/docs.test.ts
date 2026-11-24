@@ -17,6 +17,12 @@ test('catalog.html generated regions are current', async () => {
   assert.equal(buildCatalog(html), html)
 })
 
+test('catalog.en.html is current', async () => {
+  const { buildCatalog, translateCatalog } = await import('../scripts/build-catalog.ts')
+  const { html } = translateCatalog(buildCatalog(read('catalog.html')), JSON.parse(read('catalog.en.json')))
+  assert.equal(read('catalog.en.html'), html)
+})
+
 test('components.js is generated from components.ts', async () => {
   const { buildBehaviorJs } = await import('../scripts/build-catalog.ts')
   assert.equal(buildBehaviorJs(read('js/components.ts')), read('js/components.js'))
@@ -62,7 +68,7 @@ test('setup prompt fills its placeholders and requires shadcn only for React', a
 test('옛 저장소 이름과 옛 Pages 주소가 남지 않는다', () => {
   // GitHub App 이름(daewoong-design-system-sync)은 그대로 쓰므로 주소 모양만 본다
   const stale = ['github.com/daewoong-axtf/daewoong-design-system', 'github.io/daewoong-design-system', 'releases/latest/download']
-  for (const file of ['../README.md', '../design/catalog.html', '../design/ai/setup-prompt.md']) {
+  for (const file of ['../README.md', '../design/catalog.html', '../design/catalog.en.html', '../design/ai/setup-prompt.md']) {
     const text = readFileSync(new URL(file, import.meta.url), 'utf8')
     for (const s of stale) assert.ok(!text.includes(s), `${file}에 ${s}가 남아 있다`)
   }

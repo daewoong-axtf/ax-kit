@@ -1,7 +1,10 @@
+"use client"
+
 import { ListFilterIcon } from "lucide-react"
 import type * as React from "react"
 
 import { Button } from "@/components/ui/button"
+import { useDwMessages } from "@/lib/dw-locale"
 import { cn } from "@/lib/utils"
 
 interface FilterButtonProps
@@ -15,13 +18,14 @@ interface FilterButtonProps
  * 조건 수는 접근 가능한 이름에도 넣는다.
  */
 function FilterButton({ activeCount, className, ...props }: FilterButtonProps) {
+  const t = useDwMessages()
   return (
     <Button
       type="button"
       variant="outline"
       size="icon"
       data-slot="filter-button"
-      aria-label={activeCount > 0 ? `조회 조건 — ${activeCount}개 적용됨` : "조회 조건"}
+      aria-label={activeCount > 0 ? t("filter.applied", { count: activeCount }) : t("filter.label")}
       className={cn(
         // 36px 버튼의 터치 히트 영역을 44px로 넓힌다
         "relative shrink-0 pointer-coarse:before:absolute pointer-coarse:before:-inset-1 pointer-coarse:before:content-['']",

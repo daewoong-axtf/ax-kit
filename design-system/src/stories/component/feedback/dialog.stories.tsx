@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dialog'
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import { en } from '@/lib/dw-messages'
 
 const meta = {
   title: 'Component/Feedback/Dialog',
@@ -67,5 +68,16 @@ export const Default: Story = {
     await userEvent.keyboard('{Escape}')
     await waitFor(() => expect(body.queryByRole('dialog')).not.toBeInTheDocument())
     await expect(trigger).toHaveFocus()
+  },
+}
+
+/** 툴바 언어가 English면 닫기 버튼 이름도 영어다 */
+export const English: Story = {
+  globals: { locale: 'en' },
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(canvasElement).getByRole('button', { name: '프로필 수정' }))
+    const dialog = await within(document.body).findByRole('dialog', { name: '프로필 수정' })
+    await expect(within(dialog).getByRole('button', { name: en['common.close'] })).toBeInTheDocument()
+    await expect(within(dialog).getByRole('button', { name: 'Close' })).toBeInTheDocument()
   },
 }

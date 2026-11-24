@@ -82,6 +82,8 @@
 | --- | --- |
 | Tab | 안쪽 컨트롤을 차례로 지난다. Section은 포커스를 받지 않는다 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `formSection.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

@@ -1,8 +1,11 @@
-// 카탈로그 페이지 동작 — 테마 전환, 메뉴 검색, 좁은 화면 메뉴, 현재 위치 표시
+// 카탈로그 페이지 동작 — 테마 전환, 언어 링크, 메뉴 검색, 좁은 화면 메뉴, 현재 위치 표시
 ;(() => {
   const root = document.documentElement
   const header = document.querySelector('.page-header')
   const nav = document.getElementById('page-nav')
+
+  // 영어판(catalog.en.html)이면 이 파일이 만드는 문구도 영어로 쓴다
+  const en = /^en/i.test(root.lang)
 
   // 카탈로그의 폼 예시는 실제로 전송하지 않는다
   document.addEventListener('dw:form-valid', (e) => e.preventDefault())
@@ -11,7 +14,7 @@
   const theme = document.getElementById('theme')
   const isDark = () => root.dataset.theme === 'dark' || (!root.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches)
   const syncTheme = () => {
-    const label = isDark() ? '라이트 모드로 전환' : '다크 모드로 전환'
+    const label = isDark() ? (en ? 'Switch to light mode' : '라이트 모드로 전환') : (en ? 'Switch to dark mode' : '다크 모드로 전환')
     theme.setAttribute('aria-label', label)
     theme.title = label
     theme.querySelector('use').setAttribute('href', isDark() ? '#i-sun' : '#i-moon')
@@ -21,6 +24,12 @@
     syncTheme()
   })
   syncTheme()
+
+  /* ── 언어 링크: 다른 언어판의 같은 절로 간다 ── */
+  const lang = document.getElementById('lang')
+  lang?.addEventListener('click', () => {
+    lang.hash = location.hash
+  })
 
   /* ── 메뉴 검색: 이름과 data-q(한글·영문 별칭)에서 찾는다 ── */
   const search = document.getElementById('page-search')
@@ -80,7 +89,7 @@
   const setSidebar = (open) => {
     if (open) delete root.dataset.sidebar
     else root.dataset.sidebar = 'closed'
-    const label = open ? '사이드바 접기' : '사이드바 펼치기'
+    const label = open ? (en ? 'Collapse sidebar' : '사이드바 접기') : (en ? 'Expand sidebar' : '사이드바 펼치기')
     sidebar.setAttribute('aria-label', label)
     sidebar.title = label
     sidebar.setAttribute('aria-expanded', String(open))
@@ -100,10 +109,10 @@
     const status = document.querySelector('.ai-prompt__status')
     try {
       await navigator.clipboard.writeText(prompt.textContent)
-      status.textContent = '복사했어요'
+      status.textContent = en ? 'Copied' : '복사했어요'
     } catch {
       getSelection().selectAllChildren(prompt)
-      status.textContent = '복사하지 못했어요. 선택된 글자를 직접 복사해 주세요.'
+      status.textContent = en ? "Couldn't copy. Copy the selected text yourself." : '복사하지 못했어요. 선택된 글자를 직접 복사해 주세요.'
     }
   })
 

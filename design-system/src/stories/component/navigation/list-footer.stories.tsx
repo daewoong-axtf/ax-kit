@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, within } from 'storybook/test'
 
-import { ListFooter } from '@/components/ui/list-footer'
+import { ListFooter, type ListCountUnit } from '@/components/ui/list-footer'
 import {
   Pagination,
   PaginationContent,
@@ -66,3 +67,13 @@ export const Mobile: Story = {
 export const People: Story = { args: { total: 36, unit: '명' } }
 
 export const Unknown: Story = { args: { total: null } }
+
+/** 정해진 단위(`명`·`개`) 밖의 값이 와도 `undefined`가 아니라 `개` 문구로 보인다 */
+export const UnknownUnit: Story = {
+  args: { total: 12, unit: '건' as ListCountUnit },
+  play: async ({ canvasElement }) => {
+    const text = canvasElement.querySelector('[data-slot="list-footer"] p')
+    await expect(text).toHaveTextContent('총 12개')
+    await expect(text).not.toHaveTextContent('undefined')
+  },
+}

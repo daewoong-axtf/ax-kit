@@ -61,6 +61,8 @@
 | --- | --- |
 | Tab | Pagination 안 링크 순서대로 이동 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `listFooter.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

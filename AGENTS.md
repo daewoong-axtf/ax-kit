@@ -9,5 +9,6 @@
 | `plugins/` | 팀 Claude 스킬(플러그인 마켓플레이스) | [plugins/README.md](plugins/README.md) — 추가하는 법. 스킬 원문은 받은 그대로 넣는다 |
 
 - `design-system/design/tokens.css`는 생성 파일이다. 직접 고치지 말고 `design-system/design/tokens.json`을 고친 뒤 `pnpm -C design-system build:tokens`.
+- `design-system/src/lib/dw-messages.ts`, `design-system/design/js/components.ts`의 `MESSAGES` 구역, `design-system/design/catalog.en.html`도 생성 파일이다. 컴포넌트 문구는 `design-system/design/messages.json`, 카탈로그 영어는 `design-system/design/catalog.en.json`을 고친 뒤 `pnpm -C design-system build`.
 - `rules/safety-rules/daewoong-coding-guide.md`는 생성 파일이다. 직접 고치지 말고 `rules/safety-rules/parts/`의 조각을 고친 뒤 `pnpm build:rules`. 버전(`version.txt`)과 `CHANGELOG.md`는 release-please가 고친다.
 - 변경 후 루트에서 `pnpm test`(가드 테스트)가 통과해야 한다.

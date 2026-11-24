@@ -16,6 +16,7 @@ import {
   ComboboxValue,
   useComboboxAnchor,
 } from '@/components/ui/combobox'
+import { useDwMessages } from '@/lib/dw-locale'
 
 /** 입력이 멎고 요청을 보내기까지(ms). 한글은 자모마다 입력이 바뀌어 더 짧으면 치는 중에도 요청이 나간다 */
 const DEFAULT_DEBOUNCE_MS = 400
@@ -191,18 +192,20 @@ function LiveStatus({ text }: { text: string }) {
 }
 
 function useTexts(minLength: number, messages?: AsyncComboboxMessages): Required<AsyncComboboxMessages> {
+  const t = useDwMessages()
   return {
-    idle: messages?.idle ?? `${minLength}자 이상 입력해주세요`,
-    loading: messages?.loading ?? '검색 중…',
-    empty: messages?.empty ?? '검색 결과가 없어요',
-    error: messages?.error ?? '검색하지 못했어요. 다시 시도해주세요.',
-    retry: messages?.retry ?? '다시 시도',
+    idle: messages?.idle ?? t('combobox.idle', { min: minLength }),
+    loading: messages?.loading ?? t('combobox.loading'),
+    empty: messages?.empty ?? t('combobox.empty'),
+    error: messages?.error ?? t('combobox.error'),
+    retry: messages?.retry ?? t('common.retry'),
   }
 }
 
 function SingleAsyncCombobox(props: CommonProps & SingleProps) {
   const { onSearch, minLength = DEFAULT_MIN_LENGTH, debounceMs = DEFAULT_DEBOUNCE_MS, exclude, disabledReason, value, onValueChange } = props
   const { setQuery, items, status, busy, retry } = useAsyncSearch(onSearch, minLength, debounceMs)
+  const t = useDwMessages()
   const texts = useTexts(minLength, props.messages)
   const [open, setOpen] = React.useState(false)
   const [text, setText] = React.useState(value?.label ?? '')
@@ -243,7 +246,7 @@ function SingleAsyncCombobox(props: CommonProps & SingleProps) {
       >
         <ComboboxInput
           id={props.id}
-          placeholder={props.placeholder ?? `${minLength}자 이상 입력`}
+          placeholder={props.placeholder ?? t('combobox.placeholder', { min: minLength })}
           autoComplete='off'
           disabled={props.disabled}
           showClear={!!value}
@@ -260,12 +263,12 @@ function SingleAsyncCombobox(props: CommonProps & SingleProps) {
         />
         <ComboboxContent>
           <StatusPanel status={status} texts={texts} retry={retry} />
-          <ComboboxList aria-busy={busy} aria-label={props.listLabel ?? '검색 결과'}>
+          <ComboboxList aria-busy={busy} aria-label={props.listLabel ?? t('combobox.list')}>
             {(option: AsyncComboboxOption) => <ItemRow key={option.value} option={option} reason={disabledReason?.(option) ?? null} />}
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
-      <LiveStatus text={status === 'results' ? `검색 결과 ${shown.length}개` : status === 'idle' ? '' : texts[status]} />
+      <LiveStatus text={status === 'results' ? t('combobox.results', { count: shown.length }) : status === 'idle' ? '' : texts[status]} />
     </>
   )
 }
@@ -273,6 +276,7 @@ function SingleAsyncCombobox(props: CommonProps & SingleProps) {
 function MultipleAsyncCombobox(props: CommonProps & MultipleProps) {
   const { onSearch, minLength = DEFAULT_MIN_LENGTH, debounceMs = DEFAULT_DEBOUNCE_MS, exclude, disabledReason, value, onValueChange } = props
   const { setQuery, items, status, busy, retry } = useAsyncSearch(onSearch, minLength, debounceMs)
+  const t = useDwMessages()
   const texts = useTexts(minLength, props.messages)
   const anchor = useComboboxAnchor()
   const [open, setOpen] = React.useState(false)
@@ -304,14 +308,14 @@ function MultipleAsyncCombobox(props: CommonProps & MultipleProps) {
         <ComboboxChips ref={anchor} className={props.className}>
           <ComboboxValue>
             {value.map((option) => (
-              <ComboboxChip key={option.value} aria-label={option.label} removeLabel={`${option.label} 빼기`}>
+              <ComboboxChip key={option.value} aria-label={option.label} removeLabel={t('combobox.remove', { label: option.label })}>
                 {option.label}
               </ComboboxChip>
             ))}
           </ComboboxValue>
           <ComboboxChipsInput
             id={props.id}
-            placeholder={value.length ? undefined : (props.placeholder ?? `${minLength}자 이상 입력`)}
+            placeholder={value.length ? undefined : (props.placeholder ?? t('combobox.placeholder', { min: minLength }))}
             autoComplete='off'
             disabled={props.disabled}
             aria-invalid={props['aria-invalid']}
@@ -325,12 +329,12 @@ function MultipleAsyncCombobox(props: CommonProps & MultipleProps) {
         </ComboboxChips>
         <ComboboxContent anchor={anchor}>
           <StatusPanel status={status} texts={texts} retry={retry} />
-          <ComboboxList aria-busy={busy} aria-label={props.listLabel ?? '검색 결과'}>
+          <ComboboxList aria-busy={busy} aria-label={props.listLabel ?? t('combobox.list')}>
             {(option: AsyncComboboxOption) => <ItemRow key={option.value} option={option} reason={disabledReason?.(option) ?? null} />}
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
-      <LiveStatus text={status === 'results' ? `검색 결과 ${shown.length}개` : status === 'idle' ? '' : texts[status]} />
+      <LiveStatus text={status === 'results' ? t('combobox.results', { count: shown.length }) : status === 'idle' ? '' : texts[status]} />
     </>
   )
 }

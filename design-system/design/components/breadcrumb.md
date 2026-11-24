@@ -65,6 +65,8 @@
 | Tab | 각 Link·Ellipsis |
 | Enter | 이동 / 접힌 단계 열기 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `breadcrumb.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |
