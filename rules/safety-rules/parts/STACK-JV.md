@@ -71,7 +71,7 @@ src/test/...           # main과 같은 패키지 구조
 
 - 테스트는 JUnit 5와 Spring Boot Test로 쓴다. Controller는 `@WebMvcTest`와 MockMvc로 테스트한다. Kotlin은 MockK를 써도 된다.
 - 권한 테스트(15번)는 `spring-security-test`(`@WithMockUser` 등)로 권한 없는 사용자가 차단되는지 확인한다.
-- 테스트가 없는 프로젝트는 `@SpringBootTest`와 MockMvc로 엔드포인트마다 현재 응답을 JSON 파일로 기록해 비교하는 특성 테스트를 만든다. 외부 HTTP 호출은 `MockRestServiceServer`로 가짜 응답을 준다. 테스트 DB는 Testcontainers로 운영과 같은 엔진(MariaDB 또는 PostgreSQL)을 쓴다.
+- 테스트가 없는 프로젝트는 `@SpringBootTest`와 MockMvc로 엔드포인트마다 현재 응답을 JSON 파일로 기록해 비교하는 특성 테스트를 만든다. 외부 HTTP 호출은 `MockRestServiceServer`로 가짜 응답을 준다. 테스트 DB는 Testcontainers로 운영과 같은 엔진(PostgreSQL)을 쓴다.
 - 시나리오(S-n)는 MockMvc 테스트로 만들고 `@DisplayName("S-01 ...")`으로 시나리오 ID를 붙인다. TDD 단위 테스트는 JUnit 5로 Service·도메인 클래스 단위로 만든다.
 
 ## JV-7. 아키텍처 패턴과 리팩토링

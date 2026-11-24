@@ -64,7 +64,7 @@ tests/
 ## PY-6. 테스트와 전환
 
 - 테스트는 pytest와 FastAPI `TestClient`로 `tests/`에 둔다. 권한 테스트(15번)는 `app.dependency_overrides`로 다른 사용자를 넣어 차단되는지 확인한다.
-- 테스트가 없는 프로젝트는 엔드포인트마다 `TestClient`로 현재 응답을 기록하는 특성 테스트를 만든다(syrupy 스냅샷). 외부 HTTP 호출은 respx로 가짜 응답을 준다. 테스트 DB는 테스트마다 새로 만든다. Testcontainers로 운영과 같은 엔진(MariaDB 또는 PostgreSQL)을 띄우고, Docker를 쓸 수 없으면 SQLite로 하되 그 사실을 `README.md`에 적는다.
+- 테스트가 없는 프로젝트는 엔드포인트마다 `TestClient`로 현재 응답을 기록하는 특성 테스트를 만든다(syrupy 스냅샷). 외부 HTTP 호출은 respx로 가짜 응답을 준다. 테스트 DB는 테스트마다 새로 만든다. Testcontainers로 운영과 같은 엔진(PostgreSQL)을 띄우고, Docker를 쓸 수 없으면 SQLite로 하되 그 사실을 `README.md`에 적는다.
 - 시나리오(S-n)는 `tests/scenarios/`에 `TestClient` 테스트로 만들고 함수 이름에 시나리오 ID를 넣는다(`test_s01_...`). TDD 단위 테스트는 `tests/unit/`에 둔다.
 - Streamlit·Gradio·Flask·Django 앱을 옮길 때는 계산·데이터 처리 함수를 `services/`로 옮겨 재사용하고, 화면은 TS 규칙으로 새로 만든다.
 
