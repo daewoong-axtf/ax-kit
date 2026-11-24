@@ -64,7 +64,7 @@
   "<strong>빈 화면과 로딩</strong> \"디자인 시스템 써서 목록이 비었을 때 안내와, 불러오는 동안 보일 자리 표시를 넣어줘\"": "<strong>Empty and loading states</strong> \"Using the design system, add a message for when the list is empty and placeholders to show while it loads\"",
   "<strong>기존 화면 정리</strong> \"이 화면을 디자인 시스템에 맞게 고쳐줘. 동작은 그대로 두고 색, 여백, 버튼만 바꿔줘\"": "<strong>Tidy up an existing screen</strong> \"Update this screen to match the design system. Keep the behavior and change only the colors, spacing and buttons\"",
   "<strong>점검하기</strong> \"디자인 시스템 기준으로 이 화면 점검해줘. 어두운 화면, 휴대폰 너비, 키보드 조작까지 봐줘\"": "<strong>Review</strong> \"Review this screen against the design system. Check dark mode, phone width and keyboard use too\"",
-  "<strong>새 버전 받기</strong> \"디자인 시스템 새 버전으로 올려줘. 업데이트 기록을 보고, 우리가 고친 파일은 덮어쓰지 마\"": "<strong>Get a new version</strong> \"Update to the new version of the design system. Check the release history, and don't overwrite files we changed\"",
+  "<strong>새 버전 받기</strong> dds 플러그인을 설치하고 \"/dds:dds-update\" 또는 \"디자인 시스템 새 버전으로 올려줘\"라고 입력해요. 우리가 고친 파일은 덮어쓰기 전에 물어봐요": "<strong>Get a new version</strong> Install the dds plugin and type \"/dds:dds-update\" or \"Update the design system to the new version\". It asks before overwriting files we changed",
   "이럴 때 찾아보세요": "When to look here",
   "<strong>화면을 기획할 때</strong> 쓸 수 있는 버튼과 입력창이 어떤 게 있는지 살펴보세요.": "<strong>When planning a screen</strong>, see which buttons and inputs are available.",
   "<strong>시안을 확인할 때</strong> 색과 글자 크기가 기준과 같은지 비교해 보세요.": "<strong>When reviewing a mockup</strong>, check that colors and text sizes match the standard.",

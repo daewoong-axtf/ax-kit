@@ -99,18 +99,29 @@ AI 도구에는 프로젝트 파일을 고칠 권한과 저장소를 받을 수 
 디자인 시스템 써서 목록이 비었을 때 안내와, 불러오는 동안 보일 자리 표시를 넣어줘
 이 화면을 디자인 시스템에 맞게 고쳐줘. 동작은 그대로 두고 색, 여백, 버튼만 바꿔줘
 디자인 시스템 기준으로 이 화면 점검해줘. 어두운 화면, 휴대폰 너비, 키보드 조작까지 봐줘
-디자인 시스템 새 버전으로 올려줘. 업데이트 기록을 보고, 우리가 고친 파일은 덮어쓰지 마
 ```
+
+새 판으로 올릴 때는 [버전](#버전)을 본다.
 
 ### AI용 문서
 
 - [문서 목록](design/llms.txt) — AI가 읽을 문서의 색인
 - [전체 문서](design/llms-full.txt) — 정본 문서를 한 파일로 합친 판
 - [설정 프롬프트 원본](design/ai/setup-prompt.md)
+- [업데이트 절차 원본](design/ai/update-prompt.md) — 설치한 프로젝트를 새 판으로 올리는 절차. `dds-update` 스킬이 받은 판에서 읽는다
 
 ### 버전
 
-설치한 저장소·ref·커밋은 프로젝트의 `docs/design-system.md`에 남는다. 이미 설치한 프로젝트는 자동으로 바뀌지 않는다. [자동 반영](#릴리즈와-자동-반영)에 등록한 저장소만 새 릴리즈가 PR로 온다. 올릴 때는 [업데이트 기록](https://daewoong-axtf.github.io/ax-kit/design/catalog.html#page-history-title)을 확인하고, 프로젝트에서 고친 파일을 덮어쓰지 않는지 비교한다.
+설치한 저장소·ref·커밋은 프로젝트의 `docs/design-system.md`에 남는다. 이미 설치한 프로젝트는 자동으로 바뀌지 않는다. [자동 반영](#릴리즈와-자동-반영)에 등록한 저장소만 새 릴리즈가 PR로 온다.
+
+새 판으로 올리려면 [`dds` 플러그인](../plugins/README.md)을 설치하고 프로젝트에서 아래 중 하나를 입력한다. 판을 말하지 않으면 최신 릴리즈로 올린다.
+
+```text
+/dds:dds-update
+디자인 시스템 새 버전으로 올려줘
+```
+
+`/dds:dds-update`는 Claude Code의 이름이다. Codex · Cursor 등은 프로젝트 맨 위 폴더에서 `npx skills add daewoong-axtf/ax-kit --skill dds-update`로 스킬을 넣고 같은 문장을 입력한다. 스킬은 올릴 판을 받아 그 판의 [업데이트 절차](design/ai/update-prompt.md)를 그대로 따른다. 지금 판 · 프로젝트 · 새 판 세 쪽을 비교해 프로젝트에서 고치지 않은 파일은 묻지 않고 바꾸고, 프로젝트에서 고친 파일을 새 판도 바꿨을 때만 한 번에 묻는다. [업데이트 기록](https://daewoong-axtf.github.io/ax-kit/design/catalog.html#page-history-title)에서 주의할 변경을 골라 알리고 `docs/design-system.md`를 새 판으로 고친다. 1.5.0까지의 판에는 업데이트 절차가 없다. 그 판으로 올리라고 하면 스킬이 절차를 지어내지 않고 멈춰서 이유를 알린다.
 
 ## 직접 설치하기
 
@@ -189,7 +200,7 @@ body {
 | [카탈로그](https://daewoong-axtf.github.io/ax-kit/design/catalog.html) | 모두 | 토큰과 컴포넌트를 한 페이지에서 보는 HTML. 언어와 무관하게 마크업을 복사해 쓴다 |
 | Storybook 링크 | React 개발자 | 동작하는 React 컴포넌트 모음 _(준비 중)_ |
 | [`design/`](design/) | 개발자·AI 에이전트 | 언어 무관 정본 — 토큰, 컴포넌트 명세, 순수 HTML/CSS 레퍼런스, 가이드 |
-| [`design/ai/setup-prompt.md`](design/ai/setup-prompt.md) · [`design/llms.txt`](design/llms.txt) | 현업·AI 에이전트 | 복사해서 쓰는 설정 프롬프트와 AI용 문서 |
+| [`design/ai/setup-prompt.md`](design/ai/setup-prompt.md) · [`design/ai/update-prompt.md`](design/ai/update-prompt.md) · [`design/llms.txt`](design/llms.txt) | 현업·AI 에이전트 | 복사해서 쓰는 설정 프롬프트, 새 판으로 올리는 절차, AI용 문서 |
 
 프로젝트에 붙이는 방법(React·Next.js는 Tailwind·shadcn + `tokens.css` + `shadcn.css`, 그 밖의 웹은 `tokens.css` + `components.css`, 웹이 아닌 곳은 `tokens.json`)은 [`design/design.md` 14장](design/design.md#14-환경별-적용)에 있다.
 

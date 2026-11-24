@@ -1,5 +1,6 @@
 // AI가 읽는 문서를 만든다
 //   design/ai/setup-prompt.md + package.json designSystem → catalog.html의 복사 프롬프트 (build-catalog.ts)
+//   design/ai/update-prompt.md 는 채우지 않는다 — dds-update 스킬이 받은 태그에서 그대로 읽는다. llms.txt 목록에만 넣는다
 //   design/llms.txt       읽을 문서 목록
 //   design/llms-full.txt  정본 문서를 한 파일로 합친 것
 //   README.md             <!--AI_PROMPT--> 구역의 복사 프롬프트
@@ -36,6 +37,7 @@ export function buildIndex(): string {
 - [읽는 순서와 금지사항](README.md)
 - [토큰 쓰임과 환경별 적용](design.md)
 - [프로젝트 설정 프롬프트](ai/setup-prompt.md)
+- [새 판으로 올리는 절차](ai/update-prompt.md)
 - [전체 문서를 한 파일로 합친 판](llms-full.txt)
 
 ## 값
