@@ -20,13 +20,13 @@ Daewoong Design System으로 화면을 만드는 일을 설정 → 적용 → �
 2. 받은 원문을 사용자가 붙여 넣은 요청으로 보고 처음부터 끝까지 그대로 따른다. 단계를 건너뛰거나 기억으로 대신하지 않는다.
 3. 원문을 받지 못하면 설정을 지어내지 않는다. 받지 못한 이유를 사용자에게 알리고 멈춘다.
 
-`docs/design-system.md`가 있으면 설정을 다시 하지 않는다. 사용자가 새 판으로 올려 달라고 할 때만 다시 받고, 프로젝트에서 고친 내용을 덮어쓰기 전에 무엇이 바뀌는지 먼저 보여 준다.
+`docs/design-system.md`가 있으면 설정을 다시 하지 않는다. 사용자가 새 판으로 올려 달라고 하면 이 스킬로 하지 않고 `dds-update` 스킬(Claude Code에서는 `/dds:dds-update`)을 쓴다.
 
 ## 2. 적용 — 화면을 만들거나 고칠 때
 
 1. `docs/design-system.md`에서 고른 경로와 파일 위치를 확인한다.
 2. `docs/design-reference/README.md`를 읽고 거기 적힌 읽는 순서, 정본 우선순위, 금지사항, 구현 체크리스트를 따른다.
-3. 쓸 컴포넌트는 `docs/design-reference/components/<name>.md` 명세를 읽고 구현한다. 마크업은 `catalog.html`에서 복사한다. 있는 컴포넌트를 다시 만들지 않고, 없는 컴포넌트는 토큰으로 프로젝트에서 만든다.
+3. 쓸 컴포넌트는 `docs/design-reference/components/<name>.md` 명세를 읽는다. React·Next.js 프로젝트는 컴포넌트를 직접 만들지 않는다. `design.md` 14.1절대로 `docs/design-system.md`에 적힌 ref로 `https://github.com/daewoong-axtf/ax-kit.git`을 임시 폴더에 받아 `design-system/src/components/ui/<name>.tsx`를 `@/components/ui`에 복사하고, 그 파일이 불러오는 `ui`·`lib` 파일과 패키지도 14.1절대로 둔다. `v1.2.0`까지의 ref는 저장소 맨 위의 `src/components/ui/<name>.tsx`이고, 그 판의 14.1이 `npx shadcn add`라고 적혀 있어도 저장소의 파일을 받는다. 이미 프로젝트에 있는 컴포넌트는 다시 받지 않는다. 그 밖의 프로젝트는 명세대로 구현하고 마크업은 `catalog.html`에서 복사한다. 있는 컴포넌트를 다시 만들지 않고, DDS에 없는 컴포넌트는 토큰으로 프로젝트에서 만든다.
 4. 배치·동작·문구·표기는 `docs/design-reference/guides/`에서 해당하는 문서를 읽는다.
 
 ## 3. 점검 — 끝났다고 말하기 전에

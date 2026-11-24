@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { test } from 'node:test'
 
 // 플러그인 하나를 넣을 때 고치는 곳: plugins/<이름>/ · marketplace.json · release-please-config · manifest · version.txt
@@ -85,4 +85,20 @@ test('plugins/README.md는 모든 플러그인과 Notion 연결 안내를 담고
   assert.match(guide, /Notion/)
   assert.ok(read('README.md').includes('(plugins/README.md'))
   assert.ok(read('AGENTS.md').includes('(plugins/README.md)'))
+})
+
+test('dds 플러그인은 설정 · 적용 스킬과 업데이트 스킬 두 개를 담는다', () => {
+  assert.deepEqual(dirs('plugins/dds/skills'), ['dds', 'dds-update'])
+})
+
+test('dds-update 스킬은 절차를 지어내지 않고 받은 판의 update-prompt.md를 따른다', () => {
+  const skill = read('plugins/dds/skills/dds-update/SKILL.md')
+  const path = 'design-system/design/ai/update-prompt.md'
+  assert.ok(skill.includes(path), `${path}를 가리키지 않는다`)
+  assert.ok(existsSync(new URL(`../${path}`, import.meta.url)), `${path}가 없다`)
+  assert.ok(skill.includes('https://github.com/daewoong-axtf/ax-kit.git'))
+  assert.ok(skill.includes('https://daewoong-axtf.github.io/ax-kit/guides/index.json'))
+  // dds 스킬은 업데이트를 직접 하지 않고 dds-update로 넘긴다
+  assert.ok(read('plugins/dds/skills/dds/SKILL.md').includes('dds-update'))
+  assert.ok(read('plugins/README.md').includes('--skill dds-update'))
 })
