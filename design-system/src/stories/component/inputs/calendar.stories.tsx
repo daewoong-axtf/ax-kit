@@ -3,7 +3,10 @@ import { useState } from 'react'
 import type { DateRange } from 'react-day-picker'
 import { expect, userEvent, within } from 'storybook/test'
 
+import { ja } from 'date-fns/locale'
+
 import { Calendar } from '@/components/ui/calendar'
+import { DwLocaleProvider } from '@/lib/dw-locale'
 
 const meta = {
   title: 'Component/Inputs/Calendar',
@@ -120,5 +123,19 @@ export const KoreanNames: Story = {
     await expect(canvas.getByRole('button', { name: /^오늘, .+, 선택됨$/ })).toBeInTheDocument()
     await expect(canvas.getByRole('combobox', { name: '연도' })).toBeInTheDocument()
     await expect(canvas.getAllByRole('rowheader', { name: /^\d+주차$/ }).length).toBeGreaterThan(0)
+  },
+}
+
+/** Provider의 dateLocale이 월 드롭다운의 이름도 바꾼다 (5.4) */
+export const DateLocaleMonths: Story = {
+  render: () => (
+    <DwLocaleProvider locale='ko' dateLocale={ja}>
+      <DropdownDemo />
+    </DwLocaleProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const month = canvas.getByRole('combobox', { name: '월' })
+    await expect(within(month).getByRole('option', { selected: true })).toHaveTextContent('5月')
   },
 }

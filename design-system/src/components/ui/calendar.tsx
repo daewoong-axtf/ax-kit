@@ -17,7 +17,7 @@ import {
 
 import { Button, buttonVariants } from '@/components/ui/button'
 import { useDwDate } from '@/lib/dw-date'
-import { useDwLocale, useDwMessages } from '@/lib/dw-locale'
+import { useDwMessages } from '@/lib/dw-locale'
 import { cn } from '@/lib/utils'
 
 function Calendar({
@@ -37,9 +37,9 @@ function Calendar({
 }) {
   const defaultClassNames = getDefaultClassNames()
   const t = useDwMessages()
-  const { locale: dwLocale } = useDwLocale()
   const { dateLocale } = useDwDate()
-  const intlLocale = dwLocale === 'en' ? 'en-US' : 'ko-KR'
+  // 월 드롭다운은 Intl로 만든다. 달력에 쓰는 date-fns 로케일의 code(ko·en-US·ja 등)를 그대로 넘긴다
+  const intlLocale = (locale ?? dateLocale).code
   // react-day-picker가 기본으로 내보내는 영어 이름을 문구 표로 바꾼다
   const dwLabels = React.useMemo<Partial<Labels>>(() => {
     const dayName: Labels['labelDayButton'] = (date, modifiers, options, dateLib) => {
