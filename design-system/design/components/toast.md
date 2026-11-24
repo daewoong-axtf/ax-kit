@@ -79,6 +79,8 @@
 | Tab | (Toast 안에 있을 때) Action |
 | Esc | Toast 닫기 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `toast.*`·`common.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

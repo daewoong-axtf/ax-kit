@@ -121,6 +121,8 @@ WAI-ARIA APG **Editable Combobox With List Autocomplete** 패턴.
 | Backspace | (다중, 입력이 빌 때) 마지막 칩 빼기 |
 | Home · End | 입력 안 커서 이동 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `combobox.*`·`common.*`를 따른다.
+
 ## async
 
 입력할 때마다 서버에서 찾는 변형이다. 보기가 많아 페이지에 다 실을 수 없을 때(회원 검색 등) 쓴다. React는 `AsyncCombobox`(`src/components/ui/async-combobox.tsx`)다.

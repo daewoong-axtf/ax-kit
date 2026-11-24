@@ -63,6 +63,7 @@
 - `role="progressbar"` + `aria-label`. determinate는 `aria-valuemin="0" aria-valuemax="100" aria-valuenow`.
 - 로딩 영역을 감싸는 요소에 `aria-busy="true"`.
 - 400ms 안에 끝나는 작업에는 띄우지 않는다(깜빡임 방지 — 300ms 지연 후 표시).
+- 영어 문구는 [`messages.json`](../messages.json)의 `common.*`를 따른다.
 
 ## Responsive
 

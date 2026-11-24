@@ -9,7 +9,7 @@
 
 ## 카탈로그
 
-토큰과 컴포넌트를 한 페이지에서 보는 [온라인 카탈로그](https://daewoong-axtf.github.io/ax-kit/design/catalog.html)다. 원본은 [`design/catalog.html`](design/catalog.html)이다.
+토큰과 컴포넌트를 한 페이지에서 보는 [온라인 카탈로그](https://daewoong-axtf.github.io/ax-kit/design/catalog.html)다. 원본은 [`design/catalog.html`](design/catalog.html)이다. 영어판 [`design/catalog.en.html`](design/catalog.en.html)은 `design/catalog.en.json` 번역표로 생성된다(`pnpm build:catalog`).
 
 ## AI로 설치하기
 
@@ -50,7 +50,7 @@ AI 도구에는 프로젝트 파일을 고칠 권한과 저장소를 받을 수 
 
 3. 받은 저장소의 `design-system/design/`을 이하 `design/`이라 부른다. 폴더를 나누기 전 태그(v1.2.0까지)는 저장소 맨 위에 `design/`이 있으니 그것을 쓴다. `design/README.md`, `design/llms.txt`, `design/design.md` 14장을 읽어줘. `design/` 전체는 참고 문서로 `docs/design-reference/`에 복사해줘. 이 폴더는 사용자에게 공개되는 경로에 두지 않는다. 그다음 아래에서 프로젝트에 맞는 경로 하나를 골라줘. 화면 실행에 쓰는 파일은 `fonts/`, `tokens.css`, `components.css`, `js/components.js`, `icons/`다.
    - 서버가 HTML을 만드는 웹(Django, Flask, Spring, Ktor 등): 실행 파일을 정적 파일 경로 아래 `design/`에 복사하고 `fonts/pretendard.css`, `tokens.css`, `components.css`, `js/components.js`를 공통 템플릿에 연결한다. 경로는 프레임워크의 정적 파일 방식을 따른다. 마크업은 `catalog.html`에서 복사한다.
-   - React·Next.js: Tailwind CSS v4와 shadcn/ui를 쓴다. 없으면 각 공식 설치 방법으로 설치한다. 단, 이미 다른 UI 라이브러리(MUI, Chakra, Ant Design, styled-components 등)를 쓰고 있으면 설치하기 전에 사용자에게 물어보고, 쓰지 않기로 하면 아래 Vue·Svelte 경로를 따른다. 실행 파일 중 `fonts/`, `icons/`, `tokens.css`, `shadcn.css`를 소스 경로(예: `src/design/`)에 복사하고 14.1절의 순서로 전역 CSS에서 불러온다. shadcn으로 받은 컴포넌트는 14.1절대로 비활성의 `pointer-events-none`을 지우고 메뉴·선택 항목의 `cursor-default`를 `cursor-pointer`로 바꿔 커서가 보이게 한다.
+   - React·Next.js: Tailwind CSS v4와 shadcn/ui를 쓴다. 없으면 각 공식 설치 방법으로 설치한다. 단, 이미 다른 UI 라이브러리(MUI, Chakra, Ant Design, styled-components 등)를 쓰고 있으면 설치하기 전에 사용자에게 물어보고, 쓰지 않기로 하면 아래 Vue·Svelte 경로를 따른다. 실행 파일 중 `fonts/`, `icons/`, `tokens.css`, `shadcn.css`를 소스 경로(예: `src/design/`)에 복사하고 14.1절의 순서로 전역 CSS에서 불러온다. 컴포넌트는 shadcn 원본 대신 14.1절대로 받은 저장소의 `design-system/src/components/ui/`에서 필요한 파일을 `src/lib/dw-locale.tsx`·`src/lib/dw-messages.ts`와 함께 복사한다. DDS에 없는 컴포넌트를 shadcn에서 새로 받았으면 14.1절대로 비활성의 `pointer-events-none`을 지우고 메뉴·선택 항목의 `cursor-default`를 `cursor-pointer`로 바꿔 커서가 보이게 한다.
    - Vue·Svelte 등 그 밖의 프론트엔드 프레임워크: 실행 파일 중 `js/components.js`를 뺀 나머지를 번들러가 처리하는 소스 경로(예: `src/design/`)에 복사하고 `fonts/pretendard.css`, `tokens.css`, `components.css`를 전역으로 불러온다. 동작은 그 프레임워크로 구현한다. Tailwind를 권장한다. 이미 쓰고 있으면 화면 배치에 그대로 쓰고, 없으면 설치할지 사용자에게 물어본다.
    - 웹이 아닌 환경(Flutter, Android, iOS, 데스크탑, PDF 등): 참고 문서만 두고, 14.3절대로 `tokens.json`을 그 플랫폼의 색·치수 정의로 옮긴다.
 
@@ -132,6 +132,7 @@ git clone --depth 1 --branch design-system-v<버전> https://github.com/daewoong
 | --- | --- | --- |
 | 서버가 HTML을 만드는 웹 (Django, Flask, Spring 등) | `fonts/` `icons/` `tokens.css` `components.css` `js/components.js` | 정적 파일 경로 아래 `design/` |
 | React · Next.js (Tailwind·shadcn) | `fonts/` `icons/` `tokens.css` `shadcn.css` | 소스 경로 아래 `design/` (예: `src/design/`) |
+| React · Next.js 컴포넌트 | 저장소의 `design-system/src/components/ui/<name>.tsx`, `src/lib/dw-locale.tsx`, `src/lib/dw-messages.ts` (`calendar`·`date-picker`는 `src/lib/dw-date.ts`도) | 프로젝트의 `src/components/ui/`·`src/lib/`. `design.zip`에는 없으므로 1번의 `git clone`으로 받는다 |
 | 그 밖의 프론트엔드 (Vue, Svelte 등) | `fonts/` `icons/` `tokens.css` `components.css` | 소스 경로 아래 `design/` (예: `src/design/`) |
 | 웹이 아닌 환경 (Flutter, Android, iOS 등) | `tokens.json` | [14.3절](design/design.md#14-환경별-적용)대로 플랫폼 값으로 옮긴다 |
 
@@ -198,13 +199,19 @@ body {
 
 `tokens.css`는 `tokens.json`에서 생성된다(`pnpm build:tokens`). 충돌하면 `tokens.json`이 이긴다.
 
+컴포넌트 문구(한국어·영어)의 정본은 `design/messages.json`이다.
+
 ## 개발
 
 ```bash
 pnpm build:tokens   # tokens.json → tokens.css
 pnpm build:icons    # lucide-react → design/icons/ (*.svg · sprite.svg · icons.json)
+pnpm build:messages # messages.json → src/lib/dw-messages.ts · components.ts의 MESSAGES 구역 (--check: 최신인지만 확인)
+pnpm build:catalog  # 카탈로그 아이콘·메뉴·프롬프트 · components.js · catalog.en.html (--check · --missing [절 id…])
 pnpm build:llms     # AI용 문서 → design/llms.txt · llms-full.txt, README 프롬프트
-pnpm test               # 토큰·가드 테스트
+pnpm build          # 위 다섯 개를 순서대로 (tokens → icons → messages → catalog → llms)
+pnpm test               # 토큰·문구·카탈로그 번역·가드 테스트
+pnpm typecheck
 ```
 
 ## 다른 서비스에서 받아 쓰기
@@ -265,4 +272,6 @@ pnpm test:storybook     # 스토리 play 테스트 + a11y (Chromium)
 pnpm shadcn add <name>  # shadcn 원본 컴포넌트 추가 (사내 프록시면 NODE_OPTIONS=--use-system-ca)
 ```
 
-`src/components/ui/`는 shadcn 원본 그대로다. 색·모서리·그림자는 `src/styles/globals.css`에서 shadcn 변수를 `design/tokens.css`의 `--dw-*` 토큰에 연결해 바꾼다 — 컴포넌트 소스를 고치지 않는다. 정본은 여전히 `design/`이다.
+`src/components/ui/`는 shadcn 원본에 컨트롤 높이·커서·문구 훅(`useDwMessages`)을 더한 DDS 자체 파일이다. 프로젝트는 `npx shadcn add`가 아니라 이 파일을 `src/lib/dw-locale.tsx`·`src/lib/dw-messages.ts`와 함께 복사한다(`calendar`·`date-picker`는 `src/lib/dw-date.ts`와 `date-fns`도 필요하다. [design.md 14.1](design/design.md#141-react--nextjs--tailwind--shadcn)). 색·모서리·그림자는 `src/styles/globals.css`에서 shadcn 변수를 `design/tokens.css`의 `--dw-*` 토큰에 연결해 바꾼다 — 컴포넌트 소스를 고치지 않는다. 정본은 여전히 `design/`이다.
+
+컴포넌트 문구는 `src/lib/dw-locale.tsx`의 `DwLocaleProvider`로 바꾼다. Provider가 없으면 한국어다. Storybook은 툴바의 언어(한국어·English)를 고르면 Provider로 감싸 그린다.

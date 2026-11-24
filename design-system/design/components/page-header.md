@@ -75,6 +75,8 @@
 | Tab | Back → Actions 순서로 이동 |
 | Enter | Back 이동 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `pageHeader.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

@@ -79,6 +79,8 @@
 | Tab / Shift+Tab | 시트 안 순환 |
 | Esc | 닫기 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `common.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

@@ -80,6 +80,8 @@
 | Enter · Space (Toggle) | 표시·숨김 전환 |
 | Enter (Value) | 폼 제출 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `passwordInput.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

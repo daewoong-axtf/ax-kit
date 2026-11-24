@@ -69,6 +69,8 @@ Tag의 크기·색·상태는 [Chip](chip.md) `outline-weak` · `small`을 따�
 | Tab | 다음 Tag |
 | Enter · Space | 그 조건 지우기 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `filter.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

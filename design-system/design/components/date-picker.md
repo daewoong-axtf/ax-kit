@@ -87,6 +87,8 @@ Value의 표기는 JS가 hidden input 값으로 채운다. 서버는 placeholder
 | Tab (칸에서) | 닫고 Trigger 다음 요소로 |
 | Shift + Tab (칸에서) | 달 이동 버튼으로 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `datePicker.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

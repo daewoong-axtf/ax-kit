@@ -105,6 +105,8 @@ Backdrop·Content·Handle·Header·Footer의 값과 열고 닫는 모션은 [Bot
 | Enter | 입력 필드에서 조회 |
 | Esc | 입력을 버리고 닫기 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `filter.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

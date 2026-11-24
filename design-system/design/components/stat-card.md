@@ -76,6 +76,8 @@ Root의 모양·padding은 [Card](card.md)를 따른다. 세로 gap만 4px `x1`�
 | --- | --- |
 | Tab | interactive일 때만 포커스를 받는다 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `statCard.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |

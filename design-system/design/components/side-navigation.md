@@ -86,6 +86,8 @@
 | Tab | Item 순서대로 |
 | Enter | 이동 / 하위 메뉴 토글 |
 
+- 영어 문구는 [`messages.json`](../messages.json)의 `sidebar.*`를 따른다.
+
 ## Responsive
 
 | 너비 | 변화 |
