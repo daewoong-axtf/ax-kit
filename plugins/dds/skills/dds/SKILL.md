@@ -1,6 +1,6 @@
 ---
 name: dds
-description: Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 그 토큰과 컴포넌트를 적용한 뒤 web-design-guidelines · ux-heuristics 스킬로 점검한다. 사용자가 "디자인 시스템 써", "디자인 시스템 설정해줘", "Daewoong Design System 써", "use the design system"이라고 하거나, docs/design-system.md가 있는 프로젝트에서 화면·컴포넌트·페이지를 만들거나 고치거나 UI를 점검해 달라고 하면 이 스킬을 쓴다.
+description: Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 그 토큰과 컴포넌트를 적용한 뒤 web-design-guidelines · ux-heuristics 스킬로 점검한다. 사용자가 "디자인 시스템 써", "디자인 시스템 설정해줘", "Daewoong Design System 써", "use the design system"이라고 하거나, docs/design-system.md가 있는 프로젝트에서 화면·컴포넌트·페이지를 만들거나 고치거나 UI를 점검해 달라고 하면 이 스킬을 쓴다. 설치한 디자인 시스템을 새 판으로 올리는 일은 이 스킬이 아니라 dds-update 스킬이 한다.
 ---
 
 # dds

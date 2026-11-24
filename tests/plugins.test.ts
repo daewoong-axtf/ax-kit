@@ -101,4 +101,9 @@ test('dds-update 스킬은 절차를 지어내지 않고 받은 판의 update-pr
   // dds 스킬은 업데이트를 직접 하지 않고 dds-update로 넘긴다
   assert.ok(read('plugins/dds/skills/dds/SKILL.md').includes('dds-update'))
   assert.ok(read('plugins/README.md').includes('--skill dds-update'))
+  assert.ok(skill.includes('mktemp -d'))
+  // 절차가 처음 들어가는 릴리즈를 문서와 스킬이 같은 말로 알린다
+  for (const p of ['plugins/README.md', 'design-system/README.md', 'plugins/dds/skills/dds-update/SKILL.md']) {
+    assert.ok(read(p).includes('1.5.0 다음 design-system 릴리즈'), p)
+  }
 })

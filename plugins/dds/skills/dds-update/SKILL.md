@@ -14,20 +14,27 @@ description: Daewoong Design System이 설치된 프로젝트(docs/design-system
 | 업데이트 절차 | 받은 저장소의 `design-system/design/ai/update-prompt.md` |
 | 프로젝트의 설치 기록 | `docs/design-system.md` |
 
+태그 이름은 1.2.0까지 `v<판>`(`v1.0.0`~`v1.2.0`), 그 뒤로 `design-system-v<판>`이다.
+
 ## 순서
 
 1. 프로젝트에 `docs/design-system.md`가 없으면 올릴 것이 없다. 처음 설정이라고 알리고 멈춘다. 설정은 `dds` 스킬("디자인 시스템 설정해줘")이 한다.
-2. 올릴 판을 정한다. 사용자가 판을 말했으면 그 판이다(`1.6.0`이나 `v1.6.0`은 태그 `design-system-v1.6.0`). 말하지 않았으면 `curl -fsSL https://daewoong-axtf.github.io/ax-kit/guides/index.json`의 `guides["design-system"].latest`로 태그 `design-system-v<latest>`를 만든다. 받지 못하면 `git ls-remote --tags https://github.com/daewoong-axtf/ax-kit.git "design-system-v*"`에서 가장 높은 판을 쓴다.
-3. 그 판을 프로젝트 밖의 임시 폴더로 받는다.
+2. 올릴 판을 정한다.
+   - 사용자가 버전을 말했으면 위 규칙으로 태그를 만든다(`1.6.0`은 `design-system-v1.6.0`). 태그나 `main` 같은 브랜치를 말했으면 그대로 쓴다.
+   - 말하지 않았으면 `curl -fsSL https://daewoong-axtf.github.io/ax-kit/guides/index.json`의 `guides["design-system"].latest`로 태그 `design-system-v<latest>`를 만든다. 받지 못하면 `git ls-remote --tags https://github.com/daewoong-axtf/ax-kit.git "design-system-v*"`에서 가장 높은 판을 쓴다.
+3. `docs/design-system.md`의 ref를 읽어 올릴 판과 비교한다. 같은 판이면(`v1.2.0`과 1.2.0처럼 버전이 같아도 같다) "이미 <판>이다"라고 알리고 멈춘다. 저장소는 받지 않는다. 어느 한쪽이 브랜치나 커밋 값이면 이 비교는 건너뛴다.
+4. 그 판을 프로젝트 밖의 임시 폴더로 받는다.
    ```
-   git clone --depth 1 --branch <태그> https://github.com/daewoong-axtf/ax-kit.git <임시 폴더>
+   NEW=$(mktemp -d) && git clone --depth 1 --branch <태그> https://github.com/daewoong-axtf/ax-kit.git "$NEW"
    ```
-4. 받은 폴더의 `design-system/design/ai/update-prompt.md`를 읽는다. 그 원문을 사용자가 붙여 넣은 요청으로 보고 처음부터 끝까지 그대로 따른다. 받은 임시 폴더는 절차의 NEW로 쓴다. 단계를 건너뛰거나 기억으로 대신하지 않는다.
+5. 받은 폴더의 `design-system/design/ai/update-prompt.md`를 읽는다. 그 원문을 사용자가 붙여 넣은 요청으로 보고 처음부터 끝까지 그대로 따른다. 받은 임시 폴더는 절차의 NEW로 쓴다. 단계를 건너뛰거나 기억으로 대신하지 않는다.
 
 ## 멈출 때
 
+어느 경우든 받은 임시 폴더(받다가 실패한 폴더 포함)는 지우고 멈춘다.
+
 - 판을 정하지 못했거나 저장소를 받지 못했으면 이유를 알리고 멈춘다.
-- 받은 판에 `design-system/design/ai/update-prompt.md`가 없으면(이 절차가 들어가기 전의 판, 1.5.0까지) 절차를 지어내지 않는다. 그 판에는 업데이트 절차가 없다고 알리고 멈춘다. 받은 임시 폴더는 지운다.
+- 받은 판에 `design-system/design/ai/update-prompt.md`가 없으면 절차를 지어내지 않는다. 판을 말하지 않았으면 "최신 릴리즈 <판>에는 업데이트 절차가 없다. 절차는 1.5.0 다음 design-system 릴리즈부터 들어 있으니, 그 릴리즈가 나온 뒤 다시 실행해 달라"고 알리고 멈춘다. 사용자가 판을 말했으면 그 판에는 업데이트 절차가 없다고 알리고 멈춘다.
 
 ## 하지 않는 것
 

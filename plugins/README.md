@@ -90,7 +90,7 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
 - 화면을 만들거나 고치면 프로젝트에 복사된 `docs/design-reference/`를 읽고 토큰과 컴포넌트를 쓴다.
 - 끝내기 전에 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다. 두 스킬은 처음 한 번 GitHub에서 받아 프로젝트의 `.agents/skills/`에 두고, 그 뒤로는 프로젝트에 있는 것을 계속 쓴다.
 - 스킬 지적이 디자인 시스템과 어긋나면 디자인 시스템을 따른다.
-- 새 판으로 올릴 때는 `dds-update` 스킬이 맡는다. Claude Code에서는 `/dds:dds-update`로 바로 부른다. 판을 말하지 않으면 최신 릴리즈로 올린다. 올릴 판을 받아 그 판의 [업데이트 절차](../design-system/design/ai/update-prompt.md)를 그대로 따르고, 프로젝트에서 고친 파일을 새 판도 바꿨을 때만 묻는다. 1.5.0까지의 판에는 이 절차가 없어서 그 판으로는 멈추고 이유를 알린다.
+- 새 판으로 올릴 때는 `dds-update` 스킬이 맡는다. Claude Code에서는 `/dds:dds-update`로 바로 부른다. 판을 말하지 않으면 최신 릴리즈로 올린다. 올릴 판을 받아 그 판의 [업데이트 절차](../design-system/design/ai/update-prompt.md)를 그대로 따르고, 프로젝트에서 고친 파일을 새 판도 바꿨을 때만 묻는다. **1.5.0 다음 design-system 릴리즈부터 동작한다.** 업데이트 절차가 그 릴리즈에 처음 들어가므로, 그 전에는 절차가 없다고 알리고 멈춘다.
 - 사용자가 올려 달라고 하기 전에는 디자인 시스템을 올리지 않는다.
 
 ## 업데이트
