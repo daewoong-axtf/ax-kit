@@ -26,6 +26,18 @@ interface MultiSelectProps {
 }
 
 /**
+ * 보기 앞 체크박스 — Checkbox medium·brand 모양(select.md "Item checkbox (다중)").
+ * 장식이라 aria-hidden이고 포커스를 받지 않는다. 켜짐은 보기의 aria-selected가 알린다.
+ * 20px 상자를 14/20 줄의 첫 줄 가운데에 둔다.
+ */
+const CHECKBOX = cn(
+  'group/checkbox flex size-5 shrink-0 items-center justify-center rounded-[var(--dw-radius-r1)] bg-[var(--dw-bg-transparent)] text-[var(--dw-fg-on-brand-solid)] shadow-[inset_0_0_0_1px_var(--dw-stroke-neutral-weak)]',
+  'transition-colors duration-(--dw-duration-color-transition) ease-(--dw-easing-easing)',
+  'data-checked:not-data-disabled:bg-[var(--dw-bg-brand-solid)] data-checked:not-data-disabled:shadow-none',
+  'data-disabled:bg-[var(--dw-bg-disabled)] data-disabled:text-[var(--dw-fg-disabled)] data-disabled:shadow-[inset_0_0_0_1px_var(--dw-stroke-neutral-muted)]',
+)
+
+/**
  * (DW 커스텀) Radix Select는 다중 선택이 없어 Base UI로 만든다. 명세는 design/components/select.md
  */
 function MultiSelect({
@@ -99,12 +111,18 @@ function MultiSelect({
                   value={option.value}
                   disabled={option.disabled}
                   data-slot="multi-select-item"
-                  className="relative flex cursor-pointer items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none select-none data-disabled:opacity-50 data-highlighted:bg-accent data-highlighted:text-accent-foreground"
+                  className="relative flex cursor-pointer items-start gap-2 rounded-sm px-2 py-1.5 text-sm outline-none select-none data-disabled:cursor-not-allowed data-disabled:text-[var(--dw-fg-disabled)] data-highlighted:not-data-disabled:bg-accent data-highlighted:not-data-disabled:text-accent-foreground"
                 >
-                  <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>
-                  <SelectPrimitive.ItemIndicator className="absolute right-2 flex size-3.5 items-center justify-center">
-                    <CheckIcon className="size-4" />
+                  <SelectPrimitive.ItemIndicator
+                    keepMounted
+                    data-slot="multi-select-checkbox"
+                    data-disabled={option.disabled ? '' : undefined}
+                    render={(props, state) => <span {...props} data-checked={state.selected ? '' : undefined} />}
+                    className={CHECKBOX}
+                  >
+                    <CheckIcon className="size-3 opacity-0 transition-opacity duration-(--dw-duration-color-transition) ease-(--dw-easing-easing) group-data-checked/checkbox:opacity-100" />
                   </SelectPrimitive.ItemIndicator>
+                  <SelectPrimitive.ItemText className="min-w-0">{option.label}</SelectPrimitive.ItemText>
                 </SelectPrimitive.Item>
               ))}
             </SelectPrimitive.List>
