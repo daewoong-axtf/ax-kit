@@ -104,4 +104,9 @@ export const Desktop: Story = {
 
 export const Mobile: Story = {
   globals: { viewport: { value: 'mobile' } },
+  play: async ({ canvasElement }) => {
+    // 모바일에서는 state가 아니라 서랍이 열렸는지로 이름이 정해진다
+    const canvas = within(canvasElement)
+    await expect(canvas.getByRole('button', { name: '메뉴 펼치기' })).toBeInTheDocument()
+  },
 }

@@ -260,9 +260,10 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar, state } = useSidebar()
+  const { toggleSidebar, state, isMobile, openMobile } = useSidebar()
   const t = useDwMessages()
-  const label = t(state === "expanded" ? "sidebar.collapse" : "sidebar.expand")
+  const expanded = isMobile ? openMobile : state === "expanded"
+  const label = t(expanded ? "sidebar.collapse" : "sidebar.expand")
 
   return (
     <Button
@@ -284,9 +285,10 @@ function SidebarTrigger({
 }
 
 function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
-  const { toggleSidebar, state } = useSidebar()
+  const { toggleSidebar, state, isMobile, openMobile } = useSidebar()
   const t = useDwMessages()
-  const label = t(state === "expanded" ? "sidebar.collapse" : "sidebar.expand")
+  const expanded = isMobile ? openMobile : state === "expanded"
+  const label = t(expanded ? "sidebar.collapse" : "sidebar.expand")
 
   return (
     <button
