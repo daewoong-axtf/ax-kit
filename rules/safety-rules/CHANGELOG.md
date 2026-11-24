@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/daewoong-axtf/ax-kit/compare/safety-rules-v1.2.0...safety-rules-v1.3.0) (2026-11-24)
+
+
+### 새로 추가된 기능
+
+* 운영 DB를 PostgreSQL 하나로 통일 ([#29](https://github.com/daewoong-axtf/ax-kit/issues/29)) ([dbdb6ab](https://github.com/daewoong-axtf/ax-kit/commit/dbdb6abfa3e3b50357e7677a5bc364721ed9cc3c))
+
 ## [1.2.0](https://github.com/daewoong-axtf/ax-kit/compare/safety-rules-v1.1.0...safety-rules-v1.2.0) (2026-11-23)
 
 
