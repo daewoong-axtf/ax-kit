@@ -10,6 +10,7 @@ import {
   ComboboxItem,
   ComboboxList,
 } from '@/components/ui/combobox'
+import { useDwMessages } from '@/lib/dw-locale'
 
 interface SearchableSelectProps {
   /** 고를 수 있는 값 — 보이는 문구와 값이 같다 */
@@ -38,9 +39,10 @@ export function SearchableSelect({
   onValueChange,
   label,
   id,
-  placeholder = '전체',
+  placeholder,
   className,
 }: SearchableSelectProps) {
+  const t = useDwMessages()
   const items =
     value && !options.includes(value) ? [...options, value] : options
 
@@ -68,15 +70,15 @@ export function SearchableSelect({
     >
       <ComboboxInput
         id={id}
-        placeholder={placeholder}
+        placeholder={placeholder ?? t('searchableSelect.all')}
         autoComplete='off'
         showClear={!!value}
-        clearLabel={`${label} 지우기`}
+        clearLabel={t('searchableSelect.clear', { label })}
         className={className}
         onInput={(event) => setQuery(event.currentTarget.value)}
       />
       <ComboboxContent>
-        <ComboboxEmpty>검색 결과가 없어요</ComboboxEmpty>
+        <ComboboxEmpty>{t('combobox.empty')}</ComboboxEmpty>
         <ComboboxList aria-label={label}>
           {(item: string) => (
             <ComboboxItem key={item} value={item}>

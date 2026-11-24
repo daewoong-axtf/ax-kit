@@ -1,6 +1,9 @@
+"use client"
+
 import { XIcon } from "lucide-react"
 import * as React from "react"
 
+import { useDwMessages } from "@/lib/dw-locale"
 import { cn } from "@/lib/utils"
 
 interface FilterTagItem<K extends string = string> {
@@ -29,9 +32,10 @@ function FilterTags<K extends string>({
   onRemove,
   focusAfterEmptyRef,
   className,
-  "aria-label": ariaLabel = "적용된 조회 조건",
+  "aria-label": ariaLabel,
   ...props
 }: FilterTagsProps<K>) {
+  const t = useDwMessages()
   const listRef = React.useRef<HTMLUListElement>(null)
 
   function handleRemove(key: K, event: React.MouseEvent<HTMLButtonElement>) {
@@ -53,7 +57,7 @@ function FilterTags<K extends string>({
     <ul
       ref={listRef}
       data-slot="filter-tags"
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? t("filter.tags")}
       className={cn("flex min-w-0 flex-wrap items-center gap-x-2 gap-y-3", className)}
       {...props}
     >
@@ -63,7 +67,7 @@ function FilterTags<K extends string>({
           <li key={item.key} className="max-w-full min-w-0">
             <button
               type="button"
-              aria-label={`${text} 조건 지우기`}
+              aria-label={t("filter.remove", { label: text })}
               onClick={(event) => handleRemove(item.key, event)}
               className="relative inline-flex h-8 max-w-full min-w-11 cursor-pointer items-center justify-center gap-1 rounded-full bg-(--dw-bg-transparent) px-3 pr-2 text-sm font-medium whitespace-nowrap shadow-[inset_0_0_0_1px_var(--dw-stroke-neutral-muted)] transition-colors outline-none hover:bg-(--dw-bg-transparent-pressed) focus-visible:ring-[3px] focus-visible:ring-ring/50 pointer-coarse:before:absolute pointer-coarse:before:inset-x-0 pointer-coarse:before:-inset-y-1.5 pointer-coarse:before:content-['']"
             >

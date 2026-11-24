@@ -135,3 +135,46 @@ test('link underline offset defaults to spacing-x1 everywhere', () => {
   assert.match(read('components.css'), /:root \{ text-underline-offset: var\(--dw-spacing-x1\); \}/)
   assert.doesNotMatch(read('components.css'), /text-underline-offset: (?!var\(--dw-spacing-)/)
 })
+
+test('React components take copy from messages.json', () => {
+  // 주석을 지운다. 문자열 안의 `//`(URL 등)는 앞이 `:`이면 남긴다
+  const strip = (src: string) => src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1')
+  // `{…}` 표현식을 안쪽부터 지운다(중첩 중괄호 포함)
+  const dropExpressions = (text: string) => {
+    let prev
+    do [prev, text] = [text, text.replace(/\{[^{}]*\}/g, '')]
+    while (text !== prev)
+    return text
+  }
+  // list-footer의 단위 타입 `"명" | "개"`는 공개 API라 남긴다(보이는 문구는 listFooter.total*)
+  const allowed: Record<string, RegExp> = { 'list-footer.tsx': /"(?:명|개)"/g }
+  const found: string[] = []
+  for (const f of readdirSync('src/components/ui')) {
+    const code = strip(readFileSync(`src/components/ui/${f}`, 'utf8')).replace(allowed[f] ?? /$^/g, '""')
+    for (const m of code.matchAll(/[가-힣][^\n]*/g)) found.push(`${f}: 한글 ${m[0].trim()}`)
+    // aria-label·title·placeholder는 {…} 표현식만 허용한다(문자열 리터럴 금지)
+    for (const m of code.matchAll(/\b(?:aria-label|title|placeholder)=(?:["']|\{\s*["'`])[^\n]*/g)) found.push(`${f}: 속성 ${m[0].trim()}`)
+    // sr-only 요소의 글자는 {…} 표현식만 허용한다
+    for (const m of code.matchAll(/["'\s]sr-only["'\s][^>]*>([^<]*)</g)) {
+      const text = dropExpressions(m[1]).trim()
+      if (text) found.push(`${f}: sr-only ${text}`)
+    }
+    // JSX 글자(`>`와 `<`/`{` 사이)에 글자가 있으면 안 된다 — 한글이든 영어든. 예: <Button>Close</Button>
+    // `=>`·`->` 뒤, 코드 기호가 섞인 조각, `,`로 시작하는 객체·타입 조각, 제네릭 뒤 키워드(`Promise<T> return`, `<T> extends`)는 코드라 뺀다
+    for (const m of code.matchAll(/(?<![=-])>([^<>{}]*)(?=[<{])/g)) {
+      const text = m[1].trim()
+      if (/\p{L}/u.test(text) && !/[()=;&|"'`]/.test(text) && !/^,/.test(text) && !/^(?:return|extends)\b/.test(text)) {
+        found.push(`${f}: JSX 글자 ${text}`)
+      }
+    }
+  }
+  assert.deepEqual(found, [])
+})
+
+test('only calendar and date-picker need date-fns', () => {
+  // dialog.tsx처럼 날짜와 무관한 컴포넌트를 dw-locale.tsx·dw-messages.ts와 함께 가져가면 date-fns 없이 빌드된다
+  const usesDateFns = (src: string) => /from\s+['"]date-fns(?:\/[^'"]*)?['"]|import\(\s*['"]date-fns/.test(src)
+  assert.equal(usesDateFns(readFileSync('src/lib/dw-locale.tsx', 'utf8')), false, 'dw-locale.tsx')
+  assert.equal(usesDateFns(readFileSync('src/lib/dw-messages.ts', 'utf8')), false, 'dw-messages.ts')
+  assert.equal(/from\s+['"]@\/lib\/dw-date['"]/.test(readFileSync('src/components/ui/dialog.tsx', 'utf8')), false, 'dialog.tsx')
+})

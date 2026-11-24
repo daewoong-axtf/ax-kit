@@ -1,6 +1,9 @@
+'use client'
+
 import { CheckIcon } from 'lucide-react'
 import type * as React from 'react'
 
+import { useDwMessages } from '@/lib/dw-locale'
 import { cn } from '@/lib/utils'
 
 interface StepperProps extends Omit<React.ComponentProps<'ol'>, 'children'> {
@@ -12,6 +15,7 @@ interface StepperProps extends Omit<React.ComponentProps<'ol'>, 'children'> {
 
 /** 흐름의 전체 단계와 지금 위치를 보여 준다. 명세: design/components/stepper.md */
 function Stepper({ steps, current, className, ...props }: StepperProps) {
+  const t = useDwMessages()
   return (
     <ol
       data-slot='stepper'
@@ -54,7 +58,7 @@ function Stepper({ steps, current, className, ...props }: StepperProps) {
               )}
             >
               {label}
-              {done && <span className='sr-only'> 완료</span>}
+              {done && <span className='sr-only'>{' ' + t('stepper.completed')}</span>}
             </span>
             {!last && (
               <span

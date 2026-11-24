@@ -1,3 +1,5 @@
+"use client"
+
 import {
   CircleCheckIcon,
   InfoIcon,
@@ -8,7 +10,10 @@ import {
 import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 
-const Toaster = ({ ...props }: ToasterProps) => {
+import { useDwMessages } from "@/lib/dw-locale"
+
+const Toaster = ({ customAriaLabel, toastOptions, ...props }: ToasterProps) => {
+  const t = useDwMessages()
   const { theme = "system" } = useTheme()
 
   return (
@@ -44,6 +49,9 @@ const Toaster = ({ ...props }: ToasterProps) => {
           zIndex: "var(--dw-z-toast)",
         } as React.CSSProperties
       }
+      // containerAriaLabel만 넘기면 sonner가 뒤에 단축키 글자를 붙인다. 영역 이름 전체를 정한다
+      customAriaLabel={customAriaLabel ?? (props.containerAriaLabel ? undefined : t("toast.region"))}
+      toastOptions={{ closeButtonAriaLabel: t("common.close"), ...toastOptions }}
       {...props}
     />
   )

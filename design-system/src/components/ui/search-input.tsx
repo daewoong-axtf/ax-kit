@@ -5,6 +5,7 @@ import { CircleXIcon, SearchIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
+import { useDwMessages } from "@/lib/dw-locale"
 
 interface SearchInputProps extends Omit<React.ComponentProps<typeof Input>, "onChange" | "value" | "type"> {
   value: string
@@ -22,6 +23,7 @@ interface SearchInputProps extends Omit<React.ComponentProps<typeof Input>, "onC
  * 명세는 design/components/search-input.md.
  */
 function SearchInput({ value, onValueChange, onClear, className, ...props }: SearchInputProps) {
+  const t = useDwMessages()
   function handleClear(e: React.MouseEvent<HTMLButtonElement>) {
     onValueChange("")
     onClear?.()
@@ -42,7 +44,7 @@ function SearchInput({ value, onValueChange, onClear, className, ...props }: Sea
       {value && (
         <button
           type="button"
-          aria-label="입력 지우기"
+          aria-label={t("searchInput.clear")}
           onClick={handleClear}
           className="absolute top-1/2 right-2 flex size-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-sm text-muted-foreground outline-none transition-colors after:absolute after:-inset-3 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
         >

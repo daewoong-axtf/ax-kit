@@ -1,7 +1,6 @@
 'use client'
 
 import { format, parseISO } from 'date-fns'
-import { ko } from 'date-fns/locale'
 import { CalendarIcon, XIcon } from 'lucide-react'
 import * as React from 'react'
 
@@ -11,6 +10,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { useDwDate } from '@/lib/dw-date'
+import { useDwMessages } from '@/lib/dw-locale'
 import { cn } from '@/lib/utils'
 
 export interface DatePickerProps {
@@ -51,7 +52,7 @@ export function DatePicker({
   onChange,
   min,
   max,
-  placeholder = '날짜 선택',
+  placeholder,
   clearable = false,
   disabled,
   name,
@@ -60,6 +61,8 @@ export function DatePicker({
   'aria-invalid': ariaInvalid,
   className,
 }: DatePickerProps) {
+  const t = useDwMessages()
+  const { dateLocale, dateFormat } = useDwDate()
   const [open, setOpen] = React.useState(false)
   const selected = value ? parseISO(value) : undefined
   const minDate = min ? parseISO(min) : undefined
@@ -96,12 +99,12 @@ export function DatePicker({
             />
             <span className='truncate'>
               {selected
-                ? format(selected, 'yyyy년 M월 d일 (EEE)', { locale: ko })
-                : placeholder}
+                ? format(selected, dateFormat, { locale: dateLocale })
+                : (placeholder ?? t('datePicker.label'))}
             </span>
           </button>
         </PopoverTrigger>
-        <PopoverContent align='start' aria-label='날짜 선택' className='w-auto p-2'>
+        <PopoverContent align='start' aria-label={t('datePicker.label')} className='w-auto p-2'>
           <Calendar
             mode='single'
             autoFocus
@@ -124,7 +127,7 @@ export function DatePicker({
       {showClear && (
         <button
           type='button'
-          aria-label='날짜 지우기'
+          aria-label={t('datePicker.clear')}
           onClick={() => onChange('')}
           className='absolute top-1/2 right-1 flex size-7 -translate-y-1/2 items-center justify-center rounded-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50'
         >
