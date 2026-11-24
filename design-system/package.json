@@ -15,9 +15,10 @@
   "scripts": {
     "build:tokens": "node scripts/build-tokens.ts",
     "build:icons": "node scripts/build-icons.ts",
+    "build:messages": "node scripts/build-messages.ts",
     "build:catalog": "node scripts/build-catalog.ts",
     "build:llms": "node scripts/build-llms.ts",
-    "build": "pnpm build:tokens && pnpm build:icons && pnpm build:catalog && pnpm build:llms",
+    "build": "pnpm build:tokens && pnpm build:icons && pnpm build:messages && pnpm build:catalog && pnpm build:llms",
     "test": "node --test \"tests/**/*.test.ts\"",
     "typecheck": "tsc -p tsconfig.node.json && tsc -p tsconfig.json",
     "storybook": "storybook dev -p 6006",

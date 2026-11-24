@@ -1,0 +1,86 @@
+{
+  "common.close": { "ko": "닫기", "en": "Close" },
+  "common.loading": { "ko": "불러오는 중", "en": "Loading" },
+  "common.retry": { "ko": "다시 시도", "en": "Try again" },
+
+  "breadcrumb.label": { "ko": "현재 위치", "en": "Breadcrumb" },
+  "breadcrumb.more": { "ko": "접힌 단계", "en": "More levels" },
+
+  "calendar.previousMonth": { "ko": "이전 달", "en": "Previous month" },
+  "calendar.nextMonth": { "ko": "다음 달", "en": "Next month" },
+  "calendar.year": { "ko": "연도", "en": "Year" },
+  "calendar.month": { "ko": "월", "en": "Month" },
+  "calendar.today": { "ko": "오늘, {date}", "en": "Today, {date}" },
+  "calendar.selected": { "ko": "{date}, 선택됨", "en": "{date}, selected" },
+  "calendar.week": { "ko": "{week}주차", "en": "Week {week}" },
+  "calendar.weekHeader": { "ko": "주 번호", "en": "Week number" },
+  "calendar.nav": { "ko": "달 이동", "en": "Month navigation" },
+
+  "combobox.open": { "ko": "목록 열기", "en": "Open list" },
+  "combobox.placeholder": { "ko": "{min}자 이상 입력", "en": "Type {min}+ characters" },
+  "combobox.idle": { "ko": "{min}자 이상 입력해주세요", "en": "Type {min}+ characters to search" },
+  "combobox.loading": { "ko": "검색 중…", "en": "Searching…" },
+  "combobox.empty": { "ko": "검색 결과가 없어요", "en": "No results" },
+  "combobox.error": { "ko": "검색하지 못했어요. 다시 시도해주세요.", "en": "Couldn't search. Try again." },
+  "combobox.list": { "ko": "검색 결과", "en": "Search results" },
+  "combobox.results": { "ko": "검색 결과 {count}개", "en": "Results: {count}" },
+  "combobox.remove": { "ko": "{label} 빼기", "en": "Remove {label}" },
+
+  "connectionBanner.offline": { "ko": "서버에 연결할 수 없어요. 잠시 후 다시 시도해주세요.", "en": "Can't connect to the server. Try again in a moment." },
+  "connectionBanner.reconnecting": { "ko": "다시 연결하는 중이에요", "en": "Reconnecting" },
+  "connectionBanner.unstable": { "ko": "연결이 불안정해요. 일부 내용이 늦게 보일 수 있어요.", "en": "Your connection is unstable. Some content may load slowly." },
+  "connectionBanner.online": { "ko": "다시 연결됐어요", "en": "Reconnected" },
+  "connectionBanner.dismiss": { "ko": "연결 안내 닫기", "en": "Close connection notice" },
+
+  "datePicker.label": { "ko": "날짜 선택", "en": "Select date" },
+  "datePicker.clear": { "ko": "날짜 지우기", "en": "Clear date" },
+
+  "filter.label": { "ko": "조회 조건", "en": "Filters" },
+  "filter.applied": { "ko": "조회 조건 — {count}개 적용됨", "en": "Filters — {count} applied" },
+  "filter.description": { "ko": "{title}을 고른 뒤 조회해요.", "en": "Choose {title}, then apply" },
+  "filter.reset": { "ko": "초기화", "en": "Reset" },
+  "filter.apply": { "ko": "조회", "en": "Apply" },
+  "filter.tags": { "ko": "적용된 조회 조건", "en": "Applied filters" },
+  "filter.remove": { "ko": "{label} 조건 지우기", "en": "Remove filter {label}" },
+
+  "formSection.required": { "ko": "필수", "en": "Required" },
+
+  "infoTooltip.label": { "ko": "{label} 안내", "en": "About {label}" },
+
+  "listFooter.totalItems": { "ko": "총 {count}개", "en": "Total: {count}" },
+  "listFooter.totalPeople": { "ko": "총 {count}명", "en": "Total: {count}" },
+
+  "pageHeader.back": { "ko": "뒤로", "en": "Back" },
+
+  "pagination.label": { "ko": "페이지", "en": "Pagination" },
+  "pagination.previous": { "ko": "이전 페이지", "en": "Previous page" },
+  "pagination.next": { "ko": "다음 페이지", "en": "Next page" },
+  "pagination.previousShort": { "ko": "이전", "en": "Previous" },
+  "pagination.nextShort": { "ko": "다음", "en": "Next" },
+  "pagination.more": { "ko": "생략된 페이지", "en": "More pages" },
+  "pagination.page": { "ko": "{page} 페이지", "en": "Page {page}" },
+
+  "passwordInput.show": { "ko": "비밀번호 표시", "en": "Show password" },
+
+  "searchInput.clear": { "ko": "입력 지우기", "en": "Clear input" },
+
+  "searchableSelect.all": { "ko": "전체", "en": "All" },
+  "searchableSelect.clear": { "ko": "{label} 지우기", "en": "Clear {label}" },
+
+  "sidebar.title": { "ko": "주 메뉴", "en": "Main menu" },
+  "sidebar.description": { "ko": "화면을 이동하는 메뉴예요.", "en": "Menu for moving between screens" },
+  "sidebar.collapse": { "ko": "메뉴 접기", "en": "Collapse menu" },
+  "sidebar.expand": { "ko": "메뉴 펼치기", "en": "Expand menu" },
+
+  "slider.minimum": { "ko": "최솟값", "en": "Minimum" },
+  "slider.maximum": { "ko": "최댓값", "en": "Maximum" },
+  "slider.value": { "ko": "{total}개 중 {index}번째 값", "en": "Value {index} of {total}" },
+
+  "statCard.increase": { "ko": "증가", "en": "Increase" },
+  "statCard.decrease": { "ko": "감소", "en": "Decrease" },
+  "statCard.noChange": { "ko": "변동 없음", "en": "No change" },
+
+  "stepper.completed": { "ko": "완료", "en": "Completed" },
+
+  "toast.region": { "ko": "알림", "en": "Notifications" }
+}
