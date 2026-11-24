@@ -1,5 +1,5 @@
 {
-  "design-system": "1.4.0",
+  "design-system": "1.5.0",
   "rules/safety-rules": "1.3.0",
   "plugins/write-prd": "1.0.0",
   "plugins/ax-mail-inquiry-log": "1.0.0",
