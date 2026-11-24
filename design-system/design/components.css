@@ -1444,6 +1444,54 @@ html[data-dw-scroll-lock] { overflow: hidden; }
 
 .dw-select__item[aria-selected="true"] .dw-select__check { visibility: visible; }
 
+/* 다중 선택 보기의 앞 체크박스 — Checkbox medium·brand 모양. 장식이라 상태는 Item의 aria-selected·aria-disabled가 정한다 */
+.dw-select__item-checkbox {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  box-sizing: border-box;
+  width: var(--dw-spacing-x5);
+  height: var(--dw-spacing-x5);
+  /* 위아래 같은 여백이라 줄높이만큼 차지한다 — Item 높이가 단일 선택과 같다 */
+  margin-block: calc((var(--dw-select-line) - var(--dw-spacing-x5)) / 2);
+  margin-right: var(--dw-select-item-gap);
+  border-radius: var(--dw-radius-r1);
+  background-color: var(--dw-bg-transparent);
+  box-shadow: inset 0 0 0 1px var(--dw-stroke-neutral-weak);
+  transition: background-color var(--dw-duration-color-transition) var(--dw-easing-easing);
+}
+
+.dw-select__item-checkbox::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 12px;
+  height: 12px;
+  margin: auto;
+  background-color: var(--dw-fg-on-brand-solid);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+  opacity: 0;
+  transition: opacity var(--dw-duration-color-transition) var(--dw-easing-easing);
+}
+
+.dw-select__item[aria-selected="true"] > .dw-select__item-checkbox {
+  background-color: var(--dw-bg-brand-solid);
+  box-shadow: none;
+}
+
+.dw-select__item[aria-selected="true"] > .dw-select__item-checkbox::after { opacity: 1; }
+
+.dw-select__item[aria-disabled="true"] > .dw-select__item-checkbox {
+  background-color: var(--dw-bg-disabled);
+  box-shadow: inset 0 0 0 1px var(--dw-stroke-neutral-muted);
+}
+
+.dw-select__item[aria-disabled="true"] > .dw-select__item-checkbox::after { background-color: var(--dw-fg-disabled); }
+
+/* 체크박스가 있는 보기는 뒤 check를 쓰지 않는다 */
+.dw-select__item:has(> .dw-select__item-checkbox) > .dw-select__check { display: none; }
+
 .dw-select__item[aria-disabled="true"] { color: var(--dw-fg-disabled); cursor: not-allowed; }
 .dw-select__item[aria-disabled="true"] :is(.dw-select__item-label, .dw-select__item-description) { color: var(--dw-fg-disabled); }
 

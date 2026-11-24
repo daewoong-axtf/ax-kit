@@ -479,7 +479,7 @@
   "긴 값": "Long value",
   "서울특별시 강남구 테헤란로 일대의 지점을 모두 포함한 권역": "Area covering every branch around Teheran-ro, Gangnam-gu, Seoul",
   "다중 선택": "Multiple selection",
-  "고를 때마다 목록은 열린 채로 있고, 고른 값은 칩으로 쌓인다. 빼려면 목록에서 다시 누른다.": "The list stays open after each pick, and picked values stack up as chips. To remove one, press it again in the list.",
+  "보기마다 앞에 체크박스가 있어 열면 무엇을 골랐는지 바로 보인다. 고를 때마다 목록은 열린 채로 있고, 고른 값은 칩으로 쌓인다. 빼려면 목록에서 다시 누른다. 많이 고름의 제주는 고른 채 잠긴 보기다.": "Every option has a checkbox in front, so opening the list shows at once what is picked. The list stays open after each pick, and picked values stack up as chips. To remove one, press it again in the list. Jeju in Many picked is picked and locked.",
   "값 없음": "Empty",
   "여러 개를 고를 수 있어요": "You can pick more than one",
   "지역을 하나 이상 고르세요": "Choose at least one region",
