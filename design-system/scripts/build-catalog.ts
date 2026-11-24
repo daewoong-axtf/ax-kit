@@ -3,7 +3,15 @@
 //   <!--NAV:start-->…<!--NAV:end-->      <section>을 모아 사이드바 링크를 만든다 (INTRO_ID·FOUNDATION_IDS·NAV_GROUPS 순서)
 //   <!--AI_PROMPT:start-->…<!--AI_PROMPT:end-->  design/ai/setup-prompt.md
 // 그리고 design/js/components.ts → components.js (타입만 지우고 즉시 실행 함수로 감싼다)
+// 그리고 catalog.html + design/catalog.en.json → catalog.en.html (영어판, 번역은 scripts/translate-catalog.ts)
 //   node scripts/build-catalog.ts [--check]
+//   node scripts/build-catalog.ts --missing [절 id…]   번역표에 없는 단위를 JSON으로 찍는다 (파일은 쓰지 않는다)
+//
+// catalog.en.json — 평평한 JSON 객체. 키는 뽑힌 한국어 단위 그대로, 값은 영어다.
+//   키 조회 순서: "<절 id>::<한국어>" → "<한국어>". 절 id는 가장 가까운 <section class="demo" id>, 없으면 page
+//   block·text·attr 키는 원본 글자 그대로 비교한다. 원본의 &lt; 같은 엔티티와 줄바꿈도 키에 그대로 둔다
+//   block·text 값은 HTML로 그대로 들어간다. attr 값은 속성 따옴표만 &quot;(&#39;)로, script 값은 리터럴 따옴표만 \로 바꾼다
+//   번역하지 않는 곳: 생성 구역 ICONS·AI_PROMPT(설정 프롬프트 원문), 릴리즈 때 쌓이는 업데이트 기록 목록 — 영어판에서 lang="ko"로 둔다
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { stripTypeScriptTypes } from 'node:module'
 
@@ -11,6 +19,9 @@ process.removeAllListeners('warning') // stripTypeScriptTypes 실험 기능 경�
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { setupPrompt } from './build-llms.ts'
+import { catalogUnits, translateCatalog, type CatalogUnit } from './translate-catalog.ts'
+
+export { catalogUnits, translateCatalog, type CatalogUnit }
 
 const DESIGN = fileURLToPath(new URL('../design', import.meta.url))
 
@@ -92,11 +103,32 @@ const escapeHtml = (text: string): string => text.replaceAll('&', '&amp;').repla
 export const buildCatalog = (html: string): string =>
   fill(fill(fill(html, 'ICONS', symbols()), 'NAV', nav(html)), 'AI_PROMPT', escapeHtml(setupPrompt()))
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+function main(): void {
+  const ko = buildCatalog(readFileSync(join(DESIGN, 'catalog.html'), 'utf8'))
+  const en = translateCatalog(ko, JSON.parse(readFileSync(join(DESIGN, 'catalog.en.json'), 'utf8')))
+  const flag = process.argv.indexOf('--missing')
+  if (flag >= 0) {
+    // 같은 한국어는 한 번만, 나온 절을 모아 찍는다
+    const only = process.argv.slice(flag + 1)
+    const rows = new Map<string, { ko: string; kinds: CatalogUnit['kind'][]; sections: string[] }>()
+    for (const u of en.missing.filter((m) => !only.length || only.includes(m.section))) {
+      const row = rows.get(u.ko) ?? { ko: u.ko, kinds: [], sections: [] }
+      if (!row.kinds.includes(u.kind)) row.kinds.push(u.kind)
+      if (!row.sections.includes(u.section)) row.sections.push(u.section)
+      rows.set(u.ko, row)
+    }
+    console.log(JSON.stringify([...rows.values()], null, 2))
+    return
+  }
   const targets: Array<[string, string]> = [
-    [join(DESIGN, 'catalog.html'), buildCatalog(readFileSync(join(DESIGN, 'catalog.html'), 'utf8'))],
+    [join(DESIGN, 'catalog.html'), ko],
+    [join(DESIGN, 'catalog.en.html'), en.html],
     [join(DESIGN, 'js', 'components.js'), buildBehaviorJs(readFileSync(join(DESIGN, 'js', 'components.ts'), 'utf8'))],
   ]
+  if (!process.argv.includes('--check') && en.missing.length) {
+    console.warn(`⚠ catalog.en.json에 없는 단위 ${en.missing.length}개 — catalog.en.html에 한국어로 남는다 (전체: node scripts/build-catalog.ts --missing)`)
+    for (const u of en.missing.slice(0, 20)) console.warn(`  ${u.section} · ${u.kind} · ${JSON.stringify(u.ko)}`)
+  }
   for (const [file, out] of targets) {
     let current = ''
     try {
@@ -113,3 +145,5 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     }
   }
 }
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) main()
