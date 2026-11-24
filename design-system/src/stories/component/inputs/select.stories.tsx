@@ -95,7 +95,12 @@ async function expectCheckboxes(options: HTMLElement[]) {
     await expect(checkbox!.hasAttribute('data-disabled')).toBe(option.hasAttribute('data-disabled'))
     // 보기 안의 아이콘은 체크박스의 check 하나뿐이다 — 뒤 check가 남지 않는다
     await expect(option.querySelectorAll('svg')).toHaveLength(1)
-    await expect(checkbox!.contains(option.querySelector('svg'))).toBe(true)  }
+    await expect(checkbox!.contains(option.querySelector('svg'))).toBe(true)
+    // 꺼진 체크박스도 20px 상자가 실제로 보인다
+    await expect(checkbox).toBeVisible()
+    const box = checkbox!.getBoundingClientRect()
+    await expect([box.width, box.height]).toEqual([20, 20])
+  }
 }
 
 /** 목록은 열린 채로 있고, 고른 값은 칩으로 쌓인다. 보기마다 앞에 체크박스가 있다 */
@@ -110,11 +115,9 @@ export const Multiple: Story = {
     const canvas = within(canvasElement)
     const body = within(document.body)
     await userEvent.click(canvas.getByRole('combobox', { name: /지역/ }))
-    await body.findByRole('option', { name: '부산' })
-    await expectCheckboxes(body.getAllByRole('option'))
-    await expect(checkboxOf(body.getByRole('option', { name: '서울' }))).toHaveAttribute('data-checked')
-    await userEvent.click(body.getByRole('option', { name: '부산' }))
+    await userEvent.click(await body.findByRole('option', { name: '부산' }))
     await expect(body.getByRole('option', { name: '부산' })).toHaveAttribute('aria-selected', 'true')
+    await expect(checkboxOf(body.getByRole('option', { name: '서울' }))).toHaveAttribute('data-checked')
     await expect(checkboxOf(body.getByRole('option', { name: '부산' }))).toHaveAttribute('data-checked')
     await userEvent.click(body.getByRole('option', { name: '서울' }))
     await expect(body.getByRole('option', { name: '서울' })).toHaveAttribute('aria-selected', 'false')
@@ -194,6 +197,22 @@ export const MultipleDisabledOption: Story = {
     await expect(checkboxOf(guest)).not.toHaveAttribute('data-checked')
     await expect(owner).toHaveAttribute('aria-selected', 'true')
     await expect(checkboxOf(owner)).toHaveAttribute('data-checked')
+    // 키보드: 비활성 보기에도 강조는 오지만 Space·Enter로 바뀌지 않는다
+    const auditor = body.getByRole('option', { name: /감사 담당자/ })
+    await userEvent.hover(auditor)
+    await waitFor(() => expect(auditor).toHaveAttribute('data-highlighted'))
+    await userEvent.keyboard('{ArrowDown}')
+    await waitFor(() => expect(owner).toHaveAttribute('data-highlighted'))
+    await userEvent.keyboard(' ')
+    await userEvent.keyboard('{Enter}')
+    await expect(owner).toHaveAttribute('aria-selected', 'true')
+    await userEvent.keyboard('{ArrowDown}')
+    await waitFor(() => expect(guest).toHaveAttribute('data-highlighted'))
+    await userEvent.keyboard(' ')
+    await userEvent.keyboard('{Enter}')
+    await expect(guest).toHaveAttribute('aria-selected', 'false')
+    await expect(checkboxOf(guest)).not.toHaveAttribute('data-checked')
+    await expect(body.getByRole('listbox')).toBeInTheDocument()
     await expectCheckboxes(body.getAllByRole('option'))
   },
 }

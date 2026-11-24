@@ -35,6 +35,10 @@ const CHECKBOX = cn(
   'transition-colors duration-(--dw-duration-color-transition) ease-(--dw-easing-easing)',
   'data-checked:not-data-disabled:bg-[var(--dw-bg-brand-solid)] data-checked:not-data-disabled:shadow-none',
   'data-disabled:bg-[var(--dw-bg-disabled)] data-disabled:text-[var(--dw-fg-disabled)] data-disabled:shadow-[inset_0_0_0_1px_var(--dw-stroke-neutral-muted)]',
+  // 강제 색 모드: 테두리 그림자가 사라지므로 시스템 색 테두리로 다시 그린다 (components.css와 같음)
+  'forced-colors:border forced-colors:border-[CanvasText] forced-colors:shadow-none',
+  'forced-colors:data-checked:not-data-disabled:forced-color-adjust-none forced-colors:data-checked:not-data-disabled:border-[Highlight] forced-colors:data-checked:not-data-disabled:bg-[Highlight] forced-colors:data-checked:not-data-disabled:text-[HighlightText]',
+  'forced-colors:data-disabled:border-[GrayText] forced-colors:data-disabled:bg-[Canvas] forced-colors:data-disabled:text-[GrayText]',
 )
 
 /**
