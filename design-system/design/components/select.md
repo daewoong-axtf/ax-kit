@@ -20,7 +20,8 @@
 | Group label | `.dw-select__group-label` | | |
 | Item | `.dw-select__item` | ✓ | `role="option"` |
 | Item label · description | `.dw-select__item-label` · `.dw-select__item-description` | | 설명은 선택 |
-| Indicator | `.dw-select__check` | ✓ | 선택된 Item의 `check` |
+| Indicator | `.dw-select__check` | 단일 | 선택된 Item의 `check`. 다중 선택에는 두지 않는다 |
+| Item checkbox | `.dw-select__item-checkbox` | 다중 | 보기 앞의 체크박스. 장식이라 `<span aria-hidden="true">`이고, 켜짐·비활성은 Item의 `aria-selected`·`aria-disabled`를 따른다 |
 | Chip | `.dw-select__chip` | 다중 | 고른 값. Value 안에 쌓인다. Trigger가 버튼이라 칩에는 버튼을 넣지 않는다 |
 
 ```html
@@ -76,8 +77,14 @@ Root에 `data-multiple`을 주고, 제출 이름은 `data-name`, 값이 없을 �
     <svg class="dw-select__chevron" aria-hidden="true">…</svg>
   </button>
   <div class="dw-select__content" id="region-list" role="listbox" aria-multiselectable="true" aria-labelledby="region-label" hidden>
-    <div class="dw-select__item" role="option" id="region-seoul" data-value="seoul" aria-selected="true">…</div>
-    <div class="dw-select__item" role="option" id="region-busan" data-value="busan" aria-selected="false">…</div>
+    <div class="dw-select__item" role="option" id="region-seoul" data-value="seoul" aria-selected="true">
+      <span class="dw-select__item-checkbox" aria-hidden="true"></span>
+      <span class="dw-select__item-label">서울</span>
+    </div>
+    <div class="dw-select__item" role="option" id="region-jeju" data-value="jeju" aria-selected="false" aria-disabled="true">
+      <span class="dw-select__item-checkbox" aria-hidden="true"></span>
+      <span class="dw-select__item-label">제주</span>
+    </div>
   </div>
   <input type="hidden" name="region" value="seoul">
 </div>
@@ -85,18 +92,20 @@ Root에 `data-multiple`을 주고, 제출 이름은 `data-name`, 값이 없을 �
 
 | 항목 | 동작 |
 | --- | --- |
-| 고르기 | 켜고 끈다. 목록은 Esc, Tab, Trigger, 바깥 클릭으로 닫는다 |
+| 보기 | 보기마다 앞에 체크박스가 늘 보여서, 열면 여러 개를 고를 수 있다는 것과 무엇을 골랐는지가 함께 보인다. 뒤 `check`는 두지 않는다 |
+| 고르기 | 켜고 끈다. 체크박스가 함께 켜지고 꺼진다. 목록은 Esc, Tab, Trigger, 바깥 클릭으로 닫는다 |
 | 빼기 | 목록에서 다시 누른다 |
 | 폼 값 | 고른 값마다 같은 이름의 hidden input을 둔다. 고른 값이 없으면 hidden input도 없다 |
 | 칩 순서 | 목록 순서를 따른다 |
+| 비활성 보기 | 체크박스도 비활성 모양이다. 눌러도 바뀌지 않는다. 처음부터 고른 채 잠긴 보기는 켜진 비활성으로 보인다 |
 | 필수 | `aria-required="true"`이면 하나 이상 골라야 한다 |
 | 이벤트 | 바뀔 때마다 Root가 `dw:select-change`를 낸다. `detail`은 `{ values: [{ value, label }] }` |
-| React | `MultiSelect`(`options`, `value`, `onValueChange`, `placeholder`, `name`) |
+| React | `MultiSelect`(`options`, `value`, `onValueChange`, `placeholder`, `name`). 체크박스는 컴포넌트가 그린다 |
 
 | 고르는 것 | 쓰는 곳 |
 | --- | --- |
 | Select 다중 선택 | 보기가 짧아 목록에서 바로 찾을 수 있을 때 |
-| [Combobox](combobox.md) `multiple` | 보기가 많아 검색이 필요할 때, 칩을 바로 지워야 할 때 |
+| [Combobox](combobox.md) `multiple` | 보기가 많아 검색이 필요할 때, 칩을 바로 지워야 할 때. 보기는 뒤 `check`를 그대로 쓴다 |
 | [Checkbox](checkbox.md) | 보기가 6개 이하이고 자리가 있을 때 |
 
 ## Specification
@@ -109,6 +118,29 @@ Root에 `data-multiple`을 주고, 제출 이름은 `data-name`, 값이 없을 �
 | Chip | 높이 28px `x7`, 좌우 8px `x2`, 간격 4px `x1`, 모서리 8px `r2`, `bg-neutral-weak-alpha`, t3 13 medium |
 | 긴 값 | 칩 안에서 말줄임한다 |
 | disabled | 글자 `fg-disabled` |
+
+### Item checkbox (다중)
+
+[Checkbox](checkbox.md#specification)의 medium·brand 모양을 그대로 쓴다. Select size와 관계없이 같다.
+
+| 항목 | 값 |
+| --- | --- |
+| 크기 | 20×20px `x5` |
+| 모서리 | 4px `r1` |
+| 체크 아이콘 | 12px `check`, `::after`에 마스크로 그린다 |
+| 자리 | Item 첫 열(앞 아이콘 자리). 다중 선택 보기에는 앞 아이콘을 두지 않는다 |
+| 정렬 | label 첫 줄 가운데. 위아래 여백 `(label 줄높이 − 20px)/2`(medium −0.5px, large 1px)라 줄높이만큼만 차지해 Item 높이는 단일 선택과 같다. label이 여러 줄이면 첫 줄에 붙어 있다 |
+| label과 간격 | 앞 아이콘과 같은 Item gap — medium 8px `x2`, large 12px `x3` |
+
+| 상태 | bg | 테두리 | 체크 아이콘 |
+| --- | --- | --- | --- |
+| 꺼짐 | `bg-transparent` | 1px `stroke-neutral-weak`, 그림자 없음 | — |
+| 켜짐 (`aria-selected="true"`) | `bg-brand-solid` | 없음 | `fg-on-brand-solid` |
+| 비활성 꺼짐 (`aria-disabled="true"`) | `bg-disabled` | 1px `stroke-neutral-muted` | — |
+| 비활성 켜짐 | `bg-disabled` | 1px `stroke-neutral-muted` | `fg-disabled` |
+
+- 바뀔 때 bg와 아이콘 opacity가 `duration-color-transition` `easing-easing`으로 바뀐다(Checkbox와 같음). 크기는 그대로라 켜고 꺼도 줄이 움직이지 않는다.
+- 강조(키보드 이동·hover)·누름은 Item 강조 면이 맡는다. 체크박스 색은 강조로 바뀌지 않고, 고른 보기에 따로 배경을 깔지 않는다.
 
 ### Trigger
 
@@ -148,6 +180,7 @@ Value는 한 줄 말줄임(`text-overflow: ellipsis`).
 | `large` | 12px 16px (`x3` `x4`) | 12px | 22px | t5 16/22 | t3 13/18 | 14px |
 
 - label `fg-neutral` regular, description `fg-neutral-subtle`, check·아이콘 `fg-neutral`. disabled는 모두 `fg-disabled`.
+- 다중 선택은 뒤 check 대신 앞에 [Item checkbox](#item-checkbox-다중)를 둔다.
 - 강조(키보드 이동·hover)·누름: Item 뒤에 좌우 8px 들인 radius 12px `r3` 면이 `bg-transparent-pressed`로 깔린다(`::before`, `inset-inline` 0→8px 전환 `duration-d3`).
 
 ## States
@@ -157,7 +190,7 @@ Value는 한 줄 말줄임(`text-overflow: ellipsis`).
 | Closed | — | Content `hidden` |
 | Open | Trigger 클릭·Enter·Space·↓·↑ | Content 표시, 선택된 Item(없으면 첫 Item) 강조 |
 | Highlighted | 화살표·hover | Item 강조 면 |
-| Selected | 클릭·Enter | Value 갱신, Content 닫힘, 포커스 Trigger로. 다중은 Content가 열려 있다 |
+| Selected | 클릭·Enter | Value 갱신, Content 닫힘, 포커스 Trigger로. 다중은 Content가 열려 있고 그 보기의 체크박스가 켜진다 |
 
 ## Behavior & Accessibility
 
@@ -167,6 +200,7 @@ WAI-ARIA APG **Select-Only Combobox** 패턴.
 
 - Trigger: `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded`, `aria-controls`, 강조 중 `aria-activedescendant="<item id>"`. 포커스는 Trigger에 머문다.
 - Content: `role="listbox"`, Item: `role="option"` + `aria-selected`, 비활성은 `aria-disabled="true"`.
+- 다중 선택의 Item checkbox는 장식이다. `aria-hidden="true"`이고 포커스를 받지 않으며 `<input>`이 아니다. 켜짐은 Item의 `aria-selected`가 알리고, 포커스는 그대로 Trigger에 머문다. 색만이 아니라 체크 표시로도 켜짐을 보인다.
 - 바깥 클릭·Esc·Tab으로 닫힌다(Tab은 닫고 다음 요소로).
 - 폼 값은 hidden input으로 제출.
 
