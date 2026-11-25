@@ -1,8 +1,15 @@
 {
   "name": "dds",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 토큰·컴포넌트를 적용한 뒤 web-design-guidelines · ux-heuristics 스킬로 점검한다. 설치한 디자인 시스템을 새 판으로 올린다(/dds:update). GitHub 접속 필요",
-  "author": { "name": "daewoong-axtf" },
+  "author": {
+    "name": "daewoong-axtf"
+  },
   "repository": "https://github.com/daewoong-axtf/ax-kit",
-  "keywords": ["design-system", "ui", "ux", "점검"]
+  "keywords": [
+    "design-system",
+    "ui",
+    "ux",
+    "점검"
+  ]
 }
