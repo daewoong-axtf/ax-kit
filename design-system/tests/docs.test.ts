@@ -86,8 +86,32 @@ test('setup prompt fills its placeholders and requires shadcn only for React', a
 test('옛 저장소 이름과 옛 Pages 주소가 남지 않는다', () => {
   // GitHub App 이름(daewoong-design-system-sync)은 그대로 쓰므로 주소 모양만 본다
   const stale = ['github.com/daewoong-axtf/daewoong-design-system', 'github.io/daewoong-design-system', 'releases/latest/download']
-  for (const file of ['../README.md', '../design/catalog.html', '../design/catalog.en.html', '../design/ai/setup-prompt.md']) {
+  for (const file of ['../README.md', '../design/catalog.html', '../design/catalog.en.html', '../design/ai/setup-prompt.md', '../design/ai/update-prompt.md']) {
     const text = readFileSync(new URL(file, import.meta.url), 'utf8')
     for (const s of stale) assert.ok(!text.includes(s), `${file}에 ${s}가 남아 있다`)
   }
+})
+
+test('update prompt names what an agent cannot guess', () => {
+  const prompt = read('ai/update-prompt.md')
+  // 받는 주소는 옛 이름(daewoong-design-system)이 기록돼 있어도 ax-kit이다
+  assert.ok(prompt.includes('git clone --depth 1 --branch'), 'clone 명령이 없다')
+  assert.ok(prompt.includes('https://github.com/daewoong-axtf/ax-kit.git'), 'ax-kit clone 주소가 없다')
+  // 폴더를 나누기 전 태그는 맨 위에, design-system-v* 태그는 design-system/ 아래에 design/·src/가 있다
+  assert.match(prompt, /`v1\.0\.0`~`v1\.2\.0`/)
+  assert.ok(prompt.includes('`design-system-v*`'))
+  assert.ok(prompt.includes('`design-system/design/`'))
+  assert.ok(prompt.includes('docs/design-system.md'))
+  assert.ok(prompt.includes('https://daewoong-axtf.github.io/ax-kit/guides/index.json'))
+  // 판단은 세 판 비교로 하고, 프로젝트가 고친 파일만 묻는다
+  assert.ok(prompt.includes('docs/design-reference/'))
+  assert.ok(prompt.includes('design.md` 14'))
+  assert.doesNotMatch(prompt, /\{\{/, '스킬이 클론에서 그대로 읽으므로 채울 자리가 없어야 한다')
+  // 임시 폴더는 정해진 방법으로 만들고 멈출 때도 지운다
+  assert.ok(prompt.includes('mktemp -d'))
+  assert.match(prompt, /어느 단계에서 멈추든 .*임시 폴더/)
+})
+
+test('llms.txt lists the update prompt next to the setup prompt', () => {
+  assert.ok(read('llms.txt').includes('(ai/update-prompt.md)'))
 })

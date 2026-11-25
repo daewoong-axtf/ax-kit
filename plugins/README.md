@@ -5,7 +5,7 @@ AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인
 | 플러그인 | 하는 일 | 필요한 연결 | 버전 |
 | --- | --- | --- | --- |
 | `ax` | AX팀 업무 스킬 두 개. [`write-prd`](ax/skills/write-prd/SKILL.md) — 노션 'PRD 작성 기준'을 매번 읽어 그대로 PRD를 쓰고 'AX PRD 문서' DB에 저장한다. 기존 PRD 점검도 한다. [`mail-inquiry-log`](ax/skills/mail-inquiry-log/SKILL.md) — 메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 정해진 형식으로 기록한다 | Notion — 'PRD 작성 기준' · 'AX PM 문서' 페이지, 'AX PRD 문서' DB, 'AX 라운지 메일·메신저 문의' DB | [![ax](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=ax-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
-| [`dds`](dds/skills/dds/SKILL.md) | Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 토큰·컴포넌트를 적용한 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 | GitHub 접속 — 설정 프롬프트와 점검 스킬 두 개를 처음 한 번 받아 온다 | [![dds](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=dds-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
+| [`dds`](dds/skills/dds/SKILL.md) | Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 토큰·컴포넌트를 적용한 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 | GitHub 접속 — 설정 프롬프트와 점검 스킬 두 개를 처음 한 번, 새 판으로 올릴 때 그 판의 저장소를 받아 온다 | [![dds](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=dds-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
 
 ## 설치
 
@@ -120,7 +120,7 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
    /dds:update
    ```
 
-   "디자인 시스템 최신 판으로 업데이트해줘"라고 말해도 된다. 자동으로는 올라가지 않는다. 지금 버전이 최신이면 그렇다고 알리고 멈춘다. 아니면 최신 설정 프롬프트를 다시 받아 `docs/design-reference/`와 `docs/design-system.md`를 새 판으로 바꾼다. 덮어쓰기 전에 무엇이 바뀌는지 먼저 보여 준다. 올린 뒤 `docs/design-system.md`의 버전을 확인한다.
+   "디자인 시스템 새 버전으로 올려줘", "DDS 1.6.0으로 올려줘"라고 말해도 된다. 자동으로는 올라가지 않고, 판을 말하지 않으면 최신 릴리즈로 올린다. 지금 판이 올릴 판과 같으면 그렇다고 알리고 멈춘다. 아니면 올릴 판을 받아 그 판의 [업데이트 절차](../design-system/design/ai/update-prompt.md)를 그대로 따른다. 프로젝트에서 고치지 않은 파일은 묻지 않고 바꾸고, 프로젝트에서 고친 파일을 새 판도 바꿨을 때만 묻는다. **1.5.0 다음 design-system 릴리즈부터 동작한다.** 업데이트 절차가 그 릴리즈에 처음 들어가므로, 그 전에는 절차가 없다고 알리고 멈춘다.
 
 | 커맨드 | 하는 일 |
 | --- | --- |

@@ -9,6 +9,7 @@
 - [읽는 순서와 금지사항](README.md)
 - [토큰 쓰임과 환경별 적용](design.md)
 - [프로젝트 설정 프롬프트](ai/setup-prompt.md)
+- [새 판으로 올리는 절차](ai/update-prompt.md)
 - [전체 문서를 한 파일로 합친 판](llms-full.txt)
 
 ## 값
