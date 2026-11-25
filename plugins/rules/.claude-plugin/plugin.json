@@ -1,8 +1,15 @@
 {
   "name": "rules",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI로 만든 웹앱 최소 안전 규칙을 프로젝트에 넣고, 새 판이 나오면 올린다(/rules:apply). 인터넷 접속 필요",
-  "author": { "name": "daewoong-axtf" },
+  "author": {
+    "name": "daewoong-axtf"
+  },
   "repository": "https://github.com/daewoong-axtf/ax-kit",
-  "keywords": ["safety-rules", "규칙", "보안", "코딩 가이드"]
+  "keywords": [
+    "safety-rules",
+    "규칙",
+    "보안",
+    "코딩 가이드"
+  ]
 }
