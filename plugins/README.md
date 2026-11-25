@@ -6,7 +6,7 @@ AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인
 | --- | --- | --- | --- |
 | `ax` | AX팀 업무 스킬 두 개. [`write-prd`](ax/skills/write-prd/SKILL.md) — 노션 'PRD 작성 기준'을 매번 읽어 그대로 PRD를 쓰고 'AX PRD 문서' DB에 저장한다. 기존 PRD 점검도 한다. [`mail-inquiry-log`](ax/skills/mail-inquiry-log/SKILL.md) — 메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 정해진 형식으로 기록한다 | Notion — 'PRD 작성 기준' · 'AX PM 문서' 페이지, 'AX PRD 문서' DB, 'AX 라운지 메일·메신저 문의' DB | [![ax](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=ax-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
 | [`dds`](dds/skills/dds/SKILL.md) | Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 토큰·컴포넌트를 적용한 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 | GitHub 접속 — 설정 프롬프트와 점검 스킬 두 개를 처음 한 번, 새 판으로 올릴 때 그 판의 저장소를 받아 온다 | [![dds](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=dds-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
-| [`rules`](rules/skills/apply/SKILL.md) | 「AI로 만든 웹앱 최소 안전 규칙」을 프로젝트에 넣고, 새 판이 나오면 올린다. 규칙 원문은 `daewoong-coding-guide.md`로 두고 `CLAUDE.md` · `AGENTS.md`가 그 파일을 가리키게 한다 | 인터넷 접속 — 릴리즈된 규칙 원문을 받아 온다 | [![rules](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=rules-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
+| [`rules`](rules/skills/safety-rules/SKILL.md) | 「AI로 만든 웹앱 최소 안전 규칙」을 프로젝트에 넣고, 새 판이 나오면 올린다. 규칙 원문은 `daewoong-coding-guide.md`로 두고 `CLAUDE.md` · `AGENTS.md`가 그 파일을 가리키게 한다 | 인터넷 접속 — 릴리즈된 규칙 원문을 받아 온다 | [![rules](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=rules-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
 
 ## 설치
 
@@ -46,6 +46,12 @@ Customize → Plugins → Add → Add marketplace에 `daewoong-axtf/ax-kit`을 �
 
 ```
 npx skills add daewoong-axtf/ax-kit --skill dds
+```
+
+`rules`도 같은 방법으로 `safety-rules` 스킬만 설치한다. ChatGPT의 Codex처럼 Claude 플러그인을 쓰지 못하는 도구는 이쪽을 쓴다.
+
+```
+npx skills add daewoong-axtf/ax-kit --skill safety-rules
 ```
 
 ### 2. Notion 연결 확인
@@ -150,6 +156,8 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
 - 프로젝트의 판이 넣을 판과 같으면 "이미 그 판이다"라고 알리고 멈춘다.
 - 규칙 원문의 이름을 바꿔 `CLAUDE.md` · `AGENTS.md`로 쓰던 프로젝트는 규칙을 `daewoong-coding-guide.md`로 옮긴다. 그 파일에 덧붙여 쓴 내용이 있으면 남길지 한 번 묻는다.
 - 올렸으면 그사이 바뀐 규칙을 요약해 준다. 새 규칙은 새 대화부터 읽힌다. 커밋은 하지 않는다.
+
+Codex 등 `safety-rules` 스킬만 설치한 곳에서는 `/safety-rules`라고 하거나 같은 말로 시킨다. 이때 진입 파일은 `AGENTS.md`다. `/rules:apply`는 `safety-rules` 스킬 원문을 읽고 따르는 짧은 스킬이라, 절차는 [`safety-rules` 스킬](rules/skills/safety-rules/SKILL.md) 한 곳에만 있다.
 
 AX Desk에서 규칙을 복사하거나 파일로 받아 쓰는 방법은 그대로 쓸 수 있다. 이 커맨드는 같은 원문을 받아 넣는 일을 대신한다.
 

@@ -110,9 +110,11 @@ test('dds 스킬의 업데이트는 절차를 지어내지 않고 받은 판의 
   }
 })
 
-test('rules 플러그인의 apply 스킬은 규칙을 복사해 두지 않고 릴리즈된 원문을 받아 넣는다', () => {
-  assert.deepEqual(dirs('plugins/rules/skills'), ['apply'])
-  const skill = read('plugins/rules/skills/apply/SKILL.md')
+test('rules 플러그인의 safety-rules 스킬은 규칙을 복사해 두지 않고 릴리즈된 원문을 받아 넣는다', () => {
+  assert.deepEqual(dirs('plugins/rules/skills'), ['apply', 'safety-rules'])
+  // apply는 절차를 복사하지 않고 safety-rules 스킬 원문을 가리킨다
+  assert.ok(read('plugins/rules/skills/apply/SKILL.md').includes('../safety-rules/SKILL.md'))
+  const skill = read('plugins/rules/skills/safety-rules/SKILL.md')
   assert.ok(skill.includes('https://daewoong-axtf.github.io/ax-kit/guides/index.json'))
   assert.ok(skill.includes('guides["safety-rules"]'))
   // 프로젝트에 두는 파일 이름과 판을 읽는 첫 줄은 통합본과 같아야 한다
@@ -122,4 +124,5 @@ test('rules 플러그인의 apply 스킬은 규칙을 복사해 두지 않고 �
   assert.ok(skill.includes('mktemp'))
   assert.ok(read('plugins/README.md').includes('/rules:apply'))
   assert.ok(read('README.md').includes('/rules:apply'))
+  assert.ok(read('plugins/README.md').includes('--skill safety-rules'))
 })
