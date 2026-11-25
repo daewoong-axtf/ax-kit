@@ -29,6 +29,11 @@
       "release-type": "simple",
       "component": "dds",
       "extra-files": [{ "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" }]
+    },
+    "plugins/rules": {
+      "release-type": "simple",
+      "component": "rules",
+      "extra-files": [{ "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" }]
     }
   }
 }
