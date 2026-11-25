@@ -30,7 +30,7 @@
 | 파일 | 내용 | 수정 |
 | --- | --- | --- |
 | `ai/setup-prompt.md` | AI에게 붙여 넣는 설정 프롬프트 원본. 저장소·ref는 `package.json`의 `designSystem`에서 채운다 | 직접 |
-| `ai/update-prompt.md` | 설치한 프로젝트를 새 판으로 올리는 절차. 채울 자리 없이 릴리즈 태그 그대로 읽는다. `dds-update` 스킬이 받은 판에서 읽어 따른다 | 직접 |
+| `ai/update-prompt.md` | 설치한 프로젝트를 새 판으로 올리는 절차. 채울 자리 없이 릴리즈 태그 그대로 읽는다. `dds` 스킬의 업데이트(`/dds:update`)가 받은 판에서 읽어 따른다 | 직접 |
 | `llms.txt` · `llms-full.txt` | AI가 읽는 문서 목록과 전체 합본 | 생성 — `pnpm build:llms` |
 | `tokens.json` | 색·간격·모서리·글자·모션·쌓임 순서·브레이크포인트·그리드·비율 토큰 | 직접 |
 | `tokens.css` | `--dw-*` CSS 변수 | 생성 — `pnpm build:tokens` |

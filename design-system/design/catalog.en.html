@@ -218,7 +218,7 @@
         <li><strong>Empty and loading states</strong> "Using the design system, add a message for when the list is empty and placeholders to show while it loads"</li>
         <li><strong>Tidy up an existing screen</strong> "Update this screen to match the design system. Keep the behavior and change only the colors, spacing and buttons"</li>
         <li><strong>Review</strong> "Review this screen against the design system. Check dark mode, phone width and keyboard use too"</li>
-        <li><strong>Get a new version</strong> Install the dds plugin and type "/dds:dds-update" or "Update the design system to the new version". It asks before overwriting files we changed</li>
+        <li><strong>Get a new version</strong> Install the dds plugin and type "/dds:update" or "Update the design system to the new version". It asks before overwriting files we changed</li>
       </ul>
       <h3>When to look here</h3>
       <ul class="intro-list">
@@ -1439,7 +1439,7 @@
       </div>
 
       <h3>Multiple selection</h3>
-      <p class="note">The list stays open after each pick, and picked values stack up as chips. To remove one, press it again in the list.</p>
+      <p class="note">Every option has a checkbox in front, so opening the list shows at once what is picked. The list stays open after each pick, and picked values stack up as chips. To remove one, press it again in the list. Jeju in Many picked is picked and locked.</p>
       <div class="state-matrix">
         <div class="dw-field">
           <div class="dw-field__header"><label class="dw-field__label" id="msel-1-label" for="msel-1-trigger">Empty</label></div>
@@ -1450,12 +1450,12 @@
               <svg class="dw-select__chevron" aria-hidden="true"><use href="#i-chevron-down"/></svg>
             </button>
             <div class="dw-select__content" id="msel-1-list" role="listbox" aria-multiselectable="true" aria-labelledby="msel-1-label" hidden>
-              <div class="dw-select__item" role="option" id="msel-1-seoul" data-value="seoul" aria-selected="false"><span class="dw-select__item-label">Seoul</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-1-busan" data-value="busan" aria-selected="false"><span class="dw-select__item-label">Busan</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-1-daegu" data-value="daegu" aria-selected="false"><span class="dw-select__item-label">Daegu</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-1-incheon" data-value="incheon" aria-selected="false"><span class="dw-select__item-label">Incheon</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-1-gwangju" data-value="gwangju" aria-selected="false"><span class="dw-select__item-label">Gwangju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-1-jeju" data-value="jeju" aria-selected="false" aria-disabled="true"><span class="dw-select__item-label">Jeju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
+              <div class="dw-select__item" role="option" id="msel-1-seoul" data-value="seoul" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Seoul</span></div>
+              <div class="dw-select__item" role="option" id="msel-1-busan" data-value="busan" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Busan</span></div>
+              <div class="dw-select__item" role="option" id="msel-1-daegu" data-value="daegu" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Daegu</span></div>
+              <div class="dw-select__item" role="option" id="msel-1-incheon" data-value="incheon" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Incheon</span></div>
+              <div class="dw-select__item" role="option" id="msel-1-gwangju" data-value="gwangju" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Gwangju</span></div>
+              <div class="dw-select__item" role="option" id="msel-1-jeju" data-value="jeju" aria-selected="false" aria-disabled="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Jeju</span></div>
             </div>
           </div>
           <div class="dw-field__footer"><p class="dw-field__description" id="msel-1-desc">You can pick more than one</p><p class="dw-field__error" id="msel-1-err"><svg aria-hidden="true"><use href="#i-circle-alert"/></svg>Choose at least one region</p></div>
@@ -1469,12 +1469,12 @@
               <svg class="dw-select__chevron" aria-hidden="true"><use href="#i-chevron-down"/></svg>
             </button>
             <div class="dw-select__content" id="msel-2-list" role="listbox" aria-multiselectable="true" aria-labelledby="msel-2-label" hidden>
-              <div class="dw-select__item" role="option" id="msel-2-seoul" data-value="seoul" aria-selected="true"><span class="dw-select__item-label">Seoul</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-2-busan" data-value="busan" aria-selected="true"><span class="dw-select__item-label">Busan</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-2-daegu" data-value="daegu" aria-selected="false"><span class="dw-select__item-label">Daegu</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-2-incheon" data-value="incheon" aria-selected="false"><span class="dw-select__item-label">Incheon</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-2-gwangju" data-value="gwangju" aria-selected="false"><span class="dw-select__item-label">Gwangju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-2-jeju" data-value="jeju" aria-selected="false" aria-disabled="true"><span class="dw-select__item-label">Jeju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
+              <div class="dw-select__item" role="option" id="msel-2-seoul" data-value="seoul" aria-selected="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Seoul</span></div>
+              <div class="dw-select__item" role="option" id="msel-2-busan" data-value="busan" aria-selected="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Busan</span></div>
+              <div class="dw-select__item" role="option" id="msel-2-daegu" data-value="daegu" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Daegu</span></div>
+              <div class="dw-select__item" role="option" id="msel-2-incheon" data-value="incheon" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Incheon</span></div>
+              <div class="dw-select__item" role="option" id="msel-2-gwangju" data-value="gwangju" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Gwangju</span></div>
+              <div class="dw-select__item" role="option" id="msel-2-jeju" data-value="jeju" aria-selected="false" aria-disabled="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Jeju</span></div>
             </div><input type="hidden" name="msel-2" value="seoul"><input type="hidden" name="msel-2" value="busan">
           </div>
           <div class="dw-field__footer"><p class="dw-field__description" id="msel-2-desc">You can pick more than one</p><p class="dw-field__error" id="msel-2-err"><svg aria-hidden="true"><use href="#i-circle-alert"/></svg>Choose at least one region</p></div>
@@ -1483,18 +1483,18 @@
           <div class="dw-field__header"><label class="dw-field__label" id="msel-3-label" for="msel-3-trigger">Many picked</label></div>
           <div class="dw-select dw-select--medium" data-dw="select" data-multiple data-name="msel-3" data-placeholder="Select region">
             <button type="button" class="dw-select__trigger" id="msel-3-trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="msel-3-list" aria-labelledby="msel-3-label msel-3-value" aria-describedby="msel-3-desc">
-              <span class="dw-select__value" id="msel-3-value"><span class="dw-select__chip">Seoul</span><span class="dw-select__chip">Busan</span><span class="dw-select__chip">Daegu</span><span class="dw-select__chip">Incheon</span><span class="dw-select__chip">Gwangju</span></span>
+              <span class="dw-select__value" id="msel-3-value"><span class="dw-select__chip">Seoul</span><span class="dw-select__chip">Busan</span><span class="dw-select__chip">Daegu</span><span class="dw-select__chip">Incheon</span><span class="dw-select__chip">Gwangju</span><span class="dw-select__chip">Jeju</span></span>
               <span class="dw-select__status" aria-hidden="true"><svg class="dw-select__status-critical"><use href="#i-circle-alert"/></svg><svg class="dw-select__status-positive"><use href="#i-circle-check"/></svg></span>
               <svg class="dw-select__chevron" aria-hidden="true"><use href="#i-chevron-down"/></svg>
             </button>
             <div class="dw-select__content" id="msel-3-list" role="listbox" aria-multiselectable="true" aria-labelledby="msel-3-label" hidden>
-              <div class="dw-select__item" role="option" id="msel-3-seoul" data-value="seoul" aria-selected="true"><span class="dw-select__item-label">Seoul</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-3-busan" data-value="busan" aria-selected="true"><span class="dw-select__item-label">Busan</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-3-daegu" data-value="daegu" aria-selected="true"><span class="dw-select__item-label">Daegu</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-3-incheon" data-value="incheon" aria-selected="true"><span class="dw-select__item-label">Incheon</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-3-gwangju" data-value="gwangju" aria-selected="true"><span class="dw-select__item-label">Gwangju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-3-jeju" data-value="jeju" aria-selected="false" aria-disabled="true"><span class="dw-select__item-label">Jeju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-            </div><input type="hidden" name="msel-3" value="seoul"><input type="hidden" name="msel-3" value="busan"><input type="hidden" name="msel-3" value="daegu"><input type="hidden" name="msel-3" value="incheon"><input type="hidden" name="msel-3" value="gwangju">
+              <div class="dw-select__item" role="option" id="msel-3-seoul" data-value="seoul" aria-selected="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Seoul</span></div>
+              <div class="dw-select__item" role="option" id="msel-3-busan" data-value="busan" aria-selected="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Busan</span></div>
+              <div class="dw-select__item" role="option" id="msel-3-daegu" data-value="daegu" aria-selected="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Daegu</span></div>
+              <div class="dw-select__item" role="option" id="msel-3-incheon" data-value="incheon" aria-selected="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Incheon</span></div>
+              <div class="dw-select__item" role="option" id="msel-3-gwangju" data-value="gwangju" aria-selected="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Gwangju</span></div>
+              <div class="dw-select__item" role="option" id="msel-3-jeju" data-value="jeju" aria-selected="true" aria-disabled="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Jeju</span></div>
+            </div><input type="hidden" name="msel-3" value="seoul"><input type="hidden" name="msel-3" value="busan"><input type="hidden" name="msel-3" value="daegu"><input type="hidden" name="msel-3" value="incheon"><input type="hidden" name="msel-3" value="gwangju"><input type="hidden" name="msel-3" value="jeju">
           </div>
           <div class="dw-field__footer"><p class="dw-field__description" id="msel-3-desc">You can pick more than one</p><p class="dw-field__error" id="msel-3-err"><svg aria-hidden="true"><use href="#i-circle-alert"/></svg>Choose at least one region</p></div>
         </div>
@@ -1507,12 +1507,12 @@
               <svg class="dw-select__chevron" aria-hidden="true"><use href="#i-chevron-down"/></svg>
             </button>
             <div class="dw-select__content" id="msel-4-list" role="listbox" aria-multiselectable="true" aria-labelledby="msel-4-label" hidden>
-              <div class="dw-select__item" role="option" id="msel-4-seoul" data-value="seoul" aria-selected="false"><span class="dw-select__item-label">Seoul</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-4-busan" data-value="busan" aria-selected="false"><span class="dw-select__item-label">Busan</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-4-daegu" data-value="daegu" aria-selected="false"><span class="dw-select__item-label">Daegu</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-4-incheon" data-value="incheon" aria-selected="false"><span class="dw-select__item-label">Incheon</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-4-gwangju" data-value="gwangju" aria-selected="false"><span class="dw-select__item-label">Gwangju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-4-jeju" data-value="jeju" aria-selected="false" aria-disabled="true"><span class="dw-select__item-label">Jeju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
+              <div class="dw-select__item" role="option" id="msel-4-seoul" data-value="seoul" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Seoul</span></div>
+              <div class="dw-select__item" role="option" id="msel-4-busan" data-value="busan" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Busan</span></div>
+              <div class="dw-select__item" role="option" id="msel-4-daegu" data-value="daegu" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Daegu</span></div>
+              <div class="dw-select__item" role="option" id="msel-4-incheon" data-value="incheon" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Incheon</span></div>
+              <div class="dw-select__item" role="option" id="msel-4-gwangju" data-value="gwangju" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Gwangju</span></div>
+              <div class="dw-select__item" role="option" id="msel-4-jeju" data-value="jeju" aria-selected="false" aria-disabled="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Jeju</span></div>
             </div>
           </div>
           <div class="dw-field__footer"><p class="dw-field__description" id="msel-4-desc">You can pick more than one</p><p class="dw-field__error" id="msel-4-err"><svg aria-hidden="true"><use href="#i-circle-alert"/></svg>Choose at least one region</p></div>
@@ -1526,12 +1526,12 @@
               <svg class="dw-select__chevron" aria-hidden="true"><use href="#i-chevron-down"/></svg>
             </button>
             <div class="dw-select__content" id="msel-5-list" role="listbox" aria-multiselectable="true" aria-labelledby="msel-5-label" hidden>
-              <div class="dw-select__item" role="option" id="msel-5-seoul" data-value="seoul" aria-selected="true"><span class="dw-select__item-label">Seoul</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-5-busan" data-value="busan" aria-selected="false"><span class="dw-select__item-label">Busan</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-5-daegu" data-value="daegu" aria-selected="false"><span class="dw-select__item-label">Daegu</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-5-incheon" data-value="incheon" aria-selected="false"><span class="dw-select__item-label">Incheon</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-5-gwangju" data-value="gwangju" aria-selected="false"><span class="dw-select__item-label">Gwangju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
-              <div class="dw-select__item" role="option" id="msel-5-jeju" data-value="jeju" aria-selected="false" aria-disabled="true"><span class="dw-select__item-label">Jeju</span><svg class="dw-select__check" aria-hidden="true"><use href="#i-check"/></svg></div>
+              <div class="dw-select__item" role="option" id="msel-5-seoul" data-value="seoul" aria-selected="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Seoul</span></div>
+              <div class="dw-select__item" role="option" id="msel-5-busan" data-value="busan" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Busan</span></div>
+              <div class="dw-select__item" role="option" id="msel-5-daegu" data-value="daegu" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Daegu</span></div>
+              <div class="dw-select__item" role="option" id="msel-5-incheon" data-value="incheon" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Incheon</span></div>
+              <div class="dw-select__item" role="option" id="msel-5-gwangju" data-value="gwangju" aria-selected="false"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Gwangju</span></div>
+              <div class="dw-select__item" role="option" id="msel-5-jeju" data-value="jeju" aria-selected="false" aria-disabled="true"><span class="dw-select__item-checkbox" aria-hidden="true"></span><span class="dw-select__item-label">Jeju</span></div>
             </div><input type="hidden" name="msel-5" value="seoul">
           </div>
           <div class="dw-field__footer"><p class="dw-field__description" id="msel-5-desc">You can pick more than one</p><p class="dw-field__error" id="msel-5-err"><svg aria-hidden="true"><use href="#i-circle-alert"/></svg>Choose at least one region</p></div>

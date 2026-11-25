@@ -29,7 +29,7 @@
    NEW=$(mktemp -d) && git clone --depth 1 --branch <올릴 판> https://github.com/daewoong-axtf/ax-kit.git "$NEW"
    OLD=$(mktemp -d) && git clone --depth 1 --branch <지금 판> https://github.com/daewoong-axtf/ax-kit.git "$OLD"
    - 기록의 저장소 주소가 `daewoong-design-system`이나 `daewoong-ax-standards`로 끝나도 예전 이름일 뿐이다. 언제나 위 `ax-kit` 주소로 받는다. 옛 태그 `v1.0.0`~`v1.2.0`도 이 주소에 있다.
-   - `dds-update` 스킬이 올릴 판을 이미 받아 두었으면 그 폴더를 NEW로 쓰고 다시 받지 않는다.
+   - `dds` 스킬이 올릴 판을 이미 받아 두었으면 그 폴더를 NEW로 쓰고 다시 받지 않는다.
    - NEW에서 `git rev-parse HEAD`로 커밋 값을 적어 둔다. NEW를 받지 못하면 내용을 추측하지 말고 이유를 알리고 멈춘다.
    - 아래 경우에는 OLD를 쓰지 않고 OLD 없이 계속한다: 기록에 ref가 없다(이때는 OLD를 받지 않는다), 지금 판이 태그가 아니다(`main` 같은 브랜치, 커밋 값), OLD를 받지 못했다, 기록에 커밋 값이 없다, OLD에서 `git rev-parse HEAD`로 읽은 커밋 값이 기록의 커밋 값과 다르다. 그 이유를 적어 두었다가 9번 질문 맨 위에 쓴다. OLD 없이 계속하면 5번에서 NEW와 같은 파일만 묻지 않고, 나머지는 모두 "고친 파일"로 본다.
    - 위 정의대로 `<OLD>`와 `<NEW>`를 정한다. 두 판의 폴더 구조가 달라도 비교는 `<OLD>/design/tokens.css`와 `<NEW>/design/tokens.css`처럼 같은 상대 경로끼리 한다.

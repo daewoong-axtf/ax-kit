@@ -45,6 +45,24 @@ test('every dw-* class in catalog.html is defined in components.css', () => {
   assert.deepEqual(missing, [])
 })
 
+test('Select 다중 선택의 보기마다 앞에 체크박스가 있고 뒤 check는 없다', () => {
+  const html = read('catalog.html')
+  // Combobox(data-dw="combobox")의 multiple은 대상이 아니다 — 보기를 스크립트가 만든다
+  const lines = html.split('\n')
+  const roots = lines.flatMap((line, i) => (/data-dw="select" data-multiple/.test(line) ? [i] : []))
+  assert.ok(roots.length >= 5, `다중 Select ${roots.length}개`)
+  for (const start of roots) {
+    const list = lines.findIndex((line, i) => i > start && line.includes('role="listbox"'))
+    const items: string[] = []
+    for (let i = list + 1; lines[i].trim().startsWith('<div class="dw-select__item"'); i++) items.push(lines[i].trim())
+    assert.ok(items.length > 0, `${start + 1}행의 다중 Select에 보기가 없다`)
+    for (const item of items) {
+      assert.match(item, /^<div[^>]*><span class="dw-select__item-checkbox" aria-hidden="true"><\/span><span class="dw-select__item-label">/, item)
+      assert.doesNotMatch(item, /dw-select__check/, item)
+    }
+  }
+})
+
 test('AI documents are generated from the specs', async () => {
   const { buildFull, buildIndex, buildReadme, setupPrompt } = await import('../scripts/build-llms.ts')
   assert.equal(buildIndex(), read('llms.txt'))

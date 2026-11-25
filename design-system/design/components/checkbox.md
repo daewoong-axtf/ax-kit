@@ -69,6 +69,7 @@
 - 네이티브 `<input type="checkbox">`를 쓴다(역할·키보드·폼 제출이 그대로 동작). 라벨은 `<label>`로 감싼다.
 - 그룹이면 `<fieldset>` + `<legend>`(또는 `role="group"` + `aria-labelledby`). 그룹 간격은 세로 0 — Root 최소 높이가 간격을 만든다.
 - 전체 선택은 일부만 선택됐을 때 `indeterminate`.
+- 드롭다운 안의 여러 개 고르기는 이 컴포넌트를 넣지 않는다. [Select 다중 선택](select.md#item-checkbox-다중)이 같은 모양의 장식 체크박스를 그린다.
 
 | 키 | 동작 |
 | --- | --- |

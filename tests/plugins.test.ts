@@ -73,7 +73,7 @@ test('플러그인마다 release-please 패키지가 있고 릴리즈 PR은 폴�
 })
 
 test('플러그인 설명에 Notion 연결이 필요하다고 알린다', () => {
-  for (const n of ['write-prd', 'ax-mail-inquiry-log']) {
+  for (const n of ['ax']) {
     assert.match(json(`plugins/${n}/.claude-plugin/plugin.json`).description, /Notion/)
   }
 })
@@ -87,23 +87,25 @@ test('plugins/README.md는 모든 플러그인과 Notion 연결 안내를 담고
   assert.ok(read('AGENTS.md').includes('(plugins/README.md)'))
 })
 
-test('dds 플러그인은 설정 · 적용 스킬과 업데이트 스킬 두 개를 담는다', () => {
-  assert.deepEqual(dirs('plugins/dds/skills'), ['dds', 'dds-update'])
+test('dds 플러그인은 dds 스킬과 그 절을 부르는 setup · update · check 스킬을 담는다', () => {
+  assert.deepEqual(dirs('plugins/dds/skills'), ['check', 'dds', 'setup', 'update'])
+  // 짧은 스킬은 절차를 복사하지 않고 dds 스킬 원문을 가리킨다
+  for (const n of ['setup', 'update', 'check']) {
+    assert.ok(read(`plugins/dds/skills/${n}/SKILL.md`).includes('../dds/SKILL.md'), n)
+  }
 })
 
-test('dds-update 스킬은 절차를 지어내지 않고 받은 판의 update-prompt.md를 따른다', () => {
-  const skill = read('plugins/dds/skills/dds-update/SKILL.md')
+test('dds 스킬의 업데이트는 절차를 지어내지 않고 받은 판의 update-prompt.md를 따른다', () => {
+  const skill = read('plugins/dds/skills/dds/SKILL.md')
   const path = 'design-system/design/ai/update-prompt.md'
   assert.ok(skill.includes(path), `${path}를 가리키지 않는다`)
   assert.ok(existsSync(new URL(`../${path}`, import.meta.url)), `${path}가 없다`)
   assert.ok(skill.includes('https://github.com/daewoong-axtf/ax-kit.git'))
   assert.ok(skill.includes('https://daewoong-axtf.github.io/ax-kit/guides/index.json'))
-  // dds 스킬은 업데이트를 직접 하지 않고 dds-update로 넘긴다
-  assert.ok(read('plugins/dds/skills/dds/SKILL.md').includes('dds-update'))
-  assert.ok(read('plugins/README.md').includes('--skill dds-update'))
+  assert.ok(read('plugins/README.md').includes('/dds:update'))
   assert.ok(skill.includes('mktemp -d'))
   // 절차가 처음 들어가는 릴리즈를 문서와 스킬이 같은 말로 알린다
-  for (const p of ['plugins/README.md', 'design-system/README.md', 'plugins/dds/skills/dds-update/SKILL.md']) {
+  for (const p of ['plugins/README.md', 'design-system/README.md', 'plugins/dds/skills/dds/SKILL.md']) {
     assert.ok(read(p).includes('1.5.0 다음 design-system 릴리즈'), p)
   }
 })

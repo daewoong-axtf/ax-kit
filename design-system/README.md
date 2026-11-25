@@ -108,7 +108,7 @@ AI 도구에는 프로젝트 파일을 고칠 권한과 저장소를 받을 수 
 - [문서 목록](design/llms.txt) — AI가 읽을 문서의 색인
 - [전체 문서](design/llms-full.txt) — 정본 문서를 한 파일로 합친 판
 - [설정 프롬프트 원본](design/ai/setup-prompt.md)
-- [업데이트 절차 원본](design/ai/update-prompt.md) — 설치한 프로젝트를 새 판으로 올리는 절차. `dds-update` 스킬이 받은 판에서 읽는다
+- [업데이트 절차 원본](design/ai/update-prompt.md) — 설치한 프로젝트를 새 판으로 올리는 절차. `dds` 스킬의 업데이트(`/dds:update`)가 받은 판에서 읽는다
 
 ### 버전
 
@@ -117,11 +117,11 @@ AI 도구에는 프로젝트 파일을 고칠 권한과 저장소를 받을 수 
 새 판으로 올리려면 [`dds` 플러그인](../plugins/README.md)을 설치하고 프로젝트에서 아래 중 하나를 입력한다. **1.5.0 다음 design-system 릴리즈부터 쓸 수 있다.** 판을 말하지 않으면 최신 릴리즈로 올린다.
 
 ```text
-/dds:dds-update
+/dds:update
 디자인 시스템 새 버전으로 올려줘
 ```
 
-`/dds:dds-update`는 Claude Code의 이름이다. Codex · Cursor 등은 프로젝트 맨 위 폴더에서 `npx skills add daewoong-axtf/ax-kit --skill dds-update`로 스킬을 넣고 같은 문장을 입력한다. 스킬은 올릴 판을 받아 그 판의 [업데이트 절차](design/ai/update-prompt.md)를 그대로 따른다. 지금 판 · 프로젝트 · 새 판 세 쪽을 비교해 프로젝트에서 고치지 않은 파일은 묻지 않고 바꾸고, 프로젝트에서 고친 파일을 새 판도 바꿨을 때만 한 번에 묻는다. [업데이트 기록](https://daewoong-axtf.github.io/ax-kit/design/catalog.html#page-history-title)에서 주의할 변경을 골라 알리고 `docs/design-system.md`를 새 판으로 고친다. 이 명령은 1.5.0 다음 design-system 릴리즈부터 동작한다. 업데이트 절차가 그 릴리즈에 처음 들어가기 때문이다. 그 전에는 스킬이 절차를 지어내지 않고, 최신 릴리즈에 절차가 없다고 알린 뒤 멈춘다.
+`/dds:update`는 Claude Code의 이름이다. Codex · Cursor 등은 프로젝트 맨 위 폴더에서 `npx skills add daewoong-axtf/ax-kit --skill dds`로 스킬을 넣고 `/dds update` 또는 같은 문장을 입력한다. 스킬은 올릴 판을 받아 그 판의 [업데이트 절차](design/ai/update-prompt.md)를 그대로 따른다. 지금 판 · 프로젝트 · 새 판 세 쪽을 비교해 프로젝트에서 고치지 않은 파일은 묻지 않고 바꾸고, 프로젝트에서 고친 파일을 새 판도 바꿨을 때만 한 번에 묻는다. [업데이트 기록](https://daewoong-axtf.github.io/ax-kit/design/catalog.html#page-history-title)에서 주의할 변경을 골라 알리고 `docs/design-system.md`를 새 판으로 고친다. 이 명령은 1.5.0 다음 design-system 릴리즈부터 동작한다. 업데이트 절차가 그 릴리즈에 처음 들어가기 때문이다. 그 전에는 스킬이 절차를 지어내지 않고, 최신 릴리즈에 절차가 없다고 알린 뒤 멈춘다.
 
 ## 직접 설치하기
 
