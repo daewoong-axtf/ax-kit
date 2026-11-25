@@ -1,6 +1,6 @@
 # plugins/ — 팀 Claude 스킬
 
-AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인 마켓플레이스 `ax-kit`이고, 스킬 하나가 플러그인 하나다. 마켓플레이스를 한 번 등록하고 필요한 플러그인만 골라 설치한다. 플러그인마다 따로 버전을 매긴다.
+AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인 마켓플레이스 `ax-kit`이고, 스킬 하나가 플러그인 하나다(`dds`만 커맨드를 나누려고 스킬을 넷 둔다). 마켓플레이스를 한 번 등록하고 필요한 플러그인만 골라 설치한다. 플러그인마다 따로 버전을 매긴다.
 
 | 플러그인 | 하는 일 | 필요한 연결 | 버전 |
 | --- | --- | --- | --- |
@@ -77,22 +77,67 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
 
 **dds**
 
-```
-디자인 시스템 설정해줘
-디자인 시스템 써서 회원 목록 화면 만들어줘
-이 화면 디자인 시스템 기준으로 점검해줘
-```
+디자인 시스템을 쓸 프로젝트 폴더에서 Claude Code를 열고 아래 순서로 한다. 1 · 2번은 처음 한 번만 한다.
 
-- 프로젝트에 `docs/design-system.md`가 없으면 최신 [설정 프롬프트](../design-system/design/ai/setup-prompt.md)를 받아 그대로 설정한다. 붙여 넣을 필요가 없다.
-- 화면을 만들거나 고치면 프로젝트에 복사된 `docs/design-reference/`를 읽고 토큰과 컴포넌트를 쓴다.
-- 끝내기 전에 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다. 두 스킬은 처음 한 번 GitHub에서 받아 프로젝트의 `.agents/skills/`에 두고, 그 뒤로는 프로젝트에 있는 것을 계속 쓴다.
-- 스킬 지적이 디자인 시스템과 어긋나면 디자인 시스템을 따른다.
+1. **플러그인을 설치한다.**
+
+   ```
+   /plugin marketplace add daewoong-axtf/ax-kit
+   /plugin install dds@ax-kit
+   ```
+
+2. **디자인 시스템을 프로젝트에 설정한다.**
+
+   ```
+   /dds:setup
+   ```
+
+   "디자인 시스템 설정해줘"라고 말해도 된다.
+
+   최신 [설정 프롬프트](../design-system/design/ai/setup-prompt.md)를 받아 그대로 설정한다. 붙여 넣을 필요가 없다. 끝나면 `docs/design-reference/`에 토큰과 컴포넌트 명세가, `docs/design-system.md`에 가져온 버전이 생긴다.
+
+3. **화면을 만들거나 고친다.**
+
+   ```
+   디자인 시스템 써서 회원 목록 화면 만들어줘
+   /dds:check
+   ```
+
+   만드는 일은 말로 시킨다. `/dds:check`는 만든 화면을 점검만 따로 할 때 쓴다.
+
+   프로젝트에 복사된 `docs/design-reference/`를 읽고 토큰과 컴포넌트를 쓴다. 끝내기 전에 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다. 두 스킬은 처음 한 번 GitHub에서 받아 프로젝트의 `.agents/skills/`에 두고, 그 뒤로는 프로젝트에 있는 것을 계속 쓴다. 스킬 지적이 디자인 시스템과 어긋나면 디자인 시스템을 따른다.
+
+4. **디자인 시스템 새 판이 나오면 올린다.**
+
+   ```
+   /dds:update
+   ```
+
+   "디자인 시스템 최신 판으로 업데이트해줘"라고 말해도 된다. 자동으로는 올라가지 않는다. 지금 버전이 최신이면 그렇다고 알리고 멈춘다. 아니면 최신 설정 프롬프트를 다시 받아 `docs/design-reference/`와 `docs/design-system.md`를 새 판으로 바꾼다. 덮어쓰기 전에 무엇이 바뀌는지 먼저 보여 준다. 올린 뒤 `docs/design-system.md`의 버전을 확인한다.
+
+| 커맨드 | 하는 일 |
+| --- | --- |
+| `/dds:setup` | 디자인 시스템을 프로젝트에 설정한다 |
+| `/dds:update` | 프로젝트의 디자인 시스템을 최신 판으로 올린다 |
+| `/dds:check` | 화면을 디자인 시스템과 점검 스킬 두 개로 점검한다 |
+
+커맨드는 `플러그인:스킬` 모양이다. 세 커맨드는 `dds` 스킬 원문의 해당 절을 읽고 따르는 짧은 스킬이라, 절차는 [`dds` 스킬](dds/skills/dds/SKILL.md) 한 곳에만 있다. Codex · Cursor처럼 `npx skills add … --skill dds`로 `dds` 스킬만 설치한 곳에서는 `/dds setup`, `/dds update`, `/dds check`로 쓴다.
+
+디자인 시스템 버전(`design-system-vX.Y.Z`)과 `dds` 플러그인 버전(`dds-vX.Y.Z`)은 따로 오른다. 4번은 디자인 시스템을 올리는 것이고, 플러그인 자체를 올리는 법은 아래 [업데이트](#업데이트)에 있다. 최신 디자인 시스템 버전은 [릴리즈](https://github.com/daewoong-axtf/ax-kit/releases)에서 본다.
 
 ## 업데이트
 
-플러그인은 버전이 오를 때만 새 판을 받는다.
+플러그인(스킬 원문)을 새 판으로 올리는 법이다. 플러그인은 버전이 오를 때만 새 판을 받는다. 프로젝트에 넣은 디자인 시스템을 올리는 것은 [dds 쓰는 법](#쓰는-법) 4번이다.
 
 - Claude Code: `/plugin marketplace update ax-kit` 뒤 `/plugin`에서 업데이트한다.
+- 터미널에서는 명령 두 줄로 한다. 플러그인을 설치한 프로젝트 폴더에서 실행하고, 끝나면 Claude Code를 다시 시작해야 적용된다.
+
+  ```bash
+  claude plugin marketplace update ax-kit
+  claude plugin update dds@ax-kit
+  ```
+
+  `dds` 자리에 올릴 플러그인 이름을 넣는다.
 - 자동으로 받으려면 `/plugin` → Marketplaces → `ax-kit` → Enable auto-update. 팀 마켓플레이스는 기본으로 꺼져 있다.
 
 ## 플러그인을 추가하거나 고치는 법
