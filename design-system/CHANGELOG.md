@@ -1,5 +1,13 @@
 # 변경 기록
 
+## [1.6.0](https://github.com/daewoong-axtf/ax-kit/compare/design-system-v1.5.0...design-system-v1.6.0) (2026-11-25)
+
+
+### 새로 추가된 기능
+
+* Select 다중 선택 보기 앞에 체크박스 표시 ([#35](https://github.com/daewoong-axtf/ax-kit/issues/35)) ([586997a](https://github.com/daewoong-axtf/ax-kit/commit/586997accbb8f6b833c64ea3f3b476fef62eebbf))
+* 명령 하나로 디자인 시스템을 새 판으로 올리는 dds-update 스킬 ([#34](https://github.com/daewoong-axtf/ax-kit/issues/34)) ([1aecc81](https://github.com/daewoong-axtf/ax-kit/commit/1aecc819cdd2950d32ee5e26f8c35e87bf0182cf))
+
 ## [1.5.0](https://github.com/daewoong-axtf/ax-kit/compare/design-system-v1.4.0...design-system-v1.5.0) (2026-11-24)
 
 
