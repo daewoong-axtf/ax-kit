@@ -1,11 +1,10 @@
 # plugins/ — 팀 Claude 스킬
 
-AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인 마켓플레이스 `ax-kit`이고, 스킬 하나가 플러그인 하나다(`dds`만 커맨드를 나누려고 스킬을 넷 둔다). 마켓플레이스를 한 번 등록하고 필요한 플러그인만 골라 설치한다. 플러그인마다 따로 버전을 매긴다.
+AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인 마켓플레이스 `ax-kit`이고, 플러그인 하나에 스킬이 하나 이상 들어 있다. 마켓플레이스를 한 번 등록하고 필요한 플러그인만 골라 설치한다. 플러그인마다 따로 버전을 매긴다.
 
 | 플러그인 | 하는 일 | 필요한 연결 | 버전 |
 | --- | --- | --- | --- |
-| [`write-prd`](write-prd/skills/write-prd/SKILL.md) | 노션 'PRD 작성 기준'을 매번 읽어 그대로 PRD를 쓰고 'AX PRD 문서' DB에 저장한다. 기존 PRD 점검도 한다 | Notion — 'PRD 작성 기준' · 'AX PM 문서' 페이지와 'AX PRD 문서' DB | [![write-prd](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=write-prd-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
-| [`ax-mail-inquiry-log`](ax-mail-inquiry-log/skills/ax-mail-inquiry-log/SKILL.md) | 메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 정해진 형식으로 기록한다 | Notion — 'AX 라운지 메일·메신저 문의' DB | [![ax-mail-inquiry-log](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=ax-mail-inquiry-log-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
+| `ax` | AX팀 업무 스킬 두 개. [`write-prd`](ax/skills/write-prd/SKILL.md) — 노션 'PRD 작성 기준'을 매번 읽어 그대로 PRD를 쓰고 'AX PRD 문서' DB에 저장한다. 기존 PRD 점검도 한다. [`mail-inquiry-log`](ax/skills/mail-inquiry-log/SKILL.md) — 메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 정해진 형식으로 기록한다 | Notion — 'PRD 작성 기준' · 'AX PM 문서' 페이지, 'AX PRD 문서' DB, 'AX 라운지 메일·메신저 문의' DB | [![ax](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=ax-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
 | [`dds`](dds/skills/dds/SKILL.md) | Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 토큰·컴포넌트를 적용한 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 | GitHub 접속 — 설정 프롬프트와 점검 스킬 두 개를 처음 한 번 받아 온다 | [![dds](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=dds-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
 
 ## 설치
@@ -16,12 +15,20 @@ AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인
 
 ```
 /plugin marketplace add daewoong-axtf/ax-kit
-/plugin install write-prd@ax-kit
-/plugin install ax-mail-inquiry-log@ax-kit
+/plugin install ax@ax-kit
 /plugin install dds@ax-kit
 ```
 
 `/plugin`을 열면 목록에서 골라 설치할 수도 있다.
+
+예전에 `write-prd@ax-kit`, `ax-mail-inquiry-log@ax-kit`을 설치했으면 지우고 `ax`를 설치한다. 두 플러그인은 `ax` 하나로 합쳐졌고 자동으로 넘어가지 않는다.
+
+```
+/plugin marketplace update ax-kit
+/plugin uninstall write-prd@ax-kit
+/plugin uninstall ax-mail-inquiry-log@ax-kit
+/plugin install ax@ax-kit
+```
 
 **데스크톱 앱 · claude.ai**
 
@@ -41,7 +48,7 @@ npx skills add daewoong-axtf/ax-kit --skill dds
 
 ### 2. Notion 연결 확인
 
-`write-prd`와 `ax-mail-inquiry-log`는 Notion을 읽고 쓴다. `dds`은 Notion을 쓰지 않으니 이 단계를 건너뛴다. 플러그인에는 Notion 연결이 들어 있지 않고, 각자 연결해 둔 Notion을 쓴다.
+`ax`의 두 스킬(`write-prd`, `mail-inquiry-log`)은 Notion을 읽고 쓴다. `dds`은 Notion을 쓰지 않으니 이 단계를 건너뛴다. 플러그인에는 Notion 연결이 들어 있지 않고, 각자 연결해 둔 Notion을 쓴다.
 
 - **데스크톱 앱 · claude.ai**: Settings → Connectors에서 Notion을 연결한다.
 - **Claude Code**: `/mcp`에 Notion이 보이면 된다. claude.ai 계정에 연결한 Notion이 그대로 보인다. 없으면 `claude mcp add --transport http notion https://mcp.notion.com/mcp`로 추가하고 `/mcp`에서 로그인한다.
@@ -50,9 +57,9 @@ Notion 연결은 내 계정 권한으로 동작한다. 위 표의 페이지 · D
 
 ## 쓰는 법
 
-설치하면 대화에서 하고 싶은 일을 말하면 된다. Claude가 맞는 스킬을 골라 쓴다. Claude Code에서는 `/write-prd:write-prd`, `/ax-mail-inquiry-log:ax-mail-inquiry-log`처럼 `플러그인:스킬` 이름으로 바로 부를 수도 있다.
+설치하면 대화에서 하고 싶은 일을 말하면 된다. Claude가 맞는 스킬을 골라 쓴다. Claude Code에서는 `/ax:write-prd`, `/ax:mail-inquiry-log`처럼 `플러그인:스킬` 이름으로 바로 부를 수도 있다.
 
-**write-prd**
+**ax:write-prd**
 
 ```
 PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
@@ -64,7 +71,7 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
 - 매번 노션 'PRD 작성 기준'을 다시 읽고 그대로 쓴다. 필수 항목 중 근거가 없는 것만 초안 전에 한 번에 묻는다.
 - 초안은 작업 폴더의 `prd-drafts/`에 먼저 저장하고 요약을 보여 준다. **저장하라고 해야** 'AX PRD 문서' DB에 올린다.
 
-**ax-mail-inquiry-log**
+**ax:mail-inquiry-log**
 
 ```
 이 메일 문의 노션에 기록해줘 (메일 · 웍스 대화 원문이나 요약을 붙여 넣는다)
@@ -146,7 +153,7 @@ PR을 올리고 누군가 확인한 뒤 머지한다. 한 PR에서는 플러그�
 
 **새 플러그인** — 다섯 곳을 맞춘다. 하나라도 빠지면 `pnpm test`가 실패한다.
 
-1. `plugins/<이름>/skills/<이름>/SKILL.md` — 스킬 원문. frontmatter `name`이 폴더 이름과 같아야 한다.
+1. `plugins/<이름>/skills/<스킬 이름>/SKILL.md` — 스킬 원문. frontmatter `name`이 스킬 폴더 이름과 같아야 한다. 커맨드는 `/<이름>:<스킬 이름>`이 된다.
 2. `plugins/<이름>/.claude-plugin/plugin.json` — `name`, `version: "1.0.0"`, `description`(필요한 연결도 적는다), `author`, `repository`.
 3. `plugins/<이름>/version.txt` — `1.0.0`.
 4. `.claude-plugin/marketplace.json`의 `plugins[]` — `name`, `source: "./plugins/<이름>"`, `description`. `version`은 넣지 않는다.

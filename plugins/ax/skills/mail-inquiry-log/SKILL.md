@@ -1,5 +1,5 @@
 ---
-name: "ax-mail-inquiry-log"
+name: "mail-inquiry-log"
 description: "현업의 메일·웍스(메신저) 문의와 AX팀 대응 대화를 받아, 노션 'AX 라운지 메일·메신저 문의' DB에 [부서] 제목과 문제·어려움·지원·결과·대응 이력 형식으로 페이지를 만들 때 사용"
 ---
 

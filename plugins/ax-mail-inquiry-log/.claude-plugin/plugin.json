@@ -1,8 +1,0 @@
-{
-  "name": "ax-mail-inquiry-log",
-  "version": "1.0.0",
-  "description": "현업의 메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 [부서] 제목과 문제·어려움·지원·결과·대응 이력 형식으로 기록한다. Notion 연결 필요",
-  "author": { "name": "daewoong-axtf" },
-  "repository": "https://github.com/daewoong-axtf/ax-kit",
-  "keywords": ["문의", "notion", "기록"]
-}
