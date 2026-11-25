@@ -1,8 +1,0 @@
-{
-  "name": "write-prd",
-  "version": "1.0.0",
-  "description": "노션 'PRD 작성 기준'을 매번 읽어 그대로 PRD를 쓰고 'AX PRD 문서' DB에 저장한다. 기존 PRD 점검도 한다. Notion 연결 필요",
-  "author": { "name": "daewoong-axtf" },
-  "repository": "https://github.com/daewoong-axtf/ax-kit",
-  "keywords": ["prd", "notion", "기획"]
-}

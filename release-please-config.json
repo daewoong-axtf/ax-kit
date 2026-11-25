@@ -20,14 +20,9 @@
       "release-type": "simple",
       "component": "safety-rules"
     },
-    "plugins/write-prd": {
+    "plugins/ax": {
       "release-type": "simple",
-      "component": "write-prd",
-      "extra-files": [{ "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" }]
-    },
-    "plugins/ax-mail-inquiry-log": {
-      "release-type": "simple",
-      "component": "ax-mail-inquiry-log",
+      "component": "ax",
       "extra-files": [{ "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" }]
     },
     "plugins/dds": {

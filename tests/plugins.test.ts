@@ -73,7 +73,7 @@ test('플러그인마다 release-please 패키지가 있고 릴리즈 PR은 폴�
 })
 
 test('플러그인 설명에 Notion 연결이 필요하다고 알린다', () => {
-  for (const n of ['write-prd', 'ax-mail-inquiry-log']) {
+  for (const n of ['ax']) {
     assert.match(json(`plugins/${n}/.claude-plugin/plugin.json`).description, /Notion/)
   }
 })

@@ -10,15 +10,9 @@
       "category": "development"
     },
     {
-      "name": "ax-mail-inquiry-log",
-      "source": "./plugins/ax-mail-inquiry-log",
-      "description": "메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 기록한다. Notion 연결 필요",
-      "category": "productivity"
-    },
-    {
-      "name": "write-prd",
-      "source": "./plugins/write-prd",
-      "description": "노션 'PRD 작성 기준'대로 PRD를 쓰고 'AX PRD 문서' DB에 저장한다. Notion 연결 필요",
+      "name": "ax",
+      "source": "./plugins/ax",
+      "description": "AX팀 업무 스킬. PRD를 쓰고(write-prd) 메일·웍스 문의를 기록한다(mail-inquiry-log). Notion 연결 필요",
       "category": "productivity"
     }
   ]
