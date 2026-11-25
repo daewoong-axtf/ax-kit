@@ -20,6 +20,7 @@
 /plugin marketplace add daewoong-axtf/ax-kit
 /plugin install ax@ax-kit
 /plugin install dds@ax-kit
+/plugin install rules@ax-kit
 ```
 
 데스크톱 앱 · claude.ai는 Customize → Plugins → Add → Add marketplace에 `daewoong-axtf/ax-kit`을 넣는다. `ax`의 스킬은 **Notion 연결이 필요하다.**
@@ -30,6 +31,7 @@
 | `ax:mail-inquiry-log` | "이 메일 문의 노션에 기록해줘"(원문을 붙여 넣는다), "지난번 문의 건에 오늘 회신 추가해줘" | 'AX 라운지 메일·메신저 문의' DB에 `[부서] 문의 요약` 페이지를 만들거나 대응 이력을 덧붙인다 |
 | `dds` | "디자인 시스템 설정해줘", "디자인 시스템 써서 이 화면 만들어줘" | Daewoong Design System을 프로젝트에 설정하고, 화면을 만든 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 |
 | `dds`의 `/dds:update` | "디자인 시스템 새 버전으로 올려줘", Claude Code에서는 `/dds:update` | 설치한 디자인 시스템을 새 판으로 올린다. 프로젝트에서 고친 파일은 새 판도 바꿨을 때만 묻는다. 1.5.0 다음 design-system 릴리즈부터 동작한다 |
+| `rules`의 `/rules:apply` | "최소 안전 규칙 넣어줘", "안전 규칙 최신 판으로 올려줘", Claude Code에서는 `/rules:apply` | 최소 안전 규칙 원문을 프로젝트의 `daewoong-coding-guide.md`로 넣고 `CLAUDE.md` · `AGENTS.md`가 가리키게 한다. 이미 있으면 최신 판으로 올린다 |
 
 Notion 연결 확인, 업데이트, 스킬을 추가하는 법은 [plugins/README.md](plugins/README.md).
 

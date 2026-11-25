@@ -109,3 +109,17 @@ test('dds 스킬의 업데이트는 절차를 지어내지 않고 받은 판의 
     assert.ok(read(p).includes('1.5.0 다음 design-system 릴리즈'), p)
   }
 })
+
+test('rules 플러그인의 apply 스킬은 규칙을 복사해 두지 않고 릴리즈된 원문을 받아 넣는다', () => {
+  assert.deepEqual(dirs('plugins/rules/skills'), ['apply'])
+  const skill = read('plugins/rules/skills/apply/SKILL.md')
+  assert.ok(skill.includes('https://daewoong-axtf.github.io/ax-kit/guides/index.json'))
+  assert.ok(skill.includes('guides["safety-rules"]'))
+  // 프로젝트에 두는 파일 이름과 판을 읽는 첫 줄은 통합본과 같아야 한다
+  assert.ok(skill.includes('daewoong-coding-guide.md'))
+  const title = read('rules/safety-rules/daewoong-coding-guide.md').split('\n')[0].replace(/\(v[\d.]+\)$/, '(vX.Y.Z)')
+  assert.ok(skill.includes(title), `통합본 첫 줄 모양이 다르다: ${title}`)
+  assert.ok(skill.includes('mktemp'))
+  assert.ok(read('plugins/README.md').includes('/rules:apply'))
+  assert.ok(read('README.md').includes('/rules:apply'))
+})

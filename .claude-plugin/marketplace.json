@@ -14,6 +14,12 @@
       "source": "./plugins/ax",
       "description": "AX팀 업무 스킬. PRD를 쓰고(write-prd) 메일·웍스 문의를 기록한다(mail-inquiry-log). Notion 연결 필요",
       "category": "productivity"
+    },
+    {
+      "name": "rules",
+      "source": "./plugins/rules",
+      "description": "AI로 만든 웹앱 최소 안전 규칙을 프로젝트에 넣고, 새 판이 나오면 올린다. 인터넷 접속 필요",
+      "category": "development"
     }
   ]
 }
