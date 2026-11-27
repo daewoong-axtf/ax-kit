@@ -51,7 +51,7 @@
 | 프론트엔드(Java 계열)      | Spring Boot가 제공하는 Thymeleaf 화면. JV 규칙을 쓰는 앱에서만 사용                   | JV-8         |
 | 백엔드(기본)               | Python 3.15 + FastAPI                                                                 | PY 규칙      |
 | 백엔드(Java 계열)          | Java 25 LTS 또는 Kotlin 2.4 + Spring Boot                                             | JV 규칙      |
-| DB                         | PostgreSQL(운영 기준). SQLite는 로컬 개발에서만 사용                                  | 13번         |
+| DB                         | PostgreSQL. SQLite는 쓰지 않는다(로컬 개발도 PostgreSQL)                              | 13번         |
 | 배포 단위                  | 프론트엔드·백엔드 컨테이너 각 1개(FastAPI + HTML, Spring Boot + Thymeleaf 구조는 1개) | 13번         |
 
 - 런타임은 위 표의 버전을 쓰고, 그 버전 안에서 최신 패치를 설치한다. 최신 패치는 AI가 기억하는 버전이 아니라 공식 사이트(nodejs.org, python.org, kotlinlang.org, Java는 사용하는 JDK 배포처)나 설치 도구로 확인한다. 표의 버전을 지원하지 않는 라이브러리가 있으면 임의로 버전을 낮추지 말고 사용자에게 알린다. 확인할 수 없으면 사용자에게 알리고 묻는다.
@@ -75,6 +75,7 @@
 - 새 프로젝트는 화면이 표·입력 폼 위주면 FastAPI + HTML(PY-8)로 만들고, 화면 상호작용이 많으면 프론트엔드를 TS 규칙, 백엔드를 PY 규칙으로 만든다. 사용자에게 고르게 하지 않고 에이전트가 정해 `README.md`의 "앱 개요"에 기록한다. JV 규칙은 사내 표준 템플릿이 Java 계열을 지정했거나, 이미 Java·Kotlin으로 만든 백엔드에 기능을 붙일 때만 쓴다.
 - 표준 밖 스택(Streamlit, Gradio, Flask, Django, Express, 바닐라 JS(PY-8의 FastAPI + HTML 구조 제외), JSP, PHP 등)이면 표준 스택으로 옮기는 대상이다. 화면은 TS 규칙으로, 서버 로직은 PY 규칙으로 옮긴다. 화면이 표·입력 폼 위주면 FastAPI + HTML(PY-8)로 옮겨도 된다. 기존 서버가 Java·Kotlin이면 서버 로직은 JV 규칙으로 옮기고, 화면은 JV-8로 옮겨도 된다. 옮기기 전에 아래 "규격화와 리팩토링" 순서로 계획을 세우고, 무엇이 바뀌는지 쉬운 말로 설명한 뒤 확인을 받는다. 옮기기 전에도 보안 규칙(1~17번)은 그대로 적용한다.
 - 표준 밖 스택으로 새로 만들지 않는다. 사용자가 요청해도 표준 스택으로 만든다.
+- SQLite를 쓰는 앱은 PostgreSQL로 마이그레이션하는 대상이다. 옮기기 전에 위와 같이 계획을 세우고 확인을 받는다(13번).
 
 ### 작업 시작 전 확인
 
@@ -454,7 +455,7 @@
 - DB 테이블 구조는 마이그레이션 파일로만 바꾼다(PY-3, JV-3). 운영 DB를 손으로 고치거나 앱 시작 시 자동 생성하지 않는다.
 - 실행 환경에 따라 달라지는 설정은 코드에 넣지 않고 환경 변수로 관리한다.
 - 사내 표준 템플릿의 폴더 구조를 따르고, 프론트엔드·백엔드를 각각 컨테이너로 실행할 수 있게 만든다(`Dockerfile`은 각 폴더에 하나). FastAPI + HTML, Spring Boot + Thymeleaf 구조는 컨테이너 1개로 실행한다. 템플릿이 정해져 있지 않거나 찾을 수 없으면 스택 규칙의 구조를 쓰고, 임의로 바꾸지 않는다.
-- 로컬에서 SQLite로 개발했다면 배포 전에 PostgreSQL로 전환해야 한다고 알린다. SQLite 전용 문법을 쓰지 않는다.
+- SQLite는 쓰지 않는다. 로컬 개발도 PostgreSQL로 한다. SQLite로 개발했다면 배포 전에 PostgreSQL로 마이그레이션해야 한다고 알린다.
 
 ### 14. 입력과 사용량에 기본 한도를 둔다
 
@@ -706,7 +707,7 @@ tests/
 ### PY-6. 테스트와 전환
 
 - 테스트는 pytest와 FastAPI `TestClient`로 `tests/`에 둔다. 권한 테스트(15번)는 `app.dependency_overrides`로 다른 사용자를 넣어 차단되는지 확인한다.
-- 테스트가 없는 프로젝트는 엔드포인트마다 `TestClient`로 현재 응답을 기록하는 특성 테스트를 만든다(syrupy 스냅샷). 외부 HTTP 호출은 respx로 가짜 응답을 준다. 테스트 DB는 테스트마다 새로 만든다. Testcontainers로 운영과 같은 엔진(PostgreSQL)을 띄우고, Docker를 쓸 수 없으면 SQLite로 하되 그 사실을 `README.md`에 적는다.
+- 테스트가 없는 프로젝트는 엔드포인트마다 `TestClient`로 현재 응답을 기록하는 특성 테스트를 만든다(syrupy 스냅샷). 외부 HTTP 호출은 respx로 가짜 응답을 준다. 테스트 DB는 테스트마다 새로 만든다. Testcontainers 등 Docker로 운영과 같은 엔진(PostgreSQL)을 띄운다. SQLite로 대신하지 않는다. Docker를 쓸 수 없으면 사용자에게 알리고 PostgreSQL을 쓸 방법을 확인받는다.
 - 시나리오(S-n)는 `tests/scenarios/`에 `TestClient` 테스트로 만들고 함수 이름에 시나리오 ID를 넣는다(`test_s01_...`). TDD 단위 테스트는 `tests/unit/`에 둔다.
 - Streamlit·Gradio·Flask·Django 앱을 옮길 때는 계산·데이터 처리 함수를 `services/`로 옮겨 재사용하고, 화면은 TS 규칙으로 새로 만든다.
 

@@ -34,7 +34,7 @@
 | 프론트엔드(Java 계열)      | Spring Boot가 제공하는 Thymeleaf 화면. JV 규칙을 쓰는 앱에서만 사용                   | JV-8         |
 | 백엔드(기본)               | Python 3.15 + FastAPI                                                                 | PY 규칙      |
 | 백엔드(Java 계열)          | Java 25 LTS 또는 Kotlin 2.4 + Spring Boot                                             | JV 규칙      |
-| DB                         | PostgreSQL(운영 기준). SQLite는 로컬 개발에서만 사용                                  | 13번         |
+| DB                         | PostgreSQL. SQLite는 쓰지 않는다(로컬 개발도 PostgreSQL)                              | 13번         |
 | 배포 단위                  | 프론트엔드·백엔드 컨테이너 각 1개(FastAPI + HTML, Spring Boot + Thymeleaf 구조는 1개) | 13번         |
 
 - 런타임은 위 표의 버전을 쓰고, 그 버전 안에서 최신 패치를 설치한다. 최신 패치는 AI가 기억하는 버전이 아니라 공식 사이트(nodejs.org, python.org, kotlinlang.org, Java는 사용하는 JDK 배포처)나 설치 도구로 확인한다. 표의 버전을 지원하지 않는 라이브러리가 있으면 임의로 버전을 낮추지 말고 사용자에게 알린다. 확인할 수 없으면 사용자에게 알리고 묻는다.
@@ -58,6 +58,7 @@
 - 새 프로젝트는 화면이 표·입력 폼 위주면 FastAPI + HTML(PY-8)로 만들고, 화면 상호작용이 많으면 프론트엔드를 TS 규칙, 백엔드를 PY 규칙으로 만든다. 사용자에게 고르게 하지 않고 에이전트가 정해 `README.md`의 "앱 개요"에 기록한다. JV 규칙은 사내 표준 템플릿이 Java 계열을 지정했거나, 이미 Java·Kotlin으로 만든 백엔드에 기능을 붙일 때만 쓴다.
 - 표준 밖 스택(Streamlit, Gradio, Flask, Django, Express, 바닐라 JS(PY-8의 FastAPI + HTML 구조 제외), JSP, PHP 등)이면 표준 스택으로 옮기는 대상이다. 화면은 TS 규칙으로, 서버 로직은 PY 규칙으로 옮긴다. 화면이 표·입력 폼 위주면 FastAPI + HTML(PY-8)로 옮겨도 된다. 기존 서버가 Java·Kotlin이면 서버 로직은 JV 규칙으로 옮기고, 화면은 JV-8로 옮겨도 된다. 옮기기 전에 아래 "규격화와 리팩토링" 순서로 계획을 세우고, 무엇이 바뀌는지 쉬운 말로 설명한 뒤 확인을 받는다. 옮기기 전에도 보안 규칙(1~17번)은 그대로 적용한다.
 - 표준 밖 스택으로 새로 만들지 않는다. 사용자가 요청해도 표준 스택으로 만든다.
+- SQLite를 쓰는 앱은 PostgreSQL로 마이그레이션하는 대상이다. 옮기기 전에 위와 같이 계획을 세우고 확인을 받는다(13번).
 
 ## 작업 시작 전 확인
 
