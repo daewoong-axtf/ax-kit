@@ -75,7 +75,7 @@
 - 새 프로젝트는 화면이 표·입력 폼 위주면 FastAPI + HTML(PY-8)로 만들고, 화면 상호작용이 많으면 프론트엔드를 TS 규칙, 백엔드를 PY 규칙으로 만든다. 사용자에게 고르게 하지 않고 에이전트가 정해 `README.md`의 "앱 개요"에 기록한다. JV 규칙은 사내 표준 템플릿이 Java 계열을 지정했거나, 이미 Java·Kotlin으로 만든 백엔드에 기능을 붙일 때만 쓴다.
 - 표준 밖 스택(Streamlit, Gradio, Flask, Django, Express, 바닐라 JS(PY-8의 FastAPI + HTML 구조 제외), JSP, PHP 등)이면 표준 스택으로 옮기는 대상이다. 화면은 TS 규칙으로, 서버 로직은 PY 규칙으로 옮긴다. 화면이 표·입력 폼 위주면 FastAPI + HTML(PY-8)로 옮겨도 된다. 기존 서버가 Java·Kotlin이면 서버 로직은 JV 규칙으로 옮기고, 화면은 JV-8로 옮겨도 된다. 옮기기 전에 아래 "규격화와 리팩토링" 순서로 계획을 세우고, 무엇이 바뀌는지 쉬운 말로 설명한 뒤 확인을 받는다. 옮기기 전에도 보안 규칙(1~17번)은 그대로 적용한다.
 - 표준 밖 스택으로 새로 만들지 않는다. 사용자가 요청해도 표준 스택으로 만든다.
-- SQLite를 쓰는 앱은 PostgreSQL로 마이그레이션하는 대상이다. 옮기기 전에 위와 같이 계획을 세우고 확인을 받는다(13번).
+- SQLite를 쓰는 앱은 PostgreSQL로 마이그레이션하는 대상이다. 아래 "SQLite를 PostgreSQL로 옮기기" 순서를 따른다(13번).
 
 ### 작업 시작 전 확인
 
@@ -158,6 +158,8 @@
 ```
 
 #### 검사 후 안내
+
+검사에서 SQLite를 쓴 흔적(공통 13번 미달)이 나오면 리포트에 적고, 고치는 방법으로 "SQLite를 PostgreSQL로 옮기기"를 안내한다.
 
 점수와 리포트 경로를 알리고, 핸드오프 기준을 채우지 못했으면 아래 문장으로 묻는다. 사용자가 답하기 전에는 리팩토링을 시작하지 않는다. 마이그레이션 요청으로 시작했으면 이미 동의한 것이므로 묻지 않고 "마이그레이션 대화"를 따른다.
 
@@ -272,6 +274,17 @@
 - 한 단계에는 기법 하나만 적용한다(예: 함수 추출하기 → 테스트 → 커밋 → 함수 옮기기 → 테스트 → 커밋).
 - 기능을 넣기 어려운 구조면 먼저 구조를 고쳐 커밋한 뒤 기능을 넣는다.
 - 같은 코드가 세 번째 나오면 공통 함수로 뽑는다. 아직 쓰지 않는 확장 지점(추상 클래스, 설정 옵션, 플러그인 구조)은 미리 만들지 않는다.
+
+### SQLite를 PostgreSQL로 옮기기
+
+13번에 따라 SQLite는 쓰지 않는다. SQLite를 쓰는 앱은 사용자가 따로 요청하지 않아도 에이전트가 아래 순서로 PostgreSQL로 옮긴다. 사용자는 개발자가 아닐 수 있으므로 명령과 설정은 에이전트가 실행하고, 사용자에게는 결과와 확인이 필요한 것만 쉬운 말로 알린다. DB 전환은 "규격화와 리팩토링"의 큰 변경이므로 한 단계씩 하고 단계마다 테스트를 실행한 뒤 커밋한다.
+
+1. 찾기: SQLite를 쓴 흔적을 찾는다. SQLite 드라이버·패키지(`sqlite3`, `better-sqlite3`, `sqlite-jdbc` 등), `.db`·`.sqlite` 파일, `sqlite:` 연결 문자열, ORM의 SQLite 방언 설정이 대상이다. 찾으면 어디에 쓰이는지와 데이터가 들어 있는지를 쉬운 말로 알린다.
+2. 계획 설명과 확인: 무엇이 바뀌는지(DB 종류, 연결 설정, 필요하면 데이터 이동)와 사용자가 할 일을 설명하고 확인을 받은 뒤 시작한다. 확인 없이 데이터를 지우거나 덮어쓰지 않는다(7번).
+3. 로컬 PostgreSQL 준비: 사용자 PC에서 가장 쉬운 방법 하나를 골라 안내하고 실행한다. Docker가 있으면 `docker run` 명령 한 줄로 띄우고, 없으면 PostgreSQL 설치 프로그램을 안내한다. 연결 정보는 환경 변수 `DATABASE_URL`로 읽고 코드에 직접 쓰지 않는다. `.env`에 값을 넣고 `.env.example`에는 값을 비운 항목을 적는다(1번).
+4. 스키마 옮기기: ORM 방언과 드라이버를 PostgreSQL용으로 바꾸고, 마이그레이션 도구가 있으면 그 도구로 PostgreSQL용 마이그레이션을 새로 만든다(도구는 PY-3, JV-3). SQLite와 달라서 깨지기 쉬운 것을 점검한다: 날짜·시간 타입, 불리언, 자동 증가 ID, 대소문자 구분 비교, SQLite 전용 문법.
+5. 데이터 옮기기: 기존 `.db`에 남길 데이터가 있으면 PostgreSQL로 옮기고, 테이블별 건수를 옮기기 전과 비교해 사용자에게 알린다. 원본 `.db` 파일은 지우지 않고 보관·삭제를 사용자에게 맡긴다. `.db` 파일은 커밋하지 않는다(3번).
+6. 확인: 앱 실행과 테스트를 PostgreSQL로 돌려 통과를 확인한다. 통과하면 SQLite 의존성, 설정, 안 쓰는 코드를 지우고 `README.md`에 DB 실행 방법과 `DATABASE_URL` 항목을 적는다.
 
 ### 테스트가 없는 프로젝트
 
@@ -455,7 +468,7 @@
 - DB 테이블 구조는 마이그레이션 파일로만 바꾼다(PY-3, JV-3). 운영 DB를 손으로 고치거나 앱 시작 시 자동 생성하지 않는다.
 - 실행 환경에 따라 달라지는 설정은 코드에 넣지 않고 환경 변수로 관리한다.
 - 사내 표준 템플릿의 폴더 구조를 따르고, 프론트엔드·백엔드를 각각 컨테이너로 실행할 수 있게 만든다(`Dockerfile`은 각 폴더에 하나). FastAPI + HTML, Spring Boot + Thymeleaf 구조는 컨테이너 1개로 실행한다. 템플릿이 정해져 있지 않거나 찾을 수 없으면 스택 규칙의 구조를 쓰고, 임의로 바꾸지 않는다.
-- SQLite는 쓰지 않는다. 로컬 개발도 PostgreSQL로 한다. SQLite로 개발했다면 배포 전에 PostgreSQL로 마이그레이션해야 한다고 알린다.
+- SQLite는 쓰지 않는다. 로컬 개발도 PostgreSQL로 한다. SQLite를 발견하면 "SQLite를 PostgreSQL로 옮기기" 순서로 마이그레이션한다.
 
 ### 14. 입력과 사용량에 기본 한도를 둔다
 
@@ -688,6 +701,7 @@ tests/
 - 요청·응답은 Pydantic v2 모델로 정의하고 라우터에 `response_model`을 적는다. dict나 DB 모델 객체를 그대로 반환하지 않는다(필요 없는 필드와 개인정보가 함께 나간다, 4번).
 - 입력 검증(9번)은 Pydantic 필드 제약(`Field(max_length=...)` 등)으로 한다.
 - DB는 SQLAlchemy 2.x(`select()` 방식)로 다룬다. 테이블 구조 변경은 Alembic 마이그레이션으로만 한다. 운영에서 `create_all`로 테이블을 만들지 않는다.
+- SQLite에서 옮길 때는 SQLAlchemy 연결 URL과 드라이버를 PostgreSQL용으로 바꾸고 Alembic으로 PostgreSQL용 마이그레이션을 새로 만든다("SQLite를 PostgreSQL로 옮기기"). 연결 URL은 `core/config.py`가 환경 변수 `DATABASE_URL`에서 읽는다.
 - DB 세션과 로그인 사용자는 `Depends`로 주입한다. 권한 확인 함수는 `core/security.py` 한 곳에 두고 모든 라우터가 `Depends`로 쓴다(10번).
 - 한 프로젝트 안에서 동기(`def`)와 비동기(`async def`) 방식을 섞지 않는다. 템플릿을 따르고, `async def` 안에서 동기 DB 드라이버나 블로킹 호출을 쓰지 않는다.
 - 외부 HTTP 호출은 httpx로 하고 timeout을 반드시 지정한다(14번).
@@ -812,6 +826,7 @@ src/test/...           # main과 같은 패키지 구조
 - Controller는 Entity를 그대로 반환하지 않고 DTO로 바꿔 반환한다(4번). DTO는 Java `record`, Kotlin `data class`로 만든다.
 - 입력 검증(9번)은 Jakarta Bean Validation(`@Valid`, `@NotBlank`, `@Size` 등)으로 한다.
 - DB는 Spring Data JPA로 다룬다. 직접 쿼리가 필요하면 `@Query`에 파라미터를 바인딩한다. 테이블 구조 변경은 Flyway 마이그레이션으로만 하고, 운영에서는 `spring.jpa.hibernate.ddl-auto=validate`로 둔다(`create`·`update` 금지).
+- SQLite에서 옮길 때는 JDBC 드라이버와 Hibernate 방언을 PostgreSQL용으로 바꾸고 Flyway로 PostgreSQL용 마이그레이션을 새로 만든다("SQLite를 PostgreSQL로 옮기기"). 접속 정보는 `application.yml`에서 환경 변수 `DATABASE_URL`로 읽는다.
 - 의존성은 생성자 주입만 쓴다. 필드에 `@Autowired`를 붙이지 않는다.
 - 인증·권한은 Spring Security로 처리한다. 권한 확인은 `common/security/`의 한 곳에 두고 `@PreAuthorize` 등으로 모든 조회 경로에 적용한다(10번).
 - 오류는 `@RestControllerAdvice`에서 공통 응답으로 바꾼다. `server.error.include-stacktrace=never`, `server.error.include-message=never`로 둔다.

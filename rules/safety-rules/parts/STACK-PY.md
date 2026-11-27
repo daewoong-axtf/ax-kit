@@ -45,6 +45,7 @@ tests/
 - 요청·응답은 Pydantic v2 모델로 정의하고 라우터에 `response_model`을 적는다. dict나 DB 모델 객체를 그대로 반환하지 않는다(필요 없는 필드와 개인정보가 함께 나간다, 4번).
 - 입력 검증(9번)은 Pydantic 필드 제약(`Field(max_length=...)` 등)으로 한다.
 - DB는 SQLAlchemy 2.x(`select()` 방식)로 다룬다. 테이블 구조 변경은 Alembic 마이그레이션으로만 한다. 운영에서 `create_all`로 테이블을 만들지 않는다.
+- SQLite에서 옮길 때는 SQLAlchemy 연결 URL과 드라이버를 PostgreSQL용으로 바꾸고 Alembic으로 PostgreSQL용 마이그레이션을 새로 만든다("SQLite를 PostgreSQL로 옮기기"). 연결 URL은 `core/config.py`가 환경 변수 `DATABASE_URL`에서 읽는다.
 - DB 세션과 로그인 사용자는 `Depends`로 주입한다. 권한 확인 함수는 `core/security.py` 한 곳에 두고 모든 라우터가 `Depends`로 쓴다(10번).
 - 한 프로젝트 안에서 동기(`def`)와 비동기(`async def`) 방식을 섞지 않는다. 템플릿을 따르고, `async def` 안에서 동기 DB 드라이버나 블로킹 호출을 쓰지 않는다.
 - 외부 HTTP 호출은 httpx로 하고 timeout을 반드시 지정한다(14번).

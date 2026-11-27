@@ -49,6 +49,7 @@ src/test/...           # main과 같은 패키지 구조
 - Controller는 Entity를 그대로 반환하지 않고 DTO로 바꿔 반환한다(4번). DTO는 Java `record`, Kotlin `data class`로 만든다.
 - 입력 검증(9번)은 Jakarta Bean Validation(`@Valid`, `@NotBlank`, `@Size` 등)으로 한다.
 - DB는 Spring Data JPA로 다룬다. 직접 쿼리가 필요하면 `@Query`에 파라미터를 바인딩한다. 테이블 구조 변경은 Flyway 마이그레이션으로만 하고, 운영에서는 `spring.jpa.hibernate.ddl-auto=validate`로 둔다(`create`·`update` 금지).
+- SQLite에서 옮길 때는 JDBC 드라이버와 Hibernate 방언을 PostgreSQL용으로 바꾸고 Flyway로 PostgreSQL용 마이그레이션을 새로 만든다("SQLite를 PostgreSQL로 옮기기"). 접속 정보는 `application.yml`에서 환경 변수 `DATABASE_URL`로 읽는다.
 - 의존성은 생성자 주입만 쓴다. 필드에 `@Autowired`를 붙이지 않는다.
 - 인증·권한은 Spring Security로 처리한다. 권한 확인은 `common/security/`의 한 곳에 두고 `@PreAuthorize` 등으로 모든 조회 경로에 적용한다(10번).
 - 오류는 `@RestControllerAdvice`에서 공통 응답으로 바꾼다. `server.error.include-stacktrace=never`, `server.error.include-message=never`로 둔다.
