@@ -264,7 +264,10 @@
 
 1. 찾기: SQLite를 쓴 흔적을 찾는다. SQLite 드라이버·패키지(`sqlite3`, `better-sqlite3`, `sqlite-jdbc` 등), `.db`·`.sqlite` 파일, `sqlite:` 연결 문자열, ORM의 SQLite 방언 설정이 대상이다. 찾으면 어디에 쓰이는지와 데이터가 들어 있는지를 쉬운 말로 알린다.
 2. 계획 설명과 확인: 무엇이 바뀌는지(DB 종류, 연결 설정, 필요하면 데이터 이동)와 사용자가 할 일을 설명하고 확인을 받은 뒤 시작한다. 확인 없이 데이터를 지우거나 덮어쓰지 않는다(7번).
-3. 로컬 PostgreSQL 준비: 사용자 PC에서 가장 쉬운 방법 하나를 골라 안내하고 실행한다. Docker가 있으면 `docker run` 명령 한 줄로 띄우고, 없으면 PostgreSQL 설치 프로그램을 안내한다. 연결 정보는 환경 변수 `DATABASE_URL`로 읽고 코드에 직접 쓰지 않는다. `.env`에 값을 넣고 `.env.example`에는 값을 비운 항목을 적는다(1번).
+3. 로컬 PostgreSQL 준비: 먼저 Docker를 쓸 수 있는지 확인한다(`docker --version`). 사용자 PC에서 가장 쉬운 방법 하나를 골라 안내하고 실행한다.
+   - Docker가 있으면 `docker run` 명령 한 줄로 PostgreSQL을 띄운다.
+   - Docker가 없거나 쓸 수 없으면 PC에 직접 설치한다. macOS는 Postgres.app이나 Homebrew(`brew install postgresql`), Windows는 PostgreSQL 공식 설치 프로그램을 쓴다. 설치·실행 명령은 에이전트가 안내하거나 실행하고, 관리자 권한이 필요한 설치는 실행하기 전에 사용자에게 먼저 묻는다.
+   - 어느 방법이든 연결은 환경 변수 `DATABASE_URL`로 읽고 코드에 직접 쓰지 않는다. `.env`에 값을 넣고 `.env.example`에는 값을 비운 항목을 적는다(1번).
 4. 스키마 옮기기: ORM 방언과 드라이버를 PostgreSQL용으로 바꾸고, 마이그레이션 도구가 있으면 그 도구로 PostgreSQL용 마이그레이션을 새로 만든다(도구는 PY-3, JV-3). SQLite와 달라서 깨지기 쉬운 것을 점검한다: 날짜·시간 타입, 불리언, 자동 증가 ID, 대소문자 구분 비교, SQLite 전용 문법.
 5. 데이터 옮기기: 기존 `.db`에 남길 데이터가 있으면 PostgreSQL로 옮기고, 테이블별 건수를 옮기기 전과 비교해 사용자에게 알린다. 원본 `.db` 파일은 지우지 않고 보관·삭제를 사용자에게 맡긴다. `.db` 파일은 커밋하지 않는다(3번).
 6. 확인: 앱 실행과 테스트를 PostgreSQL로 돌려 통과를 확인한다. 통과하면 SQLite 의존성, 설정, 안 쓰는 코드를 지우고 `README.md`에 DB 실행 방법과 `DATABASE_URL` 항목을 적는다.
