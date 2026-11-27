@@ -146,7 +146,7 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
 
 ```
 /plugin install rules@ax-kit
-/rules:apply
+/rules:safety-rules
 ```
 
 "최소 안전 규칙 넣어줘", "안전 규칙 최신 판으로 올려줘"라고 말해도 된다. 판을 말하면("안전 규칙 1.2.0으로") 그 판을 넣는다.
@@ -157,7 +157,7 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
 - 규칙 원문의 이름을 바꿔 `CLAUDE.md` · `AGENTS.md`로 쓰던 프로젝트는 규칙을 `daewoong-coding-guide.md`로 옮긴다. 그 파일에 덧붙여 쓴 내용이 있으면 남길지 한 번 묻는다.
 - 올렸으면 그사이 바뀐 규칙을 요약해 준다. 새 규칙은 새 대화부터 읽힌다. 커밋은 하지 않는다.
 
-Codex 등 `safety-rules` 스킬만 설치한 곳에서는 `/safety-rules`라고 하거나 같은 말로 시킨다. 이때 진입 파일은 `AGENTS.md`다. `/rules:apply`는 `safety-rules` 스킬 원문을 읽고 따르는 짧은 스킬이라, 절차는 [`safety-rules` 스킬](rules/skills/safety-rules/SKILL.md) 한 곳에만 있다.
+Codex 등 `safety-rules` 스킬만 설치한 곳에서는 `/safety-rules`라고 하거나 같은 말로 시킨다. 이때 진입 파일은 `AGENTS.md`다. Claude Code의 `/rules:safety-rules`와 Codex의 `/safety-rules`는 같은 스킬이라, 예전 안내의 `/rules:apply`(`safety-rules` 스킬 원문을 읽고 따르는 짧은 스킬)도 같은 일을 한다. 절차는 [`safety-rules` 스킬](rules/skills/safety-rules/SKILL.md) 한 곳에만 있다.
 
 AX Desk에서 규칙을 복사하거나 파일로 받아 쓰는 방법은 그대로 쓸 수 있다. 이 커맨드는 같은 원문을 받아 넣는 일을 대신한다.
 
