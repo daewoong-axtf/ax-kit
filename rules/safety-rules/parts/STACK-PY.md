@@ -147,7 +147,8 @@ web: uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}
 web: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}
 ```
 
-- `uvicorn`은 의존성(`pyproject.toml` 또는 `requirements.txt`)에 꼭 넣는다. 자동으로 설치되지 않는다.
+- `uvicorn`은 `uv add uvicorn`으로 추가한다(자동으로 설치되지 않는다).
+- 내 PC에서 개발할 때는 `uv run uvicorn …`으로 실행한다. 앱허브에 올리면 서버가 Procfile의 `uvicorn …` 줄을 실행한다. 빌드 때 의존성이 설치되어 있으므로 `uv run`이 필요 없다.
 
 ### 포트는 숫자로 적지 않는다
 
@@ -160,13 +161,13 @@ web: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-
 ### 내 PC에서 확인
 
 ```bash
-PORT=8080 uvicorn app.main:app --host 0.0.0.0 --port 8080
+PORT=8080 uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
-`Procfile`과 같은 명령으로 실행해서 `http://localhost:8080/healthz`가 열리면 서버에서도 같은 방식으로 실행된다.
+서버처럼 환경 변수 `PORT`를 읽어 포트를 정하는 방식으로 실행한다. `http://localhost:8080/docs`(FastAPI 기본 문서 화면)가 열리면 앱이 `PORT`를 읽어 켜진다는 것이 확인된 것이고, 서버에서도 같은 방식으로 실행된다.
 
 ### AI 코딩 도구에 알려 줄 문장
 
 사용자가 AI 코딩 도구에 FastAPI 앱의 실행·배포 설정을 요청하면 아래 문장을 쓰도록 안내한다.
 
-> 이 FastAPI 앱은 Google Buildpacks로 빌드돼. 프로젝트 맨 위에 `Procfile`을 만들고 `web: uvicorn <모듈>:app --host 0.0.0.0 --port ${PORT:-8080}` 한 줄을 적어 줘(모듈 경로는 실제 main.py 위치대로). 포트는 숫자로 적지 말고 PORT 환경 변수를 써. Dockerfile은 쓰이지 않으니 실행 명령은 Procfile에만 둬. uvicorn은 의존성에 넣어 줘. 진입 파일을 옮기면 Procfile도 같이 고쳐.
+> 이 FastAPI 앱은 Google Buildpacks로 빌드돼. 프로젝트 맨 위에 `Procfile`을 만들고 `web: uvicorn <모듈>:app --host 0.0.0.0 --port ${PORT:-8080}` 한 줄을 적어 줘(모듈 경로는 실제 main.py 위치대로). 포트는 숫자로 적지 말고 PORT 환경 변수를 써. Dockerfile은 쓰이지 않으니 실행 명령은 Procfile에만 둬. uvicorn은 `uv add uvicorn`으로 의존성에 넣고, 내 PC에서는 `uv run uvicorn …`으로 실행해 줘. 진입 파일을 옮기면 Procfile도 같이 고쳐.
