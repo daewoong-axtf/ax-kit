@@ -12,7 +12,7 @@
 | 공통 규칙 | 모든 웹앱의 보안·운영 규칙(1~17번) | 항상 |
 | 커밋 규칙 | 커밋 메시지, 커밋 단위, 커밋하지 않는 것 | 항상 |
 | TypeScript + React(Next.js) 규칙 | 프론트엔드의 도구·구조·아키텍처·코드 스타일(TS-1~TS-9) | 프론트엔드 코드(FastAPI + HTML, Spring Boot + Thymeleaf 구조 제외) |
-| Python + FastAPI 규칙 | 백엔드의 도구·구조·아키텍처·코드 스타일(PY-1~PY-9) | Python 백엔드 코드, FastAPI가 제공하는 HTML 화면 |
+| Python + FastAPI 규칙 | 백엔드의 도구·구조·아키텍처·코드 스타일(PY-1~PY-10) | Python 백엔드 코드, FastAPI가 제공하는 HTML 화면 |
 | Java·Kotlin + Spring Boot 규칙 | 백엔드의 도구·구조·아키텍처·코드 스타일(JV-1~JV-9) | Java·Kotlin 백엔드 코드, Spring Boot가 제공하는 Thymeleaf 화면 |
 
 ## 작업 방식
@@ -777,6 +777,59 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 path = os.path.join(UPLOAD_DIR, file.filename)
 ```
+
+### PY-10. 앱 시작 명령 (Procfile)
+
+FastAPI(Python) 앱은 프로젝트 맨 위 폴더에 **`Procfile`** 파일이 꼭 있어야 한다. 서버가 앱을 어떻게 실행할지 이 파일을 보고 정한다. 없으면 빌드가 실패한다.
+
+FastAPI 프로젝트를 만들어도 이 파일은 자동으로 생기지 않으니 직접 만든다. (Next.js·Spring Boot는 필요 없다.)
+
+#### 만드는 법
+
+프로젝트 맨 위 폴더(`pyproject.toml`이 있는 곳)에 확장자 없이 `Procfile`이라는 파일을 만들고 한 줄을 적는다.
+
+```txt
+web: uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}
+```
+
+- `app.main:app`은 "**`app` 폴더의 `main.py` 안에 있는 `app` 객체**"라는 뜻이다. 내 프로젝트 위치에 맞게 바꾼다.
+
+| 내 코드 위치 | Procfile |
+| --- | --- |
+| `main.py` (맨 위 폴더) | `web: uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}` |
+| `app/main.py` | `web: uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}` |
+| `src/myapp/main.py` | `web: uvicorn myapp.main:app --app-dir src --host 0.0.0.0 --port ${PORT:-8080}` |
+
+- DB 테이블을 Alembic으로 만들면 앞에 붙인다.
+
+```txt
+web: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}
+```
+
+- `uvicorn`은 `uv add uvicorn`으로 추가한다(자동으로 설치되지 않는다).
+- 내 PC에서 개발할 때는 `uv run uvicorn …`으로 실행한다. 앱허브에 올리면 서버가 Procfile의 `uvicorn …` 줄을 실행한다. 빌드 때 의존성이 설치되어 있으므로 `uv run`이 필요 없다.
+
+#### 포트는 숫자로 적지 않는다
+
+포트는 서버가 환경 변수 `PORT`로 알려 준다. 위 예시처럼 **`${PORT:-8080}`으로** 적어야 한다. `--port 8000`처럼 숫자를 적으면 빌드는 되지만 앱이 열리지 않는다. `PORT`는 서버가 자동으로 넣어 주므로 앱허브 '환경변수'에 넣지 않아도 된다.
+
+#### Dockerfile은 쓰이지 않는다
+
+서버는 Dockerfile을 읽지 않는다. Dockerfile에 실행 명령을 적어도 반영되지 않으니 실행 명령은 꼭 `Procfile`에 적는다.
+
+#### 내 PC에서 확인
+
+```bash
+PORT=8080 uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+서버처럼 환경 변수 `PORT`를 읽어 포트를 정하는 방식으로 실행한다. `http://localhost:8080/docs`(FastAPI 기본 문서 화면)가 열리면 앱이 `PORT`를 읽어 켜진다는 것이 확인된 것이고, 서버에서도 같은 방식으로 실행된다.
+
+#### AI 코딩 도구에 알려 줄 문장
+
+사용자가 AI 코딩 도구에 FastAPI 앱의 실행·배포 설정을 요청하면 아래 문장을 쓰도록 안내한다.
+
+> 이 FastAPI 앱은 Google Buildpacks로 빌드돼. 프로젝트 맨 위에 `Procfile`을 만들고 `web: uvicorn <모듈>:app --host 0.0.0.0 --port ${PORT:-8080}` 한 줄을 적어 줘(모듈 경로는 실제 main.py 위치대로). 포트는 숫자로 적지 말고 PORT 환경 변수를 써. Dockerfile은 쓰이지 않으니 실행 명령은 Procfile에만 둬. uvicorn은 `uv add uvicorn`으로 의존성에 넣고, 내 PC에서는 `uv run uvicorn …`으로 실행해 줘. 진입 파일을 옮기면 Procfile도 같이 고쳐.
 
 ## Java·Kotlin + Spring Boot 규칙
 
