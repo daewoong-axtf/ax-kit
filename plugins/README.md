@@ -5,8 +5,8 @@ AX팀이 함께 쓰는 Claude 스킬이다. 이 저장소가 Claude 플러그인
 | 플러그인 | 하는 일 | 필요한 연결 | 버전 |
 | --- | --- | --- | --- |
 | `ax` | AX팀 업무 스킬 두 개. [`write-prd`](ax/skills/write-prd/SKILL.md) — 노션 'PRD 작성 기준'을 매번 읽어 그대로 PRD를 쓰고 'AX PRD 문서' DB에 저장한다. 기존 PRD 점검도 한다. [`mail-inquiry-log`](ax/skills/mail-inquiry-log/SKILL.md) — 메일·웍스 문의와 AX팀 대응을 노션 'AX 라운지 메일·메신저 문의' DB에 정해진 형식으로 기록한다 | Notion — 'PRD 작성 기준' · 'AX PM 문서' 페이지, 'AX PRD 문서' DB, 'AX 라운지 메일·메신저 문의' DB | [![ax](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=ax-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
-| [`dds`](dds/skills/dds/SKILL.md) | Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 토큰·컴포넌트를 적용한 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 | GitHub 접속 — 설정 프롬프트와 점검 스킬 두 개를 처음 한 번, 새 판으로 올릴 때 그 판의 저장소를 받아 온다 | [![dds](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=dds-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
-| [`rules`](rules/skills/safety-rules/SKILL.md) | 「AI로 만든 웹앱 최소 안전 규칙」을 프로젝트에 넣고, 새 판이 나오면 올린다. 규칙 원문은 `daewoong-coding-guide.md`로 두고 `CLAUDE.md` · `AGENTS.md`가 그 파일을 가리키게 한다 | 인터넷 접속 — 릴리즈된 규칙 원문을 받아 온다 | [![rules](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=rules-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
+| [`dds`](dds/skills/dds/SKILL.md) | Daewoong Design System을 프로젝트에 설정하고, 화면을 만들거나 고칠 때 토큰·컴포넌트를 적용한 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 | GitHub 접속 — 설정 프롬프트와 점검 스킬 두 개를 처음 한 번, 새 버전으로 올릴 때 그 버전의 저장소를 받아 온다 | [![dds](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=dds-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
+| [`rules`](rules/skills/safety-rules/SKILL.md) | 「AI로 만든 웹앱 최소 안전 규칙」을 프로젝트에 넣고, 새 버전이 나오면 올린다. 규칙 원문은 `daewoong-coding-guide.md`로 두고 `CLAUDE.md` · `AGENTS.md`가 그 파일을 가리키게 한다 | 인터넷 접속 — 릴리즈된 규칙 원문을 받아 온다 | [![rules](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=rules-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) |
 
 ## 설치
 
@@ -122,18 +122,18 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
 
    프로젝트에 복사된 `docs/design-reference/`를 읽고 토큰과 컴포넌트를 쓴다. 끝내기 전에 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다. 두 스킬은 처음 한 번 GitHub에서 받아 프로젝트의 `.agents/skills/`에 두고, 그 뒤로는 프로젝트에 있는 것을 계속 쓴다. 스킬 지적이 디자인 시스템과 어긋나면 디자인 시스템을 따른다.
 
-4. **디자인 시스템 새 판이 나오면 올린다.**
+4. **디자인 시스템 새 버전이 나오면 올린다.**
 
    ```
    /dds:update
    ```
 
-   "디자인 시스템 새 버전으로 올려줘", "DDS 1.6.0으로 올려줘"라고 말해도 된다. 자동으로는 올라가지 않고, 판을 말하지 않으면 최신 릴리즈로 올린다. 지금 판이 올릴 판과 같으면 그렇다고 알리고 멈춘다. 아니면 올릴 판을 받아 그 판의 [업데이트 절차](../design-system/design/ai/update-prompt.md)를 그대로 따른다. 프로젝트에서 고치지 않은 파일은 묻지 않고 바꾸고, 프로젝트에서 고친 파일을 새 판도 바꿨을 때만 묻는다. **1.5.0 다음 design-system 릴리즈부터 동작한다.** 업데이트 절차가 그 릴리즈에 처음 들어가므로, 그 전에는 절차가 없다고 알리고 멈춘다.
+   "디자인 시스템 새 버전으로 올려줘", "DDS 1.6.0으로 올려줘"라고 말해도 된다. 자동으로는 올라가지 않고, 버전을 말하지 않으면 최신 릴리즈로 올린다. 지금 버전이 올릴 버전과 같으면 그렇다고 알리고 멈춘다. 아니면 올릴 버전을 받아 그 버전의 [업데이트 절차](../design-system/design/ai/update-prompt.md)를 그대로 따른다. 프로젝트에서 고치지 않은 파일은 묻지 않고 바꾸고, 프로젝트에서 고친 파일을 새 버전도 바꿨을 때만 묻는다. **1.5.0 다음 design-system 릴리즈부터 동작한다.** 업데이트 절차가 그 릴리즈에 처음 들어가므로, 그 전에는 절차가 없다고 알리고 멈춘다.
 
 | 커맨드 | 하는 일 |
 | --- | --- |
 | `/dds:setup` | 디자인 시스템을 프로젝트에 설정한다 |
-| `/dds:update` | 프로젝트의 디자인 시스템을 최신 판으로 올린다 |
+| `/dds:update` | 프로젝트의 디자인 시스템을 최신 버전으로 올린다 |
 | `/dds:check` | 화면을 디자인 시스템과 점검 스킬 두 개로 점검한다 |
 
 커맨드는 `플러그인:스킬` 모양이다. 세 커맨드는 `dds` 스킬 원문의 해당 절을 읽고 따르는 짧은 스킬이라, 절차는 [`dds` 스킬](dds/skills/dds/SKILL.md) 한 곳에만 있다. Codex · Cursor처럼 `npx skills add … --skill dds`로 `dds` 스킬만 설치한 곳에서는 `/dds setup`, `/dds update`, `/dds check`로 쓴다.
@@ -142,18 +142,18 @@ PRD 써줘 — https://www.notion.so/<티켓 또는 회의록>
 
 **rules**
 
-규칙을 넣을 프로젝트 폴더에서 Claude Code를 열고 한 줄이면 된다. 처음 넣을 때도, 새 판으로 올릴 때도 같은 명령이다.
+규칙을 넣을 프로젝트 폴더에서 Claude Code를 열고 한 줄이면 된다. 처음 넣을 때도, 새 버전으로 올릴 때도 같은 명령이다.
 
 ```
 /plugin install rules@ax-kit
 /rules:safety-rules
 ```
 
-"최소 안전 규칙 넣어줘", "안전 규칙 최신 판으로 올려줘"라고 말해도 된다. 판을 말하면("안전 규칙 1.2.0으로") 그 판을 넣는다.
+"최소 안전 규칙 넣어줘", "안전 규칙 최신 버전으로 올려줘"라고 말해도 된다. 버전을 말하면("안전 규칙 1.2.0으로") 그 버전을 넣는다.
 
 - [릴리즈된 규칙 원문](../rules/README.md#다른-서비스에서-받아-쓰기)을 받아 프로젝트 맨 위 폴더에 `daewoong-coding-guide.md`로 그대로 둔다. 내용은 고치지 않는다.
 - `CLAUDE.md` · `AGENTS.md`에는 그 파일을 읽으라는 짧은 블록만 넣는다. 이미 있던 프로젝트 고유 내용은 그대로 남는다. 그래서 다음에 올릴 때는 규칙 파일 하나만 바뀐다.
-- 프로젝트의 판이 넣을 판과 같으면 "이미 그 판이다"라고 알리고 멈춘다.
+- 프로젝트의 버전이 넣을 버전과 같으면 "이미 그 버전이다"라고 알리고 멈춘다.
 - 규칙 원문의 이름을 바꿔 `CLAUDE.md` · `AGENTS.md`로 쓰던 프로젝트는 규칙을 `daewoong-coding-guide.md`로 옮긴다. 그 파일에 덧붙여 쓴 내용이 있으면 남길지 한 번 묻는다.
 - 올렸으면 그사이 바뀐 규칙을 요약해 준다. 새 규칙은 새 대화부터 읽힌다. 커밋은 하지 않는다.
 
@@ -163,7 +163,7 @@ AX Desk에서 규칙을 복사하거나 파일로 받아 쓰는 방법은 그대
 
 ## 업데이트
 
-플러그인(스킬 원문)을 새 판으로 올리는 법이다. 플러그인은 버전이 오를 때만 새 판을 받는다. 프로젝트에 넣은 디자인 시스템을 올리는 것은 [dds 쓰는 법](#쓰는-법) 4번이다.
+플러그인(스킬 원문)을 새 버전으로 올리는 법이다. 플러그인은 버전이 오를 때만 새 버전을 받는다. 프로젝트에 넣은 디자인 시스템을 올리는 것은 [dds 쓰는 법](#쓰는-법) 4번이다.
 
 - Claude Code: `/plugin marketplace update ax-kit` 뒤 `/plugin`에서 업데이트한다.
 - 터미널에서는 명령 두 줄로 한다. 플러그인을 설치한 프로젝트 폴더에서 실행하고, 끝나면 Claude Code를 다시 시작해야 적용된다.
@@ -206,4 +206,4 @@ gh release create <이름>-v1.0.0 --repo daewoong-axtf/ax-kit --target <머지 �
 | `feat!:` | 메이저 (1.0.0 → 2.0.0) | 입력 · 저장 위치 · 형식을 바꿔 기존 사용법이 깨지는 변경 |
 | `docs:` · `chore:` | 릴리즈하지 않음 | 이 README 수정 등 |
 
-`main`에 머지하면 release-please가 그 플러그인의 릴리즈 PR을 따로 만든다. 그 PR을 머지하면 `plugin.json` 버전이 오르고 `<이름>-vX.Y.Z` 태그가 붙는다. 설치한 사람은 그때부터 새 판을 받는다. 릴리즈 전에 `main`에 들어간 수정은 그사이 새로 설치하는 사람에게 먼저 간다.
+`main`에 머지하면 release-please가 그 플러그인의 릴리즈 PR을 따로 만든다. 그 PR을 머지하면 `plugin.json` 버전이 오르고 `<이름>-vX.Y.Z` 태그가 붙는다. 설치한 사람은 그때부터 새 버전을 받는다. 릴리즈 전에 `main`에 들어간 수정은 그사이 새로 설치하는 사람에게 먼저 간다.

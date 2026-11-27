@@ -8,7 +8,7 @@
 | [`rules/safety-rules/`](rules/README.md) | AI로 만든 웹앱 최소 안전 규칙 | [![safety-rules](https://img.shields.io/github/v/tag/daewoong-axtf/ax-kit?filter=safety-rules-v*&sort=semver&label=%EC%B5%9C%EC%8B%A0)](https://github.com/daewoong-axtf/ax-kit/tags) | [규칙 원문](https://daewoong-axtf.github.io/ax-kit/guides/safety-rules/latest.md) |
 | [`plugins/`](plugins/README.md) | 팀 Claude 스킬 — 플러그인 마켓플레이스 `ax-kit` | 플러그인마다 `<이름>-vX.Y.Z` | [설치 · 쓰는 법](plugins/README.md) |
 
-폴더 이름을 누르면 그 폴더의 안내로 간다. "AI에 붙여 넣기"는 최신 릴리즈판 원문이다. 전체를 복사해 AI 대화창에 붙여 넣거나 프로젝트에 파일로 둔다. 스킬은 붙여 넣지 않고 플러그인으로 설치한다.
+폴더 이름을 누르면 그 폴더의 안내로 간다. "AI에 붙여 넣기"는 최신 릴리즈 버전 원문이다. 전체를 복사해 AI 대화창에 붙여 넣거나 프로젝트에 파일로 둔다. 스킬은 붙여 넣지 않고 플러그인으로 설치한다.
 
 [가이드 게시물 목록](https://daewoong-axtf.github.io/ax-kit/guides/index.json) · [릴리즈](https://github.com/daewoong-axtf/ax-kit/releases)
 
@@ -30,8 +30,8 @@
 | `ax:write-prd` | "PRD 써줘 — <노션 티켓 · 회의록 링크>", "이 PRD 기준에 맞는지 점검해줘" | 노션 'PRD 작성 기준'대로 초안을 `prd-drafts/`에 쓴다. 저장하라고 하면 'AX PRD 문서' DB에 올린다 |
 | `ax:mail-inquiry-log` | "이 메일 문의 노션에 기록해줘"(원문을 붙여 넣는다), "지난번 문의 건에 오늘 회신 추가해줘" | 'AX 라운지 메일·메신저 문의' DB에 `[부서] 문의 요약` 페이지를 만들거나 대응 이력을 덧붙인다 |
 | `dds` | "디자인 시스템 설정해줘", "디자인 시스템 써서 이 화면 만들어줘" | Daewoong Design System을 프로젝트에 설정하고, 화면을 만든 뒤 `web-design-guidelines` · `ux-heuristics` 스킬로 점검한다 |
-| `dds`의 `/dds:update` | "디자인 시스템 새 버전으로 올려줘", Claude Code에서는 `/dds:update` | 설치한 디자인 시스템을 새 판으로 올린다. 프로젝트에서 고친 파일은 새 판도 바꿨을 때만 묻는다. 1.5.0 다음 design-system 릴리즈부터 동작한다 |
-| `rules`의 `/rules:safety-rules` | "최소 안전 규칙 넣어줘", "안전 규칙 최신 판으로 올려줘", Claude Code에서는 `/rules:safety-rules` | 최소 안전 규칙 원문을 프로젝트의 `daewoong-coding-guide.md`로 넣고 `CLAUDE.md` · `AGENTS.md`가 가리키게 한다. 이미 있으면 최신 판으로 올린다 |
+| `dds`의 `/dds:update` | "디자인 시스템 새 버전으로 올려줘", Claude Code에서는 `/dds:update` | 설치한 디자인 시스템을 새 버전으로 올린다. 프로젝트에서 고친 파일은 새 버전도 바꿨을 때만 묻는다. 1.5.0 다음 design-system 릴리즈부터 동작한다 |
+| `rules`의 `/rules:safety-rules` | "최소 안전 규칙 넣어줘", "안전 규칙 최신 버전으로 올려줘", Claude Code에서는 `/rules:safety-rules` | 최소 안전 규칙 원문을 프로젝트의 `daewoong-coding-guide.md`로 넣고 `CLAUDE.md` · `AGENTS.md`가 가리키게 한다. 이미 있으면 최신 버전으로 올린다 |
 
 Notion 연결 확인, 업데이트, 스킬을 추가하는 법은 [plugins/README.md](plugins/README.md).
 
@@ -56,7 +56,7 @@ AX Desk의 코딩 가이드 화면은 Pages에 올린 게시물을 읽는다. �
 ```
 릴리즈 → .github/workflows/pages.yml → scripts/build-site.ts
   guides/index.json                 문서별 최신 버전 · 기준일 · 경로
-  guides/<문서>/<버전>.md            태그마다 한 파일. 한 번 올린 판은 바뀌지 않는다
+  guides/<문서>/<버전>.md            태그마다 한 파일. 한 번 올린 버전은 바뀌지 않는다
   guides/safety-rules/<버전>/<조각>.md  최소 안전 규칙을 이루는 조각 (rules/safety-rules/parts/)
   design/ · index.html              디자인 시스템 카탈로그 (main 기준)
 ```

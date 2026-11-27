@@ -95,7 +95,7 @@ test('dds 플러그인은 dds 스킬과 그 절을 부르는 setup · update · 
   }
 })
 
-test('dds 스킬의 업데이트는 절차를 지어내지 않고 받은 판의 update-prompt.md를 따른다', () => {
+test('dds 스킬의 업데이트는 절차를 지어내지 않고 받은 버전의 update-prompt.md를 따른다', () => {
   const skill = read('plugins/dds/skills/dds/SKILL.md')
   const path = 'design-system/design/ai/update-prompt.md'
   assert.ok(skill.includes(path), `${path}를 가리키지 않는다`)
@@ -117,7 +117,7 @@ test('rules 플러그인의 safety-rules 스킬은 규칙을 복사해 두지 �
   const skill = read('plugins/rules/skills/safety-rules/SKILL.md')
   assert.ok(skill.includes('https://daewoong-axtf.github.io/ax-kit/guides/index.json'))
   assert.ok(skill.includes('guides["safety-rules"]'))
-  // 프로젝트에 두는 파일 이름과 판을 읽는 첫 줄은 통합본과 같아야 한다
+  // 프로젝트에 두는 파일 이름과 버전을 읽는 첫 줄은 통합본과 같아야 한다
   assert.ok(skill.includes('daewoong-coding-guide.md'))
   const title = read('rules/safety-rules/daewoong-coding-guide.md').split('\n')[0].replace(/\(v[\d.]+\)$/, '(vX.Y.Z)')
   assert.ok(skill.includes(title), `통합본 첫 줄 모양이 다르다: ${title}`)
