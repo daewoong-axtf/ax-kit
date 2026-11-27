@@ -1,6 +1,6 @@
 {
   "design-system": "1.6.0",
-  "rules/safety-rules": "2.0.0",
+  "rules/safety-rules": "2.1.0",
   "plugins/ax": "1.0.0",
   "plugins/dds": "1.1.0",
   "plugins/rules": "1.1.0"
