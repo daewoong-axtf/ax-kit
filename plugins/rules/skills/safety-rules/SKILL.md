@@ -1,6 +1,6 @@
 ---
 name: safety-rules
-description: AI로 만든 웹앱 최소 안전 규칙(daewoong-coding-guide.md)을 프로젝트에 넣거나 최신 판으로 올린다. 사용자가 /rules:apply · /safety-rules라고 하거나 "최소 안전 규칙 넣어줘", "안전 규칙 적용해줘", "안전 규칙 최신 판으로 올려줘", "코딩 가이드 업데이트해줘"라고 할 때 쓴다. 자동으로는 쓰지 않는다.
+description: AI로 만든 웹앱 최소 안전 규칙(daewoong-coding-guide.md)을 프로젝트에 넣거나 최신 판으로 올린다. 사용자가 /rules:safety-rules · /safety-rules라고 하거나 "최소 안전 규칙 넣어줘", "안전 규칙 적용해줘", "안전 규칙 최신 판으로 올려줘", "코딩 가이드 업데이트해줘"라고 할 때 쓴다. 자동으로는 쓰지 않는다.
 ---
 
 # safety-rules
@@ -13,7 +13,7 @@ description: AI로 만든 웹앱 최소 안전 규칙(daewoong-coding-guide.md)�
 
 | 어디서 | 설치 | 부르기 |
 | --- | --- | --- |
-| Claude Code | `/plugin install rules@ax-kit` | `/rules:apply` |
+| Claude Code | `/plugin install rules@ax-kit` | `/rules:safety-rules` |
 | Codex(ChatGPT) 등 이 스킬만 설치한 곳 | `npx skills add daewoong-axtf/ax-kit --skill safety-rules` | `/safety-rules`, 또는 아래처럼 말로 시킨다 |
 
 어디서든 "최소 안전 규칙 넣어줘", "안전 규칙 최신 판으로 올려줘"라고 말해도 된다.
