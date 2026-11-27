@@ -1,7 +1,7 @@
 {
   "name": "rules",
   "version": "1.1.0",
-  "description": "AI로 만든 웹앱 최소 안전 규칙을 프로젝트에 넣고, 새 판이 나오면 올린다(/rules:safety-rules). 인터넷 접속 필요",
+  "description": "AI로 만든 웹앱 최소 안전 규칙을 프로젝트에 넣고, 새 버전이 나오면 올린다(/rules:safety-rules). 인터넷 접속 필요",
   "author": {
     "name": "daewoong-axtf"
   },

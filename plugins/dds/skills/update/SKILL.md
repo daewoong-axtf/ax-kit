@@ -1,11 +1,11 @@
 ---
 name: update
-description: 프로젝트에 설정된 Daewoong Design System을 최신 판으로 올린다. 사용자가 /dds:update라고 하거나 "디자인 시스템 업데이트해줘", "디자인 시스템 최신 판으로 올려줘"라고 할 때 쓴다. 자동으로는 쓰지 않는다.
+description: 프로젝트에 설정된 Daewoong Design System을 최신 버전으로 올린다. 사용자가 /dds:update라고 하거나 "디자인 시스템 업데이트해줘", "디자인 시스템 최신 버전으로 올려줘"라고 할 때 쓴다. 자동으로는 쓰지 않는다.
 ---
 
 # dds:update
 
-프로젝트의 Daewoong Design System을 최신 판으로 올린다.
+프로젝트의 Daewoong Design System을 최신 버전으로 올린다.
 
 절차는 이 스킬에 복사해 두지 않는다. 같은 플러그인의 `dds` 스킬 원문(이 파일 기준 `../dds/SKILL.md`)을 읽고 "2. 업데이트" 절을 처음부터 끝까지 그대로 따른다. 그 문서의 "하지 않는 것"도 함께 지킨다.
 

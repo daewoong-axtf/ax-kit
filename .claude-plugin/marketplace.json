@@ -6,7 +6,7 @@
     {
       "name": "dds",
       "source": "./plugins/dds",
-      "description": "Daewoong Design System을 프로젝트에 설정하고, 화면을 만들 때 적용한 뒤 web-design-guidelines · ux-heuristics 스킬로 점검하고, 새 판으로 올린다. GitHub 접속 필요",
+      "description": "Daewoong Design System을 프로젝트에 설정하고, 화면을 만들 때 적용한 뒤 web-design-guidelines · ux-heuristics 스킬로 점검하고, 새 버전으로 올린다. GitHub 접속 필요",
       "category": "development"
     },
     {
@@ -18,7 +18,7 @@
     {
       "name": "rules",
       "source": "./plugins/rules",
-      "description": "AI로 만든 웹앱 최소 안전 규칙을 프로젝트에 넣고, 새 판이 나오면 올린다. 인터넷 접속 필요",
+      "description": "AI로 만든 웹앱 최소 안전 규칙을 프로젝트에 넣고, 새 버전이 나오면 올린다. 인터넷 접속 필요",
       "category": "development"
     }
   ]
