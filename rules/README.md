@@ -36,7 +36,7 @@ curl https://daewoong-axtf.github.io/ax-kit/guides/safety-rules/latest.md
 rules/safety-rules/
   parts/                      정본. 규칙은 여기서만 고친다
     WORKFLOW.md               작업 방식 — 적용 대상과 기술 스택, 스택 판별, AX 검사와 핸드오프, 개발 순서
-    SECURITY.md               공통 규칙 1~16번
+    SECURITY.md               공통 규칙 1~17번
     COMMIT.md                 커밋 규칙
     STACK-TS.md               TypeScript + React(Next.js) 규칙 (TS-1~TS-8)
     STACK-PY.md               Python + FastAPI 규칙 (PY-1~PY-8)

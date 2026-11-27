@@ -14,7 +14,7 @@ export const GUIDE_PATH = `${RULES_DIR}/daewoong-coding-guide.md`
 /** 합치는 순서. 통합본 첫머리의 표도 여기서 만든다 */
 export const PARTS = [
   { file: 'WORKFLOW.md', summary: '적용 대상과 기술 스택, AX 검사와 핸드오프, 개발 순서, 규격화 원칙', scope: '항상' },
-  { file: 'SECURITY.md', summary: '모든 웹앱의 보안·운영 규칙(1~16번)', scope: '항상' },
+  { file: 'SECURITY.md', summary: '모든 웹앱의 보안·운영 규칙(1~17번)', scope: '항상' },
   { file: 'COMMIT.md', summary: '커밋 메시지, 커밋 단위, 커밋하지 않는 것', scope: '항상' },
   {
     file: 'STACK-TS.md',

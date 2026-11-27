@@ -51,10 +51,10 @@ test('기준일은 한국 시간 날짜', () => {
   assert.equal(kstToday(new Date('2026-11-22T16:30:00Z')), '2026-11-23')
 })
 
-test('공통 규칙은 1번부터 16번까지 빠짐없이 있다', () => {
+test('공통 규칙은 1번부터 17번까지 빠짐없이 있다', () => {
   const text = parts.find((p) => p.file === 'SECURITY.md')!.text
   const numbers = [...text.matchAll(/^## (\d+)\. /gm)].map((m) => Number(m[1]))
-  assert.deepEqual(numbers, Array.from({ length: 16 }, (_, i) => i + 1))
+  assert.deepEqual(numbers, Array.from({ length: 17 }, (_, i) => i + 1))
 })
 
 test('최소 안전 규칙 릴리즈 PR에 통합본을 다시 만들어 넣는다', () => {

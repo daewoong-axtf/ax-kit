@@ -1,6 +1,6 @@
 # 공통 규칙
 
-모든 웹앱에 항상 적용하는 보안·운영 규칙(1~16번)이다.
+모든 웹앱에 항상 적용하는 보안·운영 규칙(1~17번)이다.
 
 ## 1. 비밀정보를 코드에 쓰지 않는다
 
@@ -163,3 +163,57 @@
   - 상태가 바뀌는 처리는 바꾸기 전 상태를 조건으로 건다(예: `대기`일 때만 `승인`으로).
 - 중복으로 막힌 요청에는 오류 대신 "이미 처리됐어요"처럼 결과를 알려 준다.
 - 핵심 기능 테스트(15번)에 같은 요청을 두 번 보내도 한 번만 처리되는 경우를 넣는다.
+
+## 17. 파일은 정해진 위치에만 저장한다
+
+이유: 앱 소스 폴더 안에 저장한 파일은 내 PC에서는 되지만 서버에서는 쓰기가 거부되어 `permission denied` 오류가 난다. 저장할 수 있는 위치라도 재시작·재배포 뒤에 남는지가 위치마다 달라서, 용도에 맞지 않는 곳에 두면 올린 파일이나 데이터가 사라지거나 깨진다.
+
+- 사용자가 올린 파일과 앱이 만든 파일(문서·이미지 등)은 `/data` 폴더에 저장한다. 이 폴더의 파일은 앱을 재시작하거나 새로 배포해도 남는다.
+- 경로를 코드에 직접 쓰지 않고 환경 변수 `UPLOAD_DIR`을 읽어서 쓴다. 사내 서버(앱허브)에서는 `UPLOAD_DIR=/data`가 자동으로 들어가므로 따로 설정하지 않는다. 내 PC에서 개발할 때는 값이 없으므로 `./uploads`를 기본값으로 둔다.
+- 저장할 것에 따라 위치를 나눈다.
+
+  | 저장할 것 | 저장 위치 | 남는가 |
+  | --- | --- | --- |
+  | 업로드 파일, 생성한 문서·이미지 | `/data` (`UPLOAD_DIR`) | 재시작·재배포 뒤에도 남음 |
+  | 잠깐 쓰고 버릴 임시 파일 | `/tmp` | 재시작하면 사라짐 |
+  | 회원 정보, 게시글 같은 데이터 | DB(PostgreSQL) | 남음 |
+  | 앱 소스 폴더 안(`./uploads`, `./data.db` 등) | 저장 불가 | 서버에서는 쓰기가 거부됨 |
+
+- SQLite 같은 파일 DB를 `/data`에 두지 않는다. 파일이 깨질 수 있다. 데이터는 PostgreSQL을 신청해서 쓴다(13번).
+- 로그를 파일에 계속 덧붙이지 않는다. 느려진다. 로그는 화면 출력(`print`, `console.log`)으로 남기면 자동으로 수집된다(12번).
+- 앱 소스 폴더 안에 저장하지 않는다. 내 PC에서는 되지만 서버에서는 `permission denied` 오류가 난다.
+- 사용자가 보낸 파일 이름을 그대로 경로에 붙이지 않는다. 정해진 폴더 밖으로 나가지 못하게 경로를 검사한다(9번).
+- 저장 위치를 읽는 방법은 스택마다 아래와 같다. 예시는 위치를 읽는 부분만 보여 주며, 사용자가 보낸 이름(`file.filename`, `fileName`)을 쓸 때는 위 경로 검사를 먼저 거친다.
+
+  Python (FastAPI)
+
+  ```python
+  import os
+
+  UPLOAD_DIR = os.environ.get("UPLOAD_DIR", "./uploads")
+  os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+  path = os.path.join(UPLOAD_DIR, file.filename)
+  ```
+
+  Node (Next.js, TypeScript)
+
+  ```ts
+  import path from "node:path";
+
+  const UPLOAD_DIR = process.env.UPLOAD_DIR ?? "./uploads";
+
+  const filePath = path.join(UPLOAD_DIR, fileName);
+  ```
+
+  Kotlin (Spring Boot)
+
+  ```kotlin
+  val uploadDir = System.getenv("UPLOAD_DIR") ?: "./uploads"
+
+  val target = java.nio.file.Path.of(uploadDir, fileName)
+  ```
+
+- 사용자가 AI 코딩 도구에 파일 저장을 요청하면 아래 문장을 쓰도록 안내한다.
+
+  > 파일 업로드와 생성 파일은 환경 변수 `UPLOAD_DIR` 폴더에 저장해 줘. 값이 없으면 `./uploads`를 써. 앱 소스 폴더 안에는 파일을 저장하지 말고, 데이터는 SQLite 대신 PostgreSQL을 써. 임시 파일은 `/tmp`에 둬.
