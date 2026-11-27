@@ -14,21 +14,21 @@ export const GUIDE_PATH = `${RULES_DIR}/daewoong-coding-guide.md`
 /** 합치는 순서. 통합본 첫머리의 표도 여기서 만든다 */
 export const PARTS = [
   { file: 'WORKFLOW.md', summary: '적용 대상과 기술 스택, AX 검사와 핸드오프, 개발 순서, 규격화 원칙', scope: '항상' },
-  { file: 'SECURITY.md', summary: '모든 웹앱의 보안·운영 규칙(1~16번)', scope: '항상' },
+  { file: 'SECURITY.md', summary: '모든 웹앱의 보안·운영 규칙(1~17번)', scope: '항상' },
   { file: 'COMMIT.md', summary: '커밋 메시지, 커밋 단위, 커밋하지 않는 것', scope: '항상' },
   {
     file: 'STACK-TS.md',
-    summary: '프론트엔드의 도구·구조·아키텍처·코드 스타일(TS-1~TS-8)',
+    summary: '프론트엔드의 도구·구조·아키텍처·코드 스타일(TS-1~TS-9)',
     scope: '프론트엔드 코드(FastAPI + HTML, Spring Boot + Thymeleaf 구조 제외)',
   },
   {
     file: 'STACK-PY.md',
-    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(PY-1~PY-8)',
+    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(PY-1~PY-9)',
     scope: 'Python 백엔드 코드, FastAPI가 제공하는 HTML 화면',
   },
   {
     file: 'STACK-JV.md',
-    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(JV-1~JV-8)',
+    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(JV-1~JV-9)',
     scope: 'Java·Kotlin 백엔드 코드, Spring Boot가 제공하는 Thymeleaf 화면',
   },
 ] as const

@@ -45,6 +45,7 @@ tests/
 - 요청·응답은 Pydantic v2 모델로 정의하고 라우터에 `response_model`을 적는다. dict나 DB 모델 객체를 그대로 반환하지 않는다(필요 없는 필드와 개인정보가 함께 나간다, 4번).
 - 입력 검증(9번)은 Pydantic 필드 제약(`Field(max_length=...)` 등)으로 한다.
 - DB는 SQLAlchemy 2.x(`select()` 방식)로 다룬다. 테이블 구조 변경은 Alembic 마이그레이션으로만 한다. 운영에서 `create_all`로 테이블을 만들지 않는다.
+- SQLite에서 옮길 때는 SQLAlchemy 연결 URL과 드라이버를 PostgreSQL용으로 바꾸고 Alembic으로 PostgreSQL용 마이그레이션을 새로 만든다("SQLite를 PostgreSQL로 옮기기"). 연결 URL은 `core/config.py`가 환경 변수 `DATABASE_URL`에서 읽는다.
 - DB 세션과 로그인 사용자는 `Depends`로 주입한다. 권한 확인 함수는 `core/security.py` 한 곳에 두고 모든 라우터가 `Depends`로 쓴다(10번).
 - 한 프로젝트 안에서 동기(`def`)와 비동기(`async def`) 방식을 섞지 않는다. 템플릿을 따르고, `async def` 안에서 동기 DB 드라이버나 블로킹 호출을 쓰지 않는다.
 - 외부 HTTP 호출은 httpx로 하고 timeout을 반드시 지정한다(14번).
@@ -64,7 +65,7 @@ tests/
 ## PY-6. 테스트와 전환
 
 - 테스트는 pytest와 FastAPI `TestClient`로 `tests/`에 둔다. 권한 테스트(15번)는 `app.dependency_overrides`로 다른 사용자를 넣어 차단되는지 확인한다.
-- 테스트가 없는 프로젝트는 엔드포인트마다 `TestClient`로 현재 응답을 기록하는 특성 테스트를 만든다(syrupy 스냅샷). 외부 HTTP 호출은 respx로 가짜 응답을 준다. 테스트 DB는 테스트마다 새로 만든다. Testcontainers로 운영과 같은 엔진(PostgreSQL)을 띄우고, Docker를 쓸 수 없으면 SQLite로 하되 그 사실을 `README.md`에 적는다.
+- 테스트가 없는 프로젝트는 엔드포인트마다 `TestClient`로 현재 응답을 기록하는 특성 테스트를 만든다(syrupy 스냅샷). 외부 HTTP 호출은 respx로 가짜 응답을 준다. 테스트 DB는 테스트마다 새로 만든다. Testcontainers(Docker)나 로컬에 설치한 PostgreSQL로 운영과 같은 엔진을 쓴다. SQLite로 대신하지 않는다. 둘 다 쓸 수 없으면 사용자에게 알리고 PostgreSQL을 쓸 방법을 확인받는다.
 - 시나리오(S-n)는 `tests/scenarios/`에 `TestClient` 테스트로 만들고 함수 이름에 시나리오 ID를 넣는다(`test_s01_...`). TDD 단위 테스트는 `tests/unit/`에 둔다.
 - Streamlit·Gradio·Flask·Django 앱을 옮길 때는 계산·데이터 처리 함수를 `services/`로 옮겨 재사용하고, 화면은 TS 규칙으로 새로 만든다.
 
@@ -93,7 +94,7 @@ tests/
 
 ## PY-8. FastAPI + HTML 화면
 
-FastAPI가 HTML 화면을 직접 제공하는 구조는 새 앱과 기존 앱 모두 쓸 수 있다. 기존 앱은 Next.js로 옮기지 않아도 되고, 새 앱은 "스택 판별"의 기준으로 정한다. 이 구조에는 TS 규칙(TS-1~TS-8)을 적용하지 않고 아래를 따른다.
+FastAPI가 HTML 화면을 직접 제공하는 구조는 새 앱과 기존 앱 모두 쓸 수 있다. 기존 앱은 Next.js로 옮기지 않아도 되고, 새 앱은 "스택 판별"의 기준으로 정한다. 이 구조에는 TS 규칙(TS-1~TS-9)을 적용하지 않고 아래를 따른다.
 
 - HTML은 `app/templates/`, JavaScript·CSS는 `app/static/`에 둔다. 실제 업무 데이터는 두지 않는다(3번). 한 파일이 300줄을 넘으면 기능별로 나눈다.
 - 화면은 그리기와 API 호출만 맡는다. 업무 로직, DB 접근, 권한 판단은 백엔드에 둔다(10번).
@@ -103,3 +104,17 @@ FastAPI가 HTML 화면을 직접 제공하는 구조는 새 앱과 기존 앱 �
 - 외부 스크립트는 파일을 내려받아 `app/static/`에서 제공하고, 버전을 파일 이름이나 `README.md`에 남긴다. 외부 URL에서 불러오지 않는다(11번).
 - 보안 헤더(11번)는 가장 바깥 미들웨어에서 오류·리다이렉트를 포함한 모든 응답에 적용한다.
 - 로그인·권한·핵심 흐름(15번)은 Playwright E2E 테스트로 `tests/e2e/`에 둔다. 화면이 없는 시나리오는 PY-6을 따른다.
+
+## PY-9. 파일 저장
+
+- 업로드·생성 파일의 저장 위치는 `UPLOAD_DIR` 환경 변수로 읽고, 값이 없으면 `./uploads`를 쓴다(17번). 경로를 코드에 직접 쓰지 않는다.
+- 사용자가 보낸 파일 이름은 그대로 경로에 붙이지 않고, 정해진 폴더 밖으로 나가지 못하게 검사한다(9번). 아래 예시는 위치를 읽는 부분만 보여 준다.
+
+```python
+import os
+
+UPLOAD_DIR = os.environ.get("UPLOAD_DIR", "./uploads")
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+path = os.path.join(UPLOAD_DIR, file.filename)
+```

@@ -110,11 +110,11 @@ Host: daewoong-axtf.github.io
 | 조각 | 내용 | 적용 |
 | --- | --- | --- |
 | `WORKFLOW.md` | 작업 방식 — 적용 대상과 기술 스택, 스택 판별, AX 검사와 핸드오프, 개발 순서 | 항상 |
-| `SECURITY.md` | 공통 규칙 1~16번 | 항상 |
+| `SECURITY.md` | 공통 규칙 1~17번 | 항상 |
 | `COMMIT.md` | 커밋 규칙 | 항상 |
-| `STACK-TS.md` | TypeScript + React(Next.js) 규칙 (TS-1~TS-8) | 프론트엔드 코드 |
-| `STACK-PY.md` | Python + FastAPI 규칙 (PY-1~PY-8) | Python 백엔드 코드 |
-| `STACK-JV.md` | Java·Kotlin + Spring Boot 규칙 (JV-1~JV-8) | Java·Kotlin 백엔드 코드 |
+| `STACK-TS.md` | TypeScript + React(Next.js) 규칙 (TS-1~TS-9) | 프론트엔드 코드 |
+| `STACK-PY.md` | Python + FastAPI 규칙 (PY-1~PY-9) | Python 백엔드 코드 |
+| `STACK-JV.md` | Java·Kotlin + Spring Boot 규칙 (JV-1~JV-9) | Java·Kotlin 백엔드 코드 |
 
 ### Response `200 OK`
 
@@ -123,7 +123,7 @@ Host: daewoong-axtf.github.io
 ```markdown
 # 공통 규칙
 
-모든 웹앱에 항상 적용하는 보안·운영 규칙(1~16번)이다.
+모든 웹앱에 항상 적용하는 보안·운영 규칙(1~17번)이다.
 ...(조각 전체)
 ```
 

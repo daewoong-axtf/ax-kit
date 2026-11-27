@@ -92,3 +92,16 @@ public/                # 정적 파일(실제 업무 데이터는 두지 않는�
 - 반복문을 파이프라인으로 바꾸기 → `map`·`filter`로 바꾼다. `reduce`가 읽기 어려워지면 `for...of`를 쓴다.
 - 레코드 캡슐화하기·가변 데이터 → props와 상태는 `readonly`로 두고 직접 고치지 않는다. 새 값을 만들어 바꾼다.
 - 특이 케이스 추가하기 → 데이터 없음·로딩·오류 처리는 null 검사를 흩뿌리지 않고 빈 상태 컴포넌트와 `loading.tsx`·`error.tsx`(TS-5)로 모은다.
+
+## TS-9. 파일 저장
+
+- 업로드·생성 파일의 저장 위치는 `UPLOAD_DIR` 환경 변수로 읽고, 값이 없으면 `./uploads`를 쓴다(17번). 경로를 코드에 직접 쓰지 않는다.
+- 사용자가 보낸 파일 이름은 그대로 경로에 붙이지 않고, 정해진 폴더 밖으로 나가지 못하게 검사한다(9번). 아래 예시는 위치를 읽는 부분만 보여 준다.
+
+```ts
+import path from "node:path";
+
+const UPLOAD_DIR = process.env.UPLOAD_DIR ?? "./uploads";
+
+const filePath = path.join(UPLOAD_DIR, fileName);
+```
