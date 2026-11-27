@@ -103,7 +103,7 @@ test('update prompt names what an agent cannot guess', () => {
   assert.ok(prompt.includes('`design-system/design/`'))
   assert.ok(prompt.includes('docs/design-system.md'))
   assert.ok(prompt.includes('https://daewoong-axtf.github.io/ax-kit/guides/index.json'))
-  // 판단은 세 판 비교로 하고, 프로젝트가 고친 파일만 묻는다
+  // 판단은 세 버전 비교로 하고, 프로젝트가 고친 파일만 묻는다
   assert.ok(prompt.includes('docs/design-reference/'))
   assert.ok(prompt.includes('design.md` 14'))
   assert.doesNotMatch(prompt, /\{\{/, '스킬이 클론에서 그대로 읽으므로 채울 자리가 없어야 한다')
