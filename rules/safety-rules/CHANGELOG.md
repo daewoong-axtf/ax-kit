@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/daewoong-axtf/ax-kit/compare/safety-rules-v2.0.0...safety-rules-v2.1.0) (2026-11-27)
+
+
+### 새로 추가된 기능
+
+* **safety-rules:** FastAPI 앱 시작 명령(Procfile) 규칙 PY-10 추가 ([#46](https://github.com/daewoong-axtf/ax-kit/issues/46)) ([665e375](https://github.com/daewoong-axtf/ax-kit/commit/665e37586b58e6d87f5c7dab5e88b70068954094))
+
 ## [2.0.0](https://github.com/daewoong-axtf/ax-kit/compare/safety-rules-v1.3.0...safety-rules-v2.0.0) (2026-11-27)
 
 
