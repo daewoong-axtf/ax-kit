@@ -26,7 +26,7 @@ test('설정 프롬프트에 저장소와 ref를 채운다', () => {
   assert.throws(() => fillPrompt('{{REPO}}', 'v1.2.0'), /v1\.2\.0.*자리표시자/)
 })
 
-test('버전은 semver 내림차순, latest는 가장 높은 판', () => {
+test('버전은 semver 내림차순, latest는 가장 높은 버전', () => {
   const idx = buildIndex([
     { slug: 'design-system', version: '1.9.0', updatedAt: '2026-11-01' },
     { slug: 'design-system', version: '1.10.0', updatedAt: '2026-11-20' },
@@ -51,7 +51,7 @@ test('태그에 원문이 없으면 태그 이름을 넣어 실패한다', () =>
   assert.throws(() => readSource('safety-rules-v1.0.0', 'nope.md'), /safety-rules-v1\.0\.0/)
 })
 
-test('가이드마다 최신 판을 latest.md로도 낸다 — README 링크가 버전과 상관없이 최신 릴리즈판을 가리킨다', () => {
+test('가이드마다 최신 버전을 latest.md로도 낸다 — README 링크가 버전과 상관없이 최신 릴리즈 버전을 가리킨다', () => {
   const index = buildIndex([
     { slug: 'design-system', version: '1.2.0', updatedAt: '2026-11-12' },
     { slug: 'design-system', version: '1.3.0', updatedAt: '2026-11-18' },
@@ -63,7 +63,7 @@ test('가이드마다 최신 판을 latest.md로도 낸다 — README 링크가 
   ])
 })
 
-test('조각이 있는 판은 files에 조각 경로를 싣고 latest/ 폴더도 낸다', () => {
+test('조각이 있는 버전은 files에 조각 경로를 싣고 latest/ 폴더도 낸다', () => {
   const index = buildIndex([
     { slug: 'safety-rules', version: '1.1.0', updatedAt: '2026-11-19', files: [] },
     { slug: 'safety-rules', version: '1.2.0', updatedAt: '2026-11-30', files: ['COMMIT.md', 'SECURITY.md'] },
@@ -74,7 +74,7 @@ test('조각이 있는 판은 files에 조각 경로를 싣고 latest/ 폴더도
     { name: 'SECURITY.md', path: 'guides/safety-rules/1.2.0/SECURITY.md' },
   ])
   assert.equal(v120.path, 'guides/safety-rules/1.2.0.md')
-  assert.ok(!('files' in v110), '조각으로 나누기 전의 판에는 files가 없다')
+  assert.ok(!('files' in v110), '조각으로 나누기 전의 버전에는 files가 없다')
   assert.deepEqual(latestCopies(index), [
     { from: 'guides/safety-rules/1.2.0.md', to: 'guides/safety-rules/latest.md' },
     { from: 'guides/safety-rules/1.2.0', to: 'guides/safety-rules/latest' },

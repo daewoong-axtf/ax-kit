@@ -15,7 +15,7 @@ AI 코딩 도구에 넣어 쓰는 회사 규칙의 원문이다. 폴더 하나�
 | 무엇 | 주소 | 응답 |
 | --- | --- | --- |
 | 최신 원문 | `https://daewoong-axtf.github.io/ax-kit/guides/safety-rules/latest.md` | `text/markdown` |
-| 판별 원문 | `https://daewoong-axtf.github.io/ax-kit/guides/safety-rules/<버전>.md` | `text/markdown` |
+| 버전별 원문 | `https://daewoong-axtf.github.io/ax-kit/guides/safety-rules/<버전>.md` | `text/markdown` |
 | 조각 | `https://daewoong-axtf.github.io/ax-kit/guides/safety-rules/<버전>/<조각>.md` | `text/markdown` — `SECURITY.md` · `COMMIT.md` 등. `<버전>` 자리에 `latest`도 된다 |
 | 버전 · 기준일 · 조각 목록 | `https://daewoong-axtf.github.io/ax-kit/guides/index.json` | `application/json` — `guides["safety-rules"]`의 `latest`, `versions[].updatedAt` · `path` · `files` |
 
@@ -60,7 +60,7 @@ rules/safety-rules/
 2. 커밋 → PR → main에 머지        커밋할 때 통합본이 자동으로 다시 만들어진다
 3. (자동) 릴리즈 PR이 생긴다       새 버전 · 변경 기록 · 통합본의 버전과 기준일이 들어 있다
 4. 릴리즈 PR을 확인하고 머지
-5. (자동) 태그 safety-rules-vX.Y.Z → Pages 게시 → 15분 안에 AX Desk에 새 판이 보인다
+5. (자동) 태그 safety-rules-vX.Y.Z → Pages 게시 → 15분 안에 AX Desk에 새 버전이 보인다
 ```
 
 ### 1. 조각을 고친다
@@ -118,4 +118,4 @@ curl https://daewoong-axtf.github.io/ax-kit/guides/index.json   # latest가 새 
 | `pnpm test`가 "통합본은 조각을 합친 결과와 같다"에서 실패 | 조각만 고치고 통합본을 다시 만들지 않았다 | `pnpm build:rules` 뒤 통합본을 함께 커밋 |
 | `main`에서 "통합본의 버전은 version.txt와 같다"가 실패하고 태그가 생기지 않음 | "릴리즈 준비" 커밋이 붙기 전에 릴리즈 PR을 머지했다 | `main`에서 `pnpm build:rules` 뒤 `chore:`로 커밋해 올리면 릴리즈가 이어진다 |
 | 머지했는데 릴리즈 PR이 생기지 않음 | 커밋 타입이 `docs:` · `chore:`이거나 `rules/safety-rules/` 밖만 고쳤다 | `feat:` · `fix:` 커밋으로 조각을 고친다 |
-| 릴리즈했는데 AX Desk에 옛 판이 보임 | 캐시(최대 15분) | 기다린다. 그래도 그대로면 Actions의 Pages 워크플로가 성공했는지 본다 |
+| 릴리즈했는데 AX Desk에 옛 버전이 보임 | 캐시(최대 15분) | 기다린다. 그래도 그대로면 Actions의 Pages 워크플로가 성공했는지 본다 |

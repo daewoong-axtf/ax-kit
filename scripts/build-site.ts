@@ -1,8 +1,8 @@
 // GitHub Pages에 올릴 _site/를 만든다. 매번 git 태그만 보고 처음부터 만든다
 //   index.html · design/          디자인 시스템 카탈로그 (HEAD의 design-system/)
 //   guides/index.json             문서별 최신 버전 · 기준일 · 경로 — AX Desk가 읽는다
-//   guides/<slug>/<version>.md    태그마다 한 파일. 한 번 올린 판은 바뀌지 않는다
-//   guides/safety-rules/<version>/<조각>.md   통합본을 이루는 조각(parts/). 조각이 생긴 판부터 있다
+//   guides/<slug>/<version>.md    태그마다 한 파일. 한 번 올린 버전은 바뀌지 않는다
+//   guides/safety-rules/<version>/<조각>.md   통합본을 이루는 조각(parts/). 조각이 생긴 버전부터 있다
 //   node scripts/build-site.ts <outDir>
 import { execFileSync } from 'node:child_process'
 import { cpSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
@@ -24,7 +24,7 @@ export interface GuideVersion {
   version: string
   updatedAt: string
   path: string
-  /** 통합본을 이루는 조각. 조각으로 나누기 전의 판에는 없다 */
+  /** 통합본을 이루는 조각. 조각으로 나누기 전의 버전에는 없다 */
   files?: { name: string; path: string }[]
 }
 
@@ -85,7 +85,7 @@ export function buildIndex(entries: { slug: Slug; version: string; updatedAt: st
   return { guides }
 }
 
-/** 가이드마다 최신 판을 latest.md로 한 벌 더 — 버전이 올라도 바뀌지 않는 링크. 조각이 있으면 latest/ 폴더도 낸다 */
+/** 가이드마다 최신 버전을 latest.md로 한 벌 더 — 버전이 올라도 바뀌지 않는 링크. 조각이 있으면 latest/ 폴더도 낸다 */
 export function latestCopies(index: GuideIndex): { from: string; to: string }[] {
   return Object.entries(index.guides).flatMap(([slug, guide]) => {
     const latest = guide.versions.find((v) => v.version === guide.latest)!
