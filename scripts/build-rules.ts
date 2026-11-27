@@ -23,7 +23,7 @@ export const PARTS = [
   },
   {
     file: 'STACK-PY.md',
-    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(PY-1~PY-9)',
+    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(PY-1~PY-10)',
     scope: 'Python 백엔드 코드, FastAPI가 제공하는 HTML 화면',
   },
   {

@@ -113,7 +113,7 @@ Host: daewoong-axtf.github.io
 | `SECURITY.md` | 공통 규칙 1~17번 | 항상 |
 | `COMMIT.md` | 커밋 규칙 | 항상 |
 | `STACK-TS.md` | TypeScript + React(Next.js) 규칙 (TS-1~TS-9) | 프론트엔드 코드 |
-| `STACK-PY.md` | Python + FastAPI 규칙 (PY-1~PY-9) | Python 백엔드 코드 |
+| `STACK-PY.md` | Python + FastAPI 규칙 (PY-1~PY-10) | Python 백엔드 코드 |
 | `STACK-JV.md` | Java·Kotlin + Spring Boot 규칙 (JV-1~JV-9) | Java·Kotlin 백엔드 코드 |
 
 ### Response `200 OK`
