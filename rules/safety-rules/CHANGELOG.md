@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/daewoong-axtf/ax-kit/compare/safety-rules-v1.3.0...safety-rules-v2.0.0) (2026-11-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* 최소 안전 규칙에 17번 파일 저장 위치 추가, SQLite 금지 ([#44](https://github.com/daewoong-axtf/ax-kit/issues/44))
+
+### 새로 추가된 기능
+
+* 최소 안전 규칙에 17번 파일 저장 위치 추가, SQLite 금지 ([#44](https://github.com/daewoong-axtf/ax-kit/issues/44)) ([8797165](https://github.com/daewoong-axtf/ax-kit/commit/87971650478825e41a97e0cb1590c5a661d824b3))
+
 ## [1.3.0](https://github.com/daewoong-axtf/ax-kit/compare/safety-rules-v1.2.0...safety-rules-v1.3.0) (2026-11-24)
 
 
