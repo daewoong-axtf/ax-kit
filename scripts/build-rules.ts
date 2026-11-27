@@ -18,17 +18,17 @@ export const PARTS = [
   { file: 'COMMIT.md', summary: '커밋 메시지, 커밋 단위, 커밋하지 않는 것', scope: '항상' },
   {
     file: 'STACK-TS.md',
-    summary: '프론트엔드의 도구·구조·아키텍처·코드 스타일(TS-1~TS-8)',
+    summary: '프론트엔드의 도구·구조·아키텍처·코드 스타일(TS-1~TS-9)',
     scope: '프론트엔드 코드(FastAPI + HTML, Spring Boot + Thymeleaf 구조 제외)',
   },
   {
     file: 'STACK-PY.md',
-    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(PY-1~PY-8)',
+    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(PY-1~PY-9)',
     scope: 'Python 백엔드 코드, FastAPI가 제공하는 HTML 화면',
   },
   {
     file: 'STACK-JV.md',
-    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(JV-1~JV-8)',
+    summary: '백엔드의 도구·구조·아키텍처·코드 스타일(JV-1~JV-9)',
     scope: 'Java·Kotlin 백엔드 코드, Spring Boot가 제공하는 Thymeleaf 화면',
   },
 ] as const

@@ -93,7 +93,7 @@ tests/
 
 ## PY-8. FastAPI + HTML 화면
 
-FastAPI가 HTML 화면을 직접 제공하는 구조는 새 앱과 기존 앱 모두 쓸 수 있다. 기존 앱은 Next.js로 옮기지 않아도 되고, 새 앱은 "스택 판별"의 기준으로 정한다. 이 구조에는 TS 규칙(TS-1~TS-8)을 적용하지 않고 아래를 따른다.
+FastAPI가 HTML 화면을 직접 제공하는 구조는 새 앱과 기존 앱 모두 쓸 수 있다. 기존 앱은 Next.js로 옮기지 않아도 되고, 새 앱은 "스택 판별"의 기준으로 정한다. 이 구조에는 TS 규칙(TS-1~TS-9)을 적용하지 않고 아래를 따른다.
 
 - HTML은 `app/templates/`, JavaScript·CSS는 `app/static/`에 둔다. 실제 업무 데이터는 두지 않는다(3번). 한 파일이 300줄을 넘으면 기능별로 나눈다.
 - 화면은 그리기와 API 호출만 맡는다. 업무 로직, DB 접근, 권한 판단은 백엔드에 둔다(10번).
@@ -103,3 +103,17 @@ FastAPI가 HTML 화면을 직접 제공하는 구조는 새 앱과 기존 앱 �
 - 외부 스크립트는 파일을 내려받아 `app/static/`에서 제공하고, 버전을 파일 이름이나 `README.md`에 남긴다. 외부 URL에서 불러오지 않는다(11번).
 - 보안 헤더(11번)는 가장 바깥 미들웨어에서 오류·리다이렉트를 포함한 모든 응답에 적용한다.
 - 로그인·권한·핵심 흐름(15번)은 Playwright E2E 테스트로 `tests/e2e/`에 둔다. 화면이 없는 시나리오는 PY-6을 따른다.
+
+## PY-9. 파일 저장
+
+- 업로드·생성 파일의 저장 위치는 `UPLOAD_DIR` 환경 변수로 읽고, 값이 없으면 `./uploads`를 쓴다(17번). 경로를 코드에 직접 쓰지 않는다.
+- 사용자가 보낸 파일 이름은 그대로 경로에 붙이지 않고, 정해진 폴더 밖으로 나가지 못하게 검사한다(9번). 아래 예시는 위치를 읽는 부분만 보여 준다.
+
+```python
+import os
+
+UPLOAD_DIR = os.environ.get("UPLOAD_DIR", "./uploads")
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+path = os.path.join(UPLOAD_DIR, file.filename)
+```

@@ -100,7 +100,7 @@ Spring은 PoEAA 패턴을 거의 그대로 구현한다. 직접 만들지 않고
 
 ## JV-8. Spring Boot + Thymeleaf 화면
 
-JV 규칙을 쓰는 앱이 화면을 Spring Boot에서 함께 제공하면 Thymeleaf를 쓴다(`spring-boot-starter-thymeleaf`). 프론트엔드와 백엔드를 나눈 앱은 화면에 TS 규칙을 적용한다. 이 구조에는 TS 규칙(TS-1~TS-8)을 적용하지 않고 아래를 따른다. 새로 JSP로 만들지 않는다.
+JV 규칙을 쓰는 앱이 화면을 Spring Boot에서 함께 제공하면 Thymeleaf를 쓴다(`spring-boot-starter-thymeleaf`). 프론트엔드와 백엔드를 나눈 앱은 화면에 TS 규칙을 적용한다. 이 구조에는 TS 규칙(TS-1~TS-9)을 적용하지 않고 아래를 따른다. 새로 JSP로 만들지 않는다.
 
 - HTML은 `src/main/resources/templates/`, JavaScript·CSS는 `src/main/resources/static/`에 둔다. 실제 업무 데이터는 두지 않는다(3번). 한 파일이 300줄을 넘으면 기능별로 나눈다.
 - 화면을 돌려주는 Controller는 `@Controller`로 쓰고, 입력 검증과 응답 변환만 한다. 업무 로직, DB 접근, 권한 판단은 Service 이하에 둔다(JV-3).
@@ -113,3 +113,14 @@ JV 규칙을 쓰는 앱이 화면을 Spring Boot에서 함께 제공하면 Thyme
 - 외부 스크립트는 파일을 내려받아 `static/`에서 제공하고, 버전을 파일 이름이나 `README.md`에 남긴다. 외부 URL에서 불러오지 않는다(11번).
 - 보안 헤더(11번)는 Spring Security 설정으로 오류·리다이렉트를 포함한 모든 응답에 적용한다.
 - 로그인·권한·핵심 흐름(15번)은 Playwright E2E 테스트로 `src/test/`의 `e2e` 패키지에 둔다. 화면이 없는 시나리오는 JV-6을 따른다.
+
+## JV-9. 파일 저장
+
+- 업로드·생성 파일의 저장 위치는 `UPLOAD_DIR` 환경 변수로 읽고, 값이 없으면 `./uploads`를 쓴다(17번). 경로를 코드에 직접 쓰지 않는다.
+- 사용자가 보낸 파일 이름은 그대로 경로에 붙이지 않고, 정해진 폴더 밖으로 나가지 못하게 검사한다(9번). 아래 예시는 위치를 읽는 부분만 보여 준다.
+
+```kotlin
+val uploadDir = System.getenv("UPLOAD_DIR") ?: "./uploads"
+
+val target = java.nio.file.Path.of(uploadDir, fileName)
+```

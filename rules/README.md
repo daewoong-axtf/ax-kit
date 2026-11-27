@@ -38,9 +38,9 @@ rules/safety-rules/
     WORKFLOW.md               작업 방식 — 적용 대상과 기술 스택, 스택 판별, AX 검사와 핸드오프, 개발 순서
     SECURITY.md               공통 규칙 1~17번
     COMMIT.md                 커밋 규칙
-    STACK-TS.md               TypeScript + React(Next.js) 규칙 (TS-1~TS-8)
-    STACK-PY.md               Python + FastAPI 규칙 (PY-1~PY-8)
-    STACK-JV.md               Java·Kotlin + Spring Boot 규칙 (JV-1~JV-8)
+    STACK-TS.md               TypeScript + React(Next.js) 규칙 (TS-1~TS-9)
+    STACK-PY.md               Python + FastAPI 규칙 (PY-1~PY-9)
+    STACK-JV.md               Java·Kotlin + Spring Boot 규칙 (JV-1~JV-9)
   daewoong-coding-guide.md    통합본. 조각을 위 순서로 합친 생성 파일 — 직접 고치지 않는다
   version.txt                 지금 버전. release-please가 올린다 — 직접 고치지 않는다
   CHANGELOG.md                변경 기록. release-please가 쓴다 — 직접 고치지 않는다

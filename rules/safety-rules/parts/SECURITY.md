@@ -183,37 +183,7 @@
 - 로그를 파일에 계속 덧붙이지 않는다. 느려진다. 로그는 화면 출력(`print`, `console.log`)으로 남기면 자동으로 수집된다(12번).
 - 앱 소스 폴더 안에 저장하지 않는다. 내 PC에서는 되지만 서버에서는 `permission denied` 오류가 난다.
 - 사용자가 보낸 파일 이름을 그대로 경로에 붙이지 않는다. 정해진 폴더 밖으로 나가지 못하게 경로를 검사한다(9번).
-- 저장 위치를 읽는 방법은 스택마다 아래와 같다. 예시는 위치를 읽는 부분만 보여 주며, 사용자가 보낸 이름(`file.filename`, `fileName`)을 쓸 때는 위 경로 검사를 먼저 거친다.
-
-  Python (FastAPI)
-
-  ```python
-  import os
-
-  UPLOAD_DIR = os.environ.get("UPLOAD_DIR", "./uploads")
-  os.makedirs(UPLOAD_DIR, exist_ok=True)
-
-  path = os.path.join(UPLOAD_DIR, file.filename)
-  ```
-
-  Node (Next.js, TypeScript)
-
-  ```ts
-  import path from "node:path";
-
-  const UPLOAD_DIR = process.env.UPLOAD_DIR ?? "./uploads";
-
-  const filePath = path.join(UPLOAD_DIR, fileName);
-  ```
-
-  Kotlin (Spring Boot)
-
-  ```kotlin
-  val uploadDir = System.getenv("UPLOAD_DIR") ?: "./uploads"
-
-  val target = java.nio.file.Path.of(uploadDir, fileName)
-  ```
-
+- 저장 위치를 읽는 코드 예시는 스택 규칙(TS-9, PY-9, JV-9)을 따른다.
 - 사용자가 AI 코딩 도구에 파일 저장을 요청하면 아래 문장을 쓰도록 안내한다.
 
   > 파일 업로드와 생성 파일은 환경 변수 `UPLOAD_DIR` 폴더에 저장해 줘. 값이 없으면 `./uploads`를 써. 앱 소스 폴더 안에는 파일을 저장하지 말고, 데이터는 SQLite 대신 PostgreSQL을 써. 임시 파일은 `/tmp`에 둬.
